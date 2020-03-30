@@ -1,3 +1,6 @@
+# Ignore .zip files, typically used to upload to AWS Lambda
+*.zip
+
 # Local .terraform directories
 **/.terraform/*
 
