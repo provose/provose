@@ -30,7 +30,7 @@ resource "aws_iam_role" "iam__ecs_task_execution_role" {
 }
 EOF
   tags = {
-    Powercloud = var.name
+    Provose = var.name
   }
 
 }

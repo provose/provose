@@ -22,7 +22,7 @@ resource "aws_security_group" "elasticsearch" {
     cidr_blocks = [aws_vpc.vpc.cidr_block]
   }
   tags = {
-    Powercloud = var.name
+    Provose = var.name
   }
 }
 
@@ -81,8 +81,8 @@ resource "aws_elasticsearch_domain" "elasticsearch" {
 }
 CONFIG
   tags = {
-    Domain     = each.key
-    Powercloud = var.name
+    Domain  = each.key
+    Provose = var.name
   }
 
   depends_on = [

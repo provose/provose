@@ -16,7 +16,7 @@ resource "aws_security_group" "vpc_http_https" {
     cidr_blocks = [aws_vpc.vpc.cidr_block]
   }
   tags = {
-    Powercloud = var.name
+    Provose = var.name
   }
 }
 
@@ -30,7 +30,7 @@ resource "aws_lb" "vpc_http_https" {
   subnets            = aws_subnet.vpc[*].id
   depends_on         = [aws_internet_gateway.vpc]
   tags = {
-    Powercloud = var.name
+    Provose = var.name
   }
 }
 

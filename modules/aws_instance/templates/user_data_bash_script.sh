@@ -16,6 +16,6 @@ echo ECS_BACKEND_HOST= >> /etc/ecs/ecs.config
 # Install EFS/NFS utils if we have them.
 yum install -y amazon-efs-utils
 
-echo "Powercloud setups complete. Handing over user_data setup to the user."
+echo "Provose setups complete. Handing over user_data setup to the user."
 set +Eeuxo pipefail
 ${bash_user_data}

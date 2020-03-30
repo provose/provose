@@ -4,7 +4,7 @@
 * the private keys are stored in Terraform state. Read more at
 * https://www.terraform.io/docs/providers/tls/index.html
 * 
-* Because of this, it is important to use Powercloud with a Terraform state
+* Because of this, it is important to use Provose with a Terraform state
 * backend that can be considered to be reasonably secure--e.g. an encrypted
 * Amazon S3 bucket with strict access controls.
 */
@@ -69,7 +69,7 @@ resource "aws_acm_certificate" "vpn__ca" {
   private_key      = tls_private_key.vpn__ca[count.index].private_key_pem
   certificate_body = tls_self_signed_cert.vpn__ca[count.index].cert_pem
   tags = {
-    Powercloud = var.name
+    Provose = var.name
   }
   lifecycle {
     create_before_destroy = true
@@ -125,7 +125,7 @@ resource "aws_acm_certificate" "vpn__server" {
   certificate_body  = tls_locally_signed_cert.vpn__server[count.index].cert_pem
   certificate_chain = tls_self_signed_cert.vpn__ca[count.index].cert_pem
   tags = {
-    Powercloud = var.name
+    Provose = var.name
   }
   lifecycle {
     create_before_destroy = true
@@ -186,7 +186,7 @@ resource "aws_cloudwatch_log_stream" "vpn" {
 
 resource "aws_ec2_client_vpn_endpoint" "vpn" {
   count                  = var.vpn != null ? 1 : 0
-  description            = "Powercloud Management VPN"
+  description            = "Provose Management VPN"
   split_tunnel           = local.split_tunnel
   transport_protocol     = local.transport_protocol
   server_certificate_arn = aws_acm_certificate.vpn__server[count.index].arn
@@ -206,8 +206,8 @@ resource "aws_ec2_client_vpn_endpoint" "vpn" {
   }
 
   tags = {
-    Name       = "${var.name}-vpn"
-    Powercloud = var.name
+    Name    = "${var.name}-vpn"
+    Provose = var.name
   }
 }
 

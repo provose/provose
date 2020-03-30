@@ -32,7 +32,7 @@ resource "aws_security_group" "jumphost" {
   }
 
   tags = {
-    Powercloud = var.name
+    Provose = var.name
   }
 }
 
@@ -64,8 +64,8 @@ resource "aws_instance" "jumphost" {
   iam_instance_profile        = aws_iam_instance_profile.jumphost[0].id
   user_data                   = try(var.jumphost.user_data, null)
   tags = {
-    Name       = "jumphost"
-    Powercloud = var.name
+    Name    = "jumphost"
+    Provose = var.name
   }
 }
 

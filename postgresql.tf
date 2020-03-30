@@ -17,7 +17,7 @@ resource "aws_security_group" "postgresql" {
     cidr_blocks = [aws_vpc.vpc.cidr_block]
   }
   tags = {
-    Powercloud = var.name
+    Provose = var.name
   }
 }
 
@@ -36,7 +36,7 @@ resource "aws_rds_cluster" "postgresql" {
   database_name             = each.value.database_name
   final_snapshot_identifier = "${var.name}-postgresql-final-snapshot"
   tags = {
-    Powercloud = var.name
+    Provose = var.name
   }
 }
 
@@ -67,7 +67,7 @@ resource "aws_rds_cluster_instance" "postgresql" {
 
   depends_on = [aws_rds_cluster.postgresql]
   tags = {
-    Powercloud = var.name
+    Provose = var.name
   }
 }
 

@@ -12,7 +12,7 @@ resource "aws_security_group" "redis" {
     cidr_blocks = [aws_vpc.vpc.cidr_block]
   }
   tags = {
-    Powercloud = var.name
+    Provose = var.name
   }
 }
 
@@ -35,7 +35,7 @@ resource "aws_elasticache_cluster" "redis" {
   parameter_group_name = join("", ["default.redis", join(".", slice(split(".", each.value.engine_version), 0, 2))])
   port                 = 6379
   tags = {
-    Powercloud = var.name
+    Provose = var.name
   }
 }
 

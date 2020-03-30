@@ -11,8 +11,8 @@ resource "aws_instance" "redisinsight" {
     aws_security_group.vpc_ssh.id
   ]
   tags = {
-    Name       = "redisinsight"
-    Powercloud = var.name
+    Name    = "redisinsight"
+    Provose = var.name
   }
   user_data = <<USER_DATA
 #!/bin/bash

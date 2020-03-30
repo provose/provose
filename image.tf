@@ -9,7 +9,7 @@ resource "aws_ecr_repository" "image" {
   }
   name = each.value
   tags = {
-    Powercloud = var.name
+    Provose = var.name
   }
 }
 

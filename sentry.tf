@@ -28,7 +28,7 @@ resource "aws_security_group" "sentry" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   tags = {
-    Powercloud = var.name
+    Provose = var.name
   }
 }
 
@@ -103,8 +103,8 @@ systemctl start sentry
 USER_DATA
 
   tags = {
-    Name       = "${var.name}-sentry"
-    Powercloud = var.name
+    Name    = "${var.name}-sentry"
+    Provose = var.name
   }
 }
 

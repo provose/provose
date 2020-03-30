@@ -10,7 +10,7 @@ resource "aws_route53_zone" "internal_dns" {
     vpc_id = aws_vpc.vpc.id
   }
   tags = {
-    Powercloud = var.name
+    Provose = var.name
   }
 }
 

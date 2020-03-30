@@ -3,7 +3,7 @@ resource "aws_secretsmanager_secret" "secrets" {
   name                    = each.key
   recovery_window_in_days = 0
   tags = {
-    Powercloud = var.name
+    Provose = var.name
   }
 }
 

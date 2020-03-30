@@ -9,7 +9,7 @@ resource "aws_security_group" "allow_all_egress_to_internet" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   tags = {
-    Powercloud = var.name
+    Provose = var.name
   }
 }
 
@@ -26,7 +26,7 @@ resource "aws_security_group" "vpc_ssh" {
   }
 
   tags = {
-    Powercloud = var.name
+    Provose = var.name
   }
 }
 

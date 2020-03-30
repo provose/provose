@@ -18,7 +18,7 @@ resource "aws_security_group" "mysql" {
     cidr_blocks = [aws_vpc.vpc.cidr_block]
   }
   tags = {
-    Powercloud = var.name
+    Provose = var.name
   }
 }
 
@@ -37,7 +37,7 @@ resource "aws_rds_cluster" "mysql" {
   database_name             = each.value.database_name
   final_snapshot_identifier = "${var.name}-mysql-final-snapshot"
   tags = {
-    Powercloud = var.name
+    Provose = var.name
   }
 }
 
@@ -68,7 +68,7 @@ resource "aws_rds_cluster_instance" "mysql" {
 
   depends_on = [aws_rds_cluster.mysql]
   tags = {
-    Powercloud = var.name
+    Provose = var.name
   }
 }
 

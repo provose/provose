@@ -8,7 +8,7 @@ resource "aws_ebs_volume" "ebs_volume" {
   type              = try(each.value.type, null)
   kms_key_id        = try(each.value.kms_key_id, null)
   tags = {
-    Name       = each.key
-    Powercloud = var.name
+    Name    = each.key
+    Provose = var.name
   }
 }

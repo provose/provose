@@ -29,7 +29,7 @@ resource "aws_security_group" "logstash" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   tags = {
-    Powercloud = var.name
+    Provose = var.name
   }
 }
 
@@ -49,8 +49,8 @@ resource "aws_instance" "logstash" {
   }
 
   tags = {
-    Name       = "${each.key}-logstash"
-    Powercloud = var.name
+    Name    = "${each.key}-logstash"
+    Provose = var.name
   }
 
   user_data = <<USER_DATA

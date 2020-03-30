@@ -1,7 +1,7 @@
 resource "aws_security_group" "aws_instance" {
   for_each    = var.aws_instance
   name_prefix = "ai"
-  description = "Powercloud security group for AWS instance ${each.key}"
+  description = "Provose security group for AWS instance ${each.key}"
   vpc_id      = aws_vpc.vpc.id
 
   dynamic "ingress" {
@@ -56,7 +56,7 @@ resource "aws_security_group" "aws_instance" {
   }
 
   tags = {
-    Powercloud = var.name
+    Provose = var.name
   }
 }
 
@@ -89,8 +89,8 @@ module "aws_instance" {
             # Name the instance after the object key, except when
             # we are creating more than one instance, in which case
             # we append the index.
-            Name       = try(instance_config.instances.instance_count, 1) > 1 ? "${instance_name}-${i}" : instance_name
-            Powercloud = var.name
+            Name    = try(instance_config.instances.instance_count, 1) > 1 ? "${instance_name}-${i}" : instance_name
+            Provose = var.name
           }
         }
       ]

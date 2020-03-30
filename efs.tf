@@ -29,7 +29,7 @@ resource "aws_security_group" "efs" {
     cidr_blocks = [aws_vpc.vpc.cidr_block]
   }
   tags = {
-    Powercloud = var.name
+    Provose = var.name
   }
 }
 
@@ -38,8 +38,8 @@ resource "aws_efs_file_system" "efs" {
 
   creation_token = each.key
   tags = {
-    Name       = each.key
-    Powercloud = var.name
+    Name    = each.key
+    Provose = var.name
   }
 }
 

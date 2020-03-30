@@ -32,7 +32,7 @@ resource "aws_security_group" "public_http_https" {
   }
 
   tags = {
-    Powercloud = var.name
+    Provose = var.name
   }
 }
 
@@ -51,7 +51,7 @@ resource "aws_lb" "public_http_https" {
     enabled = true
   }
   tags = {
-    Powercloud = var.name
+    Provose = var.name
   }
 }
 

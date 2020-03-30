@@ -22,7 +22,7 @@ resource "aws_security_group" "statsd_graphite_grafana" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   tags = {
-    Powercloud = var.name
+    Provose = var.name
   }
 }
 
@@ -100,7 +100,7 @@ chown --recursive ec2-user /sgg
 systemctl start sgg
 USER_DATA
   tags = {
-    Powercloud = var.name
+    Provose = var.name
   }
 }
 

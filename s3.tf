@@ -32,8 +32,8 @@ resource "aws_s3_bucket" "s3" {
   }
 
   tags = {
-    Name       = each.key
-    Powercloud = var.name
+    Name    = each.key
+    Provose = var.name
   }
 }
 

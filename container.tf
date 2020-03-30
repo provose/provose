@@ -143,7 +143,7 @@ resource "aws_security_group" "container__internal_http_port" {
   }
 
   tags = {
-    Powercloud = var.name
+    Provose = var.name
   }
 }
 
@@ -152,8 +152,8 @@ resource "aws_ecs_cluster" "container" {
 
   name = each.key
   tags = {
-    Name       = each.key
-    Powercloud = var.name
+    Name    = each.key
+    Provose = var.name
   }
 }
 
@@ -253,7 +253,7 @@ resource "aws_ecs_task_definition" "container" {
     aws_route53_record.efs
   ]
   tags = {
-    Powercloud = var.name
+    Provose = var.name
   }
 }
 
@@ -289,7 +289,7 @@ resource "aws_lb_target_group" "container__public_https" {
     create_before_destroy = true
   }
   tags = {
-    Powercloud = var.name
+    Provose = var.name
   }
 }
 
@@ -338,7 +338,7 @@ resource "aws_lb_target_group" "container__vpc_https" {
     path = each.value.vpc.https.internal_http_health_check_path
   }
   tags = {
-    Powercloud = var.name
+    Provose = var.name
   }
   lifecycle {
     create_before_destroy = true
@@ -418,7 +418,7 @@ resource "aws_ecs_service" "container" {
   ]
 
   tags = {
-    Powercloud = var.name
+    Provose = var.name
   }
   lifecycle {
     create_before_destroy = true
@@ -437,7 +437,7 @@ resource "aws_security_group" "container__instance_ssh" {
     cidr_blocks = [aws_vpc.vpc.cidr_block]
   }
   tags = {
-    Powercloud = var.name
+    Provose = var.name
   }
 }
 
@@ -501,8 +501,8 @@ resource "aws_instance" "container__instance" {
   ]
 
   tags = {
-    Name       = each.key
-    Powercloud = var.name
+    Name    = each.key
+    Provose = var.name
   }
   user_data = <<EOF
 #!/bin/bash
@@ -694,8 +694,8 @@ resource "aws_spot_instance_request" "container__instance" {
   ]
 
   tags = {
-    Name       = each.key
-    Powercloud = var.name
+    Name    = each.key
+    Provose = var.name
   }
   user_data = <<EOF
 #!/bin/bash

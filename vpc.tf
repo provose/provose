@@ -2,16 +2,16 @@ resource "aws_vpc" "vpc" {
   cidr_block           = var.aws_vpc_cidr
   enable_dns_hostnames = true
   tags = {
-    Name       = var.name
-    Powercloud = var.name
+    Name    = var.name
+    Provose = var.name
   }
 }
 
 resource "aws_internet_gateway" "vpc" {
   vpc_id = aws_vpc.vpc.id
   tags = {
-    Name       = var.name
-    Powercloud = var.name
+    Name    = var.name
+    Provose = var.name
   }
 }
 
@@ -32,8 +32,8 @@ resource "aws_subnet" "vpc" {
   depends_on = [aws_internet_gateway.vpc]
 
   tags = {
-    Name       = "${var.name}-s-${count.index}"
-    Powercloud = var.name
+    Name    = "${var.name}-s-${count.index}"
+    Provose = var.name
   }
 }
 
