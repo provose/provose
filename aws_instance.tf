@@ -100,14 +100,23 @@ module "aws_instance" {
 
 # This a unique DNS record for every individual AWS instance we are creating.
 resource "aws_route53_record" "aws_instance" {
-  for_each = merge(
-    module.aws_instance.aws_instance.on_demand,
-    module.aws_instance.aws_instance.spot
-  )
-  name    = "${each.key}.${var.internal_subdomain}"
-  zone_id = aws_route53_zone.internal_dns.zone_id
-  type    = "A"
-  ttl     = 60
+  for_each = module.aws_instance.aws_instance.on_demand
+  name     = "${each.key}.${var.internal_subdomain}"
+  zone_id  = aws_route53_zone.internal_dns.zone_id
+  type     = "A"
+  ttl      = 60
+  records = [
+    each.value.private_ip
+  ]
+}
+
+# This a unique DNS record for every individual AWS instance we are creating.
+resource "aws_route53_record" "aws_instance" {
+  for_each = module.aws_instance.aws_instance.spot
+  name     = "${each.key}.${var.internal_subdomain}"
+  zone_id  = aws_route53_zone.internal_dns.zone_id
+  type     = "A"
+  ttl      = 60
   records = [
     each.value.private_ip
   ]
