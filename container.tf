@@ -608,8 +608,8 @@ resource "aws_acm_certificate_validation" "container__public_https_validation" {
   certificate_arn         = each.value.arn
   validation_record_fqdns = [aws_route53_record.container__public_https_validation[each.key].fqdn]
 }
-# TODO: rename this! lol
-resource "aws_lb_listener_certificate" "example" {
+
+resource "aws_lb_listener_certificate" "container__public_https_validation" {
   for_each        = aws_acm_certificate_validation.container__public_https_validation
   listener_arn    = aws_lb_listener.public_http_https__443.arn
   certificate_arn = each.value.certificate_arn
@@ -796,9 +796,8 @@ output "container" {
     aws_acm_certificate_validation = {
       container__public_https_validation = aws_acm_certificate_validation.container__public_https_validation
     }
-    # TODO: rename this! lol
     aws_lb_listener_certificate = {
-      example = aws_lb_listener_certificate.example
+      container__public_https_validation = aws_lb_listener_certificate.container__public_https_validation
     }
     aws_spot_instance_request = {
       container__instance = aws_spot_instance_request.container__instance

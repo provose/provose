@@ -81,7 +81,7 @@ resource "aws_route53_record" "postgresql" {
   records = [aws_rds_cluster.postgresql[each.key].endpoint]
 }
 
-resource "aws_route53_record" "postgresql_readonly" {
+resource "aws_route53_record" "postgresql__readonly" {
   for_each = var.postgresql
 
   zone_id = aws_route53_zone.internal_dns.zone_id
@@ -108,9 +108,8 @@ output "postgresql" {
       postgresql = aws_rds_cluster_instance.postgresql
     }
     aws_route53_record = {
-      postgresql = aws_route53_record.postgresql
-      # TODO: Fix naming issue. The MySQL verion has two underscores.
-      postgresql__readonly = aws_route53_record.postgresql_readonly
+      postgresql           = aws_route53_record.postgresql
+      postgresql__readonly = aws_route53_record.postgresql__readonly
     }
   }
 }

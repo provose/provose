@@ -1,4 +1,3 @@
-# TODO: Make this indexed on the list of distinct images, not the list of containers.
 resource "aws_ecr_repository" "image" {
   for_each = {
     for image_name in distinct([

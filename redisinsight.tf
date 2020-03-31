@@ -44,8 +44,7 @@ systemctl start redisinsight
 USER_DATA
 }
 
-# TODO: Change the name of this
-resource "aws_lb_target_group_attachment" "test" {
+resource "aws_lb_target_group_attachment" "redisinsight" {
   count            = var.redisinsight != null ? 1 : 0
   target_group_arn = aws_lb_target_group.redisinsight[0].arn
   target_id        = aws_instance.redisinsight[0].id
@@ -71,8 +70,7 @@ resource "aws_lb_target_group" "redisinsight" {
   vpc_id   = aws_vpc.vpc.id
 }
 
-# TODO: change the name of this
-resource "aws_lb_listener_rule" "static" {
+resource "aws_lb_listener_rule" "redisinsight" {
   count        = var.redisinsight != null ? 1 : 0
   listener_arn = aws_lb_listener.vpc_http_https__port_443.arn
 
@@ -108,15 +106,13 @@ output "redisinsight" {
       redisinsight = aws_instance.redisinsight
     }
     aws_lb_target_group_attachment = {
-      # TODO: change the name of this!
-      test = aws_lb_target_group_attachment.test
+      redisinsight = aws_lb_target_group_attachment.redisinsight
     }
     aws_lb_target_group = {
       redisinsight = aws_lb_target_group.redisinsight
     }
     aws_lb_listener_rule = {
-      # TODO: change the name of this
-      static = aws_lb_listener_rule.static
+      redisinsight = aws_lb_listener_rule.redisinsight
     }
     aws_route53_record = {
       redisinsight = aws_route53_record.redisinsight
