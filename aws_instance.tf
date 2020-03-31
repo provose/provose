@@ -99,7 +99,7 @@ module "aws_instance" {
 }
 
 # This a unique DNS record for every individual AWS instance we are creating.
-resource "aws_route53_record" "aws_instance" {
+resource "aws_route53_record" "aws_instance__on_demand" {
   for_each = module.aws_instance.aws_instance.on_demand
   name     = "${each.key}.${var.internal_subdomain}"
   zone_id  = aws_route53_zone.internal_dns.zone_id
@@ -111,7 +111,7 @@ resource "aws_route53_record" "aws_instance" {
 }
 
 # This a unique DNS record for every individual AWS instance we are creating.
-resource "aws_route53_record" "aws_instance" {
+resource "aws_route53_record" "aws_instance__spot" {
   for_each = module.aws_instance.aws_instance.spot
   name     = "${each.key}.${var.internal_subdomain}"
   zone_id  = aws_route53_zone.internal_dns.zone_id
@@ -152,8 +152,9 @@ output "aws_instance" {
       spot      = module.aws_instance.aws_instance.spot
     }
     aws_route53_record = {
-      aws_instance        = aws_route53_record.aws_instance
-      aws_instance__group = aws_route53_record.aws_instance__group
+      aws_instance__on_demand = aws_route53_record.aws_instance__on_demand
+      aws_instance__spot      = aws_route53_record.aws_instance__spot
+      aws_instance__group     = aws_route53_record.aws_instance__group
     }
   }
 }
