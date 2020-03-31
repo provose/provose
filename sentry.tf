@@ -7,7 +7,8 @@ locals {
 resource "aws_security_group" "sentry" {
   count       = can(var.sentry) ? 1 : 0
   vpc_id      = aws_vpc.vpc.id
-  name_prefix = "sentry"
+  name        = "${var.name}/sentry"
+  description = "Provose security group owned by module ${var.name}, configuring ports for our Sentry installation."
 
   ingress {
     from_port   = 9000
@@ -29,6 +30,9 @@ resource "aws_security_group" "sentry" {
   }
   tags = {
     Provose = var.name
+  }
+  lifecycle {
+    create_before_destroy = true
   }
 }
 

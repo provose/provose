@@ -8,7 +8,8 @@ module "public_http_https__log" {
 }
 
 resource "aws_security_group" "public_http_https" {
-  name_prefix = "https"
+  name        = "${var.name}/public-http-https"
+  description = "Provose security group owned by module ${var.name} to give HTTP and HTTPS access to the public Internet."
   vpc_id      = aws_vpc.vpc.id
 
   ingress {
@@ -33,6 +34,9 @@ resource "aws_security_group" "public_http_https" {
 
   tags = {
     Provose = var.name
+  }
+  lifecycle {
+    create_before_destroy = true
   }
 }
 

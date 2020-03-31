@@ -47,7 +47,7 @@ resource "aws_cloudfront_origin_access_identity" "this" {
 
 resource "aws_iam_role" "cloudfront_subdirectory_index_html" {
   count = length(var.sites) > 0 ? 1 : 0
-  name  = "cloudfront_subdirectory_index_html_role"
+  name  = "${var.name}---cloudfront-subdirectory-index-html-role"
 
   assume_role_policy = <<EOF
 {

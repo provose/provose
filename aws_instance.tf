@@ -1,7 +1,7 @@
 resource "aws_security_group" "aws_instance" {
   for_each    = var.aws_instance
-  name_prefix = "ai"
-  description = "Provose security group for AWS instance ${each.key}"
+  name        = "${var.name}/${each.key}/ec2-instance"
+  description = "Provose security group for AWS instance ${each.key} in module ${var.name}."
   vpc_id      = aws_vpc.vpc.id
 
   dynamic "ingress" {
@@ -57,6 +57,10 @@ resource "aws_security_group" "aws_instance" {
 
   tags = {
     Provose = var.name
+  }
+
+  lifecycle {
+    create_before_destroy = true
   }
 }
 

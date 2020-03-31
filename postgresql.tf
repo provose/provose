@@ -8,7 +8,8 @@ resource "aws_db_subnet_group" "postgresql" {
 resource "aws_security_group" "postgresql" {
   count = length(var.postgresql) > 0 ? 1 : 0
 
-  name_prefix = "postgresql-sg"
+  name_prefix = "${var.name}/postgresql"
+  description = "Provose security group owned by module ${var.name}, authorizing PostgreSQL access within the VPC."
   vpc_id      = aws_vpc.vpc.id
   ingress {
     from_port   = 5432
@@ -18,6 +19,9 @@ resource "aws_security_group" "postgresql" {
   }
   tags = {
     Provose = var.name
+  }
+  lifecycle {
+    create_before_destroy = true
   }
 }
 

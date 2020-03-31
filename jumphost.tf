@@ -13,8 +13,8 @@ data "aws_iam_policy_document" "ec2_assume_role_policy" {
 resource "aws_security_group" "jumphost" {
   count = var.jumphost != null ? 1 : 0
 
-  name        = "jumphost-sg"
-  description = "We are letting the world access our jumphost... with authorization"
+  name        = "${var.name}/jumphost"
+  description = "Provose security group giving world-accessible access to the SSH port."
   vpc_id      = aws_vpc.vpc.id
 
   ingress {
@@ -34,12 +34,15 @@ resource "aws_security_group" "jumphost" {
   tags = {
     Provose = var.name
   }
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_iam_role" "jumphost" {
   count = var.jumphost != null ? 1 : 0
 
-  name_prefix           = "jumphost-iam-role"
+  name                  = "${var.name}---jumphost---role"
   description           = "Designed to let our jumphost access basic parts of our cluster"
   assume_role_policy    = data.aws_iam_policy_document.ec2_assume_role_policy.json
   force_detach_policies = true
@@ -48,8 +51,8 @@ resource "aws_iam_role" "jumphost" {
 resource "aws_iam_instance_profile" "jumphost" {
   count = var.jumphost != null ? 1 : 0
 
-  name_prefix = "jumphost-instance-profile"
-  role        = aws_iam_role.jumphost[0].name
+  name = "${var.name}---jumphost---instance-profile"
+  role = aws_iam_role.jumphost[0].name
 }
 
 resource "aws_instance" "jumphost" {

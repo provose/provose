@@ -9,7 +9,8 @@ locals {
 resource "aws_security_group" "logstash" {
   count       = length(local.logstash_configs) > 0 ? 1 : 0
   vpc_id      = aws_vpc.vpc.id
-  name_prefix = "logstash"
+  name        = "${var.name}/logstash"
+  description = "Provose security group owned by the ${var.name}, authorizing ports for the Logstash configuration."
   ingress {
     from_port   = 22
     to_port     = 22
@@ -30,6 +31,9 @@ resource "aws_security_group" "logstash" {
   }
   tags = {
     Provose = var.name
+  }
+  lifecycle {
+    create_before_destroy = true
   }
 }
 

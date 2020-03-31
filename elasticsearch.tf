@@ -12,7 +12,8 @@ locals {
 
 resource "aws_security_group" "elasticsearch" {
   count       = length(var.elasticsearch) > 0 ? 1 : 0
-  name_prefix = "elasticsearch"
+  name        = "${var.name}/elasticsearch"
+  description = "Provose security group for Elasticsearch instances, owned by module ${var.name}."
   vpc_id      = aws_vpc.vpc.id
 
   ingress {
@@ -23,6 +24,9 @@ resource "aws_security_group" "elasticsearch" {
   }
   tags = {
     Provose = var.name
+  }
+  lifecycle {
+    create_before_destroy = true
   }
 }
 

@@ -43,7 +43,7 @@ resource "aws_iam_role_policy" "s3__container_iam__list" {
     key => config if config.permissions.list == true
   }
 
-  name = "${var.name}-${each.key}-list-role-policy"
+  name = "${var.name}---${each.key}---list-role-policy"
   role = aws_iam_role.iam__ecs_task_execution_role[each.value.container_name].id
   policy = jsonencode({
     Version = "2012-10-17"
@@ -70,7 +70,7 @@ resource "aws_iam_role_policy" "s3__container_iam__get" {
     key => config if config.permissions.get == true
   }
 
-  name = "${var.name}-${each.key}-get-role-policy"
+  name = "${var.name}---${each.key}---get-role-policy"
   role = aws_iam_role.iam__ecs_task_execution_role[each.value.container_name].id
   policy = jsonencode({
     Version = "2012-10-17"
@@ -101,7 +101,7 @@ resource "aws_iam_role_policy" "s3__container_iam__put" {
     key => config if config.permissions.put == true
   }
 
-  name = "${var.name}-${each.key}-put-role-policy"
+  name = "${var.name}---${each.key}---put-role-policy"
   role = aws_iam_role.iam__ecs_task_execution_role[each.value.container_name].id
   policy = jsonencode({
     Version = "2012-10-17"
@@ -125,7 +125,7 @@ resource "aws_iam_role_policy" "s3__container_iam__delete" {
     key => config if config.permissions.delete == true
   }
 
-  name = "${var.name}-${each.key}-delete-role-policy"
+  name = "${var.name}---${each.key}---delete-role-policy"
   role = aws_iam_role.iam__ecs_task_execution_role[each.value.container_name].id
   policy = jsonencode({
     Version = "2012-10-17"

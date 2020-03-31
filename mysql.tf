@@ -8,8 +8,8 @@ resource "aws_db_subnet_group" "mysql" {
 resource "aws_security_group" "mysql" {
   count = length(var.mysql) > 0 ? 1 : 0
 
-  name_prefix = "mysql-sg"
-  description = "Security group for MySQL"
+  name        = "${var.name}/mysql"
+  description = "Provose security group owned by module ${var.name}, authorizing MySQL access within the VPC."
   vpc_id      = aws_vpc.vpc.id
   ingress {
     from_port   = 3306
@@ -19,6 +19,9 @@ resource "aws_security_group" "mysql" {
   }
   tags = {
     Provose = var.name
+  }
+  lifecycle {
+    create_before_destroy = true
   }
 }
 

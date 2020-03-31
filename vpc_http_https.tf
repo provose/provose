@@ -1,6 +1,7 @@
 resource "aws_security_group" "vpc_http_https" {
-  name_prefix = "vpc_http_https"
+  name        = "${var.name}/vpc-http-https"
   vpc_id      = aws_vpc.vpc.id
+  description = "Provose security group owned by module ${var.name}, allowing HTTP and HTTPS access, but only from within the VPC."
 
   ingress {
     from_port   = 80
@@ -17,6 +18,9 @@ resource "aws_security_group" "vpc_http_https" {
   }
   tags = {
     Provose = var.name
+  }
+  lifecycle {
+    create_before_destroy = true
   }
 }
 

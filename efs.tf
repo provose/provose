@@ -14,7 +14,8 @@ resource "aws_security_group" "efs" {
   count  = length(local.efs_file_systems) > 0 ? 1 : 0
   vpc_id = aws_vpc.vpc.id
 
-  name_prefix = "efs"
+  name        = "${var.name}/efs"
+  description = "Provose security group for AWS Elastic File System (EFS) for module ${var.name}."
 
   ingress {
     from_port   = 2049
@@ -30,6 +31,9 @@ resource "aws_security_group" "efs" {
   }
   tags = {
     Provose = var.name
+  }
+  lifecycle {
+    create_before_destroy = true
   }
 }
 

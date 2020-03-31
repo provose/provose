@@ -4,7 +4,7 @@
 resource "aws_iam_role" "iam__ecs_task_execution_role" {
   for_each = var.container
 
-  name               = "${each.key}-iam-ecs-task-execution-role"
+  name               = "${var.name}---${each.key}---ecs-task-execution-role"
   assume_role_policy = <<EOF
 {
 "Version": "2012-10-17",
@@ -43,13 +43,13 @@ resource "aws_iam_instance_profile" "iam__ecs_instance_profile" {
     "EC2"
   }
 
-  name_prefix = "${each.key}-iam-ec2-ecs-instance-profile"
-  role        = each.value.name
+  name = "${var.name}---${each.key}---iam-ec2-ecs-instance-profile"
+  role = each.value.name
 }
 
 resource "aws_iam_role_policy" "iam__ecs_task_execution_role_policy_for_secrets" {
   for_each = { for key, val in var.container : key => val if length(try(val.secrets, {})) > 0 }
-  name     = "${each.key}-iam-ecs-task-execution-role-policy-for-secrets"
+  name     = "${var.name}---${each.key}---iam-ecs-task-execution-role-policy-for-secrets"
   role     = aws_iam_role.iam__ecs_task_execution_role[each.key].id
   policy = jsonencode({
     Version = "2012-10-17"
@@ -71,9 +71,10 @@ resource "aws_iam_role_policy" "iam__ecs_task_execution_role_policy_for_secrets"
 # This is a blanket policy that generally allows the pulling of private ECR
 # images, the creating and joining of ECR clusters, and the creating
 # and joining of CloudWatch stuff.
+# TODO: Tighten this up so that containers only have the specific permissions on the instances needed.
 resource "aws_iam_role_policy" "iam" {
   for_each = var.container
-  name     = "${each.key}-policy"
+  name     = "${var.name}---${each.key}---role-policy"
   role     = aws_iam_role.iam__ecs_task_execution_role[each.key].id
   policy = jsonencode({
     Version = "2012-10-17"

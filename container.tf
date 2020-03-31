@@ -89,7 +89,8 @@ resource "aws_security_group" "container__internal_http_port" {
   for_each = var.container
 
   vpc_id      = aws_vpc.vpc.id
-  name_prefix = "ctr-"
+  name        = "${var.name}/${each.key}/container-internal"
+  description = "Provose security group for container ${each.key} in module ${var.name}, opening up internal container ports."
 
   # Container ingress from public HTTPS for awsvpc containers
   dynamic "ingress" {
@@ -144,6 +145,10 @@ resource "aws_security_group" "container__internal_http_port" {
 
   tags = {
     Provose = var.name
+  }
+
+  lifecycle {
+    create_before_destroy = true
   }
 }
 
@@ -425,22 +430,6 @@ resource "aws_ecs_service" "container" {
   }
 }
 
-resource "aws_security_group" "container__instance_ssh" {
-  vpc_id = aws_vpc.vpc.id
-
-  name_prefix = "internal_ssh"
-
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = [aws_vpc.vpc.cidr_block]
-  }
-  tags = {
-    Provose = var.name
-  }
-}
-
 resource "aws_instance" "container__instance" {
   for_each = zipmap(
     flatten([
@@ -476,7 +465,7 @@ resource "aws_instance" "container__instance" {
   ]), each.value.index)
   vpc_security_group_ids = concat(
     local.ecs_service_security_groups[each.value.container_name],
-    [aws_security_group.container__instance_ssh.id]
+    [aws_security_group.vpc_ssh.id]
   )
   key_name = try(each.value.container.instances.key_name, null)
 
@@ -669,7 +658,7 @@ resource "aws_spot_instance_request" "container__instance" {
   ]), each.value.index)
   vpc_security_group_ids = concat(
     local.ecs_service_security_groups[each.value.container_name],
-    [aws_security_group.container__instance_ssh.id]
+    [aws_security_group.vpc_ssh.id]
   )
   key_name = try(each.value.container.instances.key_name, null)
 
@@ -758,7 +747,6 @@ output "container" {
   value = {
     aws_security_group = {
       container__internal_http_port = aws_security_group.container__internal_http_port
-      container__instance_ssh       = aws_security_group.container__instance_ssh
     }
     aws_ecs_cluster = {
       container = aws_ecs_cluster.container

@@ -1,6 +1,7 @@
 resource "aws_security_group" "allow_all_egress_to_internet" {
-  name   = "allow_all_egress_to_internet"
-  vpc_id = aws_vpc.vpc.id
+  name        = "${var.name}/allow-all-egress-to-internet"
+  vpc_id      = aws_vpc.vpc.id
+  description = "Provose egress-only security group owned by module ${var.name}, allowing all outbound access to the Internet."
 
   egress {
     from_port   = 0
@@ -11,11 +12,14 @@ resource "aws_security_group" "allow_all_egress_to_internet" {
   tags = {
     Provose = var.name
   }
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_security_group" "vpc_ssh" {
-  name        = "${var.name}_vpc_ssh"
-  description = "Enable SSH access from within the VPC."
+  name        = "${var.name}/vpc-ssh"
+  description = "Provose security group owned by module ${var.name}, allowing SSH access from within the VPC."
   vpc_id      = aws_vpc.vpc.id
 
   ingress {
@@ -27,6 +31,9 @@ resource "aws_security_group" "vpc_ssh" {
 
   tags = {
     Provose = var.name
+  }
+  lifecycle {
+    create_before_destroy = true
   }
 }
 

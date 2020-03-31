@@ -1,7 +1,8 @@
 resource "aws_security_group" "statsd_graphite_grafana" {
   count       = can(var.statsd_graphite_grafana) ? 1 : 0
   vpc_id      = aws_vpc.vpc.id
-  name_prefix = "statsd_graphite_grafana"
+  name        = "${var.name}/statsd-graphite-grafana"
+  description = "Provose security group owned by module ${var.name}, setting up permissions for our Statsd, Graphite, and Grafana installation."
 
   ingress {
     from_port   = 8125
@@ -23,6 +24,9 @@ resource "aws_security_group" "statsd_graphite_grafana" {
   }
   tags = {
     Provose = var.name
+  }
+  lifecycle {
+    create_before_destroy = true
   }
 }
 

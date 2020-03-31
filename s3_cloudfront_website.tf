@@ -4,6 +4,7 @@ module "s3_cloudfront_website" {
     aws.acm_lookup = aws.acm_lookup
   }
   source = "./modules/s3_cloudfront_website"
+  name   = var.name
   sites  = var.s3_cloudfront_website
 }
 

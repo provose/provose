@@ -1,8 +1,8 @@
 resource "aws_security_group" "redis" {
   count = length(var.redis) > 0 ? 1 : 0
 
-  name_prefix = "redis-sg"
-  description = "Open up the Redis to the VPC"
+  name        = "${var.name}/redis"
+  description = "Provose security group owned by module ${var.name}, authorizing Redis access within the VPC."
   vpc_id      = aws_vpc.vpc.id
 
   ingress {
@@ -13,6 +13,9 @@ resource "aws_security_group" "redis" {
   }
   tags = {
     Provose = var.name
+  }
+  lifecycle {
+    create_before_destroy = true
   }
 }
 
