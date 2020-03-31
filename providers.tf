@@ -1,6 +1,11 @@
 terraform {
   required_providers {
-    aws = ">= 2.54.0"
+    aws     = "2.54.0"
+    null    = "2.1.2"
+    tls     = "2.1.1"
+    random  = "2.2.1"
+    local   = "1.4.0"
+    archive = "1.3.0"
   }
 }
 
