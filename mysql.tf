@@ -58,11 +58,12 @@ resource "aws_rds_cluster_instance" "mysql" {
         {
           cluster_identifier = aws_rds_cluster.mysql[key].id
           instance_type      = value.instances.instance_type
+          apply_immediately  = try(value.apply_immediately, true)
         }
       ]
     ])
   )
-
+  apply_immediately    = each.value.apply_immediately
   engine               = "aurora-mysql"
   identifier           = each.key
   cluster_identifier   = each.value.cluster_identifier
