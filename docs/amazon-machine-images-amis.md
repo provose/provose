@@ -1,6 +1,6 @@
 ---
 title: Amazon Machine Images (AMIs)
-nav_order: 7
+nav_order: 8
 ---
 
 # Provose Amazon Machine Images (AMIs)

@@ -1,6 +1,6 @@
 ---
 title: DNS and naming conventions
-nav_order: 6
+nav_order: 7
 ---
 
 # DNS and naming conventions
