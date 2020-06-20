@@ -43,3 +43,9 @@ aws iam delete-instance-profile --instance-profile-name <name of your instance p
 ```
 
 and then run `terraform apply`.
+
+### Error: Provider configuration not present
+
+This may happen if you tried to delete the entire Provose module and then ran `terraform apply` or `terraform destroy`. This confuses Terraform because it does not know what to do with the now orphaned resources created by the module now that the module's existence has been wiped out.
+
+It is easier to try and delete the resources created by your Provose module before removing the module entirely.
