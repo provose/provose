@@ -52,7 +52,7 @@ module "aws_iam_instance_profile__containers" {
       path                  = "/"
       role_name             = role.name
     }
-    if local.launch_type[container_name] == "EC2"
+    if try(local.launch_type[container_name] == "EC2", false)
   }
 }
 
