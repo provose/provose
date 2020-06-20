@@ -1,0 +1,10 @@
+_site
+.sass-cache
+.jekyll-cache
+.jekyll-metadata
+vendor
+.mypy_cache
+.vscode
+.terraform
+*.ovpn
+*.tfstate*

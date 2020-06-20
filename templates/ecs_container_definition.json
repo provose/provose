@@ -1,0 +1,55 @@
+${jsonencode([{
+    "essential" = true
+    "name" = task_name
+    "image" = "${image_name}:${image_tag}"
+    "cpu" = cpu
+    "memory" = memory
+    "networkMode" = network_mode
+    "command" = command
+    "entryPoint" = entrypoint
+    "portMappings" = [
+        for port in ports :
+        {
+            "containerPort" = port.container_port
+            "hostPort" = port.host_port
+            "protocol" = port.protocol
+        }
+    ]
+    "environment" = [
+        for env_key, env_value in environment:
+        {
+            "name" = env_key
+            "value" = tostring(env_value)
+        }
+    ]
+    "secrets" = [
+        for env_name, secret_arn in secrets:
+        {
+            "name" = env_name
+            "valueFrom" = secret_arn
+        }
+    ]
+    "logConfiguration" = {
+        "logDriver" = "awslogs"
+        "options" = {
+            "awslogs-create-group": "true"
+            "awslogs-group": "awslogs-${task_name}"
+            "awslogs-region": region
+            "awslogs-stream-prefix": task_name
+        }
+    }
+    "mountPoints": concat([
+        for volume_name, volume in efs_volumes:
+        {
+            "sourceVolume": volume_name
+            "containerPath": volume.container_mount
+        }],
+        [
+        for volume_name, volume in bind_mounts:
+        {
+            "sourceVolume": volume_name
+            "containerPath": volume.container_mount
+        }
+    ])
+    
+}])}
