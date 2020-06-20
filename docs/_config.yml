@@ -25,7 +25,7 @@ description: >- # this means to ignore newlines until "baseurl:"
   and containers you want to run on Amazon Web Services (AWS), and it
   automatically provisions certificates, security groups, IAM policies,
   and more.
-footer_content: 'Copyright &copy; 2020 <a href="https://neocrym.com">Neocrym Records Inc</a>. Distributed via an <a href="https://github.com/provose/provose.github.io/blob/master/LICENSE">MIT license.</a>'
+footer_content: 'Copyright &copy; 2020 <a href="https://neocrym.com">Neocrym Records Inc</a>. Distributed via an <a href="https://github.com/provose/provose.github.io/blob/master/LICENSE">MIT license</a>. <a href="/privacy/">Privacy Policy</a>.'
 permalink: pretty
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
