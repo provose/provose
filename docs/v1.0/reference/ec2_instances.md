@@ -68,7 +68,7 @@ and recreation of already-deployed EC2 instances.
 
 ## Provose EC2 instances are not behind a load balancer.
 
-Docker containers that are deployed using the Proovse [`containers`](../containers/) module are launched behind an Amazon Elastic Load Balancer. However, EC2 instances created with the `ec2_instances` module are not gated behind a load balancer. They are directly exposed to the VPC they are deployed in, and optionally accessible via the Internet if you specify `public_tcp` or `public_udp` ports.
+Docker containers that are deployed using the Provose [`containers`](../containers/) module are launched behind an Amazon Elastic Load Balancer. However, EC2 instances created with the `ec2_instances` module are not gated behind a load balancer. They are directly exposed to the VPC they are deployed in, and optionally accessible via the Internet if you specify `public_tcp` or `public_udp` ports.
 
 ## Only Bash is supported for "user data."
 
