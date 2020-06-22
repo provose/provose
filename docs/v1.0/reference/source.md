@@ -14,7 +14,7 @@ When using Provose, you should set `source` to be `"github.com/provose/provose?r
 
 If you want to make modifications to Provose and use them, you should clone the Provose repository on GitHub with with shell command `git clone --recurse-submodules https://github.com/provose/provose.git`. After that, you can set the `source` parameter to be the local filesystem path where you cloned the repository.
 
-THe `source` parameter comes from Terraform's underlying module syntax--not Provose itself. The Terraform documentation has more information about [how to specify `source` in a module configuration](https://www.terraform.io/docs/modules/sources.html).
+The `source` parameter comes from Terraform's underlying module syntax--not Provose itself. The Terraform documentation has more information about [how to specify `source` in a module configuration](https://www.terraform.io/docs/modules/sources.html).
 
 ## Examples
 
