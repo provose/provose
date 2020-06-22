@@ -7,6 +7,8 @@ nav_order: 4
 
 ## v1.1.0
 
+- Add the `internal_http_health_check_success_status_codes` parameter to the [`containers` module](../v1.1/reference/containers/).
+
 ## v1.0.1
 
 **June 22, 2020**

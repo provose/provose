@@ -291,6 +291,7 @@ resource "aws_lb_target_group" "containers__public_https" {
   health_check {
     path    = each.value.public.https.internal_http_health_check_path
     timeout = try(each.value.public.https.internal_http_health_check_timeout, 5)
+    matcher = try(each.value.public.https.internal_http_health_check_success_status_codes, "200")
   }
   stickiness {
     # "lb_cookie" is currently the only stickiness type.
@@ -360,6 +361,7 @@ resource "aws_lb_target_group" "containers__vpc_https" {
   health_check {
     path    = each.value.vpc.https.internal_http_health_check_path
     timeout = try(each.value.vpc.https.internal_http_health_check_timeout, 5)
+    matcher = try(each.value.vpc.https.internal_http_health_check_success_status_codes, "200")
   }
   stickiness {
     # "lb_cookie" is currently the only stickiness type.

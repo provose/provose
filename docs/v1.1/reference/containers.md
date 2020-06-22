@@ -88,6 +88,8 @@ This example shows ten nginx "Hello World" containers running on AWS Fargate.
 
     - `internal_http_health_check_path` -- **Required.** This is a URL path, like `/robots.txt`, that the Application Load Balancer (ALB) checks to determine whether the container is healthy. This path must return a 200 OK If the ALB decides a container is unhealthy, it will be removed from routing.
 
+    - `internal_http_health_check_success_status_codes` -- **Optional.** A list or range of HTTP status codes that the Application Load Balancer (ALB) will consider to be healthy. This can be a list of values like `"200,301"` or a range of values like `"200-299"`. This corresponds with the [`matcher` parameter](https://www.terraform.io/docs/providers/aws/r/lb_target_group.html#matcher) of `health_check` objects on Terraform `aws_lb_target_group` resources. This defaults to only considering the HTTP code 200 as healthy.
+
     - `internal_http_health_check_timeout` -- **Optional.** This sets the timeout for the HTTP requests that the Application Load Balancer (ALB)'s health checks. If this field is omitted, it defaults to 5 seconds.
 
     - `stickiness_cookie_duration_seconds` -- **Optional.** If this value is present, it enables _stickiness_ on the Application Load Balancer. Stickiness is the mechanism for client requests to consistently be routed to the same container instance behind the Application Load Balancer (ALB). The ALB sets an HTTP cookie for the first client request it receives, and then checks for the cookie on subsequent requests. The cookie eventually expires, and this value sets the expiration for the cookie--in seconds.
