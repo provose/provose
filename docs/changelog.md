@@ -5,6 +5,8 @@ nav_order: 4
 
 # Changelog
 
+## v1.1.0
+
 ## v1.0.1
 
 **June 22, 2020**

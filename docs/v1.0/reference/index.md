@@ -1,6 +1,6 @@
 ---
-title: Reference
-parent: Docs - v1.0 (Latest)
+title: Reference v1.0
+parent: Docs - v1.0
 has_children: true
 nav_order: 3
 ---
