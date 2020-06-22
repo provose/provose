@@ -74,4 +74,4 @@ Docker containers that are deployed using the Provose [`containers`](../containe
 
 The phrase "user data" refers to instructions given to EC2 instances when they are created. EC2 allows user data to be supplied as shell scripts, or as the [cloud-init](https://cloudinit.readthedocs.io/en/latest/) standard for configuring instances.
 
-Provose currently only support user data via Bash shell scripts, and does not support other shells or the cloud-init standard.
+Provose currently only supports user data via Bash shell scripts, and does not support other shells or the cloud-init standard.
