@@ -35,23 +35,23 @@ resource "aws_efs_file_system" "elastic_file_systems" {
 resource "aws_efs_mount_target" "elastic_file_systems" {
   for_each = zipmap(
     flatten([
-      for file_system_key, file_system in aws_efs_file_system.elastic_file_systems : [
-        for subnet_key, subnet in aws_subnet.vpc :
-        join("-", [file_system_key, subnet.id])
+      for file_system_key, file_system in var.elastic_file_systems : [
+        for availability_zone_name in data.aws_availability_zones.available.names :
+        join("-", [file_system_key, availability_zone_name])
       ]
     ]),
     flatten([
-      for file_system_key, file_system in aws_efs_file_system.elastic_file_systems : [
-        for subnet_key, subnet in aws_subnet.vpc :
+      for file_system_key, file_system in var.elastic_file_systems : [
+        for subnet_index in range(length(data.aws_availability_zones.available.names)) :
         {
-          file_system = file_system
-          subnet      = subnet
+          file_system_key = file_system_key
+          subnet_index    = subnet_index
         }
       ]
     ])
   )
-  file_system_id  = each.value.file_system.id
-  subnet_id       = each.value.subnet.id
+  file_system_id  = aws_efs_file_system.elastic_file_systems[each.value.file_system_key].id
+  subnet_id       = aws_subnet.vpc[each.value.subnet_index].id
   security_groups = [aws_security_group.elastic_file_systems[0].id]
 
   depends_on = [
