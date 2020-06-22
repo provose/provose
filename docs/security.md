@@ -13,7 +13,7 @@ nav_order: 6
 
 ### Provose keeps sensitive information in Terraform state.
 
-Terraform synchronizes its operations by storing ["state"](https://www.terraform.io/docs/state/index.html) about what has bee deployed. By default, the state is written to the local filesystem, but Terraform also makes it easy to [store state remotely](https://www.terraform.io/docs/state/remote.html)--such as in an Amazon S3 bucket. This allows multiple contributors to run Terraform on different machines while only keeping one synchronized copy of state.
+Terraform synchronizes its operations by storing ["state"](https://www.terraform.io/docs/state/index.html) about what has been deployed. By default, the state is written to the local filesystem, but Terraform also makes it easy to [store state remotely](https://www.terraform.io/docs/state/remote.html)--such as in an Amazon S3 bucket. This allows multiple contributors to run Terraform on different machines while only keeping one synchronized copy of state.
 
 Other Terraform modules avoid writing sensitive information to Terraform state, instead writing sensitive information to the local filesystem. However, this makes it more difficult to synchronize Terraform on multiple machines.
 
