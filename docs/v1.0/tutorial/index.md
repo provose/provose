@@ -166,7 +166,7 @@ terrafrom apply "plan.out"
 
 ## Begin using Terraform remote state
 
-Now that we have created the S3 bucket we need tos store remote state, we need to change the `terraform` block at the beginning of our `terraform.tf` file to reference remote state:
+Now that we have created the S3 bucket we need to store remote state, we need to change the `terraform` block at the beginning of our `terraform.tf` file to reference remote state:
 
 ```terraform
 terraform {
