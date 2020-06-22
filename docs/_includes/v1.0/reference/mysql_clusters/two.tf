@@ -13,7 +13,7 @@ resource "random_password" "bigmy_password" {
 }
 
 module "myproject" {
-  source = "github.com/provose/provose?ref=v1.0.0"
+  source = "github.com/provose/provose?ref=v1.0.1"
   provose_config = {
     authentication = {
       aws = {

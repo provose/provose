@@ -20,7 +20,7 @@ resource "random_password" "smallcluster_password" {
 
 module "myproject" {
   # These are various settings that are core to Provose.
-  source = "github.com/provose/provose?ref=v1.0.0"
+  source = "github.com/provose/provose?ref=v1.0.1"
   provose_config = {
     authentication = {
       aws = {

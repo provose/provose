@@ -208,7 +208,7 @@ In `myproject.tf`, we will enter the bare minimum Provose configuration:
 
 ```terraform
 module "myproject" {
-  source = "github.com/provose/provose?ref=v1.0.0"
+  source = "github.com/provose/provose?ref=v1.0.1"
   provose_config = {
     authentication = {
       aws = {
@@ -222,7 +222,7 @@ module "myproject" {
 }
 ```
 
-Run `terraform init` again to download Provose v1.0.0 and the Terraform modules and providers that Provose depends on.
+Run `terraform init` again to download Provose v1.0.1 and the Terraform modules and providers that Provose depends on.
 
 You should rerun `terraform init` every time you update Provose, or if you change any Terraform modules or providers that you use elsewhere in your code.
 
