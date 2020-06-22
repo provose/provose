@@ -53,6 +53,7 @@ search_enabled: true
 # their entries' file path in the `include:` list.
 #
 exclude:
+  - bump-minor-version.sh
   - .sass-cache/
   - .jekyll-cache/
   - gemfiles/
