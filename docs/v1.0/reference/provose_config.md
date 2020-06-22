@@ -2,6 +2,7 @@
 title: provose_config
 parent: Reference v1.0
 grand_parent: Docs - v1.0
+search_exclude: true
 ---
 
 # provose_config
