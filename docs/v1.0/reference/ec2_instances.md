@@ -70,7 +70,7 @@ and recreation of already-deployed EC2 instances.
 
 Docker containers that are deployed using the Provose [`containers`](../containers/) module are launched behind an Amazon Elastic Load Balancer. However, EC2 instances created with the `ec2_instances` module are not gated behind a load balancer. They are directly exposed to the VPC they are deployed in, and optionally accessible via the Internet if you specify `public_tcp` or `public_udp` ports.
 
-## Only Bash is supported for "user data."
+## Only Bash is supported for "user data".
 
 The phrase "user data" refers to instructions given to EC2 instances when they are created. EC2 allows user data to be supplied as shell scripts, or as the [cloud-init](https://cloudinit.readthedocs.io/en/latest/) standard for configuring instances.
 
