@@ -66,7 +66,7 @@ Provose will periodically update the AMI used as Amazon produces new AMIs, but t
 will be breaking major-version upgrades of Provose that will force the destruction
 and recreation of already-deployed EC2 instances.
 
-## Provose EC2 instances are not being a load balancer.
+## Provose EC2 instances are not behind a load balancer.
 
 Docker containers that are deployed using the Proovse [`containers`](../containers/) module are launched behind an Amazon Elastic Load Balancer. However, EC2 instances created with the `ec2_instances` module are not gated behind a load balancer. They are directly exposed to the VPC they are deployed in, and optionally accessible via the Internet if you specify `public_tcp` or `public_udp` ports.
 
