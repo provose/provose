@@ -21,9 +21,9 @@ module "myproject" {
     # It is also possible to not specify a local path, and instead create
     # an Amazon Web Services Elastic Container Registry (ECR) repository
     # to where you will push an image to later.
-    # Note that if you have containers that depend on this ECR images, the
+    # Note that if you have containers that depend on this ECR image, the
     # Application Load Balancer will throw HTTP 503 errors until you have
     # uploaded an image that can run.
-    "my_organization/my_container_2" = {}
+    "my_organization/my_container_3" = {}
   }
 }

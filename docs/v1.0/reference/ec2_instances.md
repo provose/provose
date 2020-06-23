@@ -66,12 +66,12 @@ Provose will periodically update the AMI used as Amazon produces new AMIs, but t
 will be breaking major-version upgrades of Provose that will force the destruction
 and recreation of already-deployed EC2 instances.
 
-## Provose EC2 instances are not being a load balancer.
+## Provose EC2 instances are not behind a load balancer.
 
-Docker containers that are deployed using the Proovse [`containers`](../containers/) module are launched behind an Amazon Elastic Load Balancer. However, EC2 instances created with the `ec2_instances` module are not gated behind a load balancer. They are directly exposed to the VPC they are deployed in, and optionally accessible via the Internet if you specify `public_tcp` or `public_udp` ports.
+Docker containers that are deployed using the Provose [`containers`](../containers/) module are launched behind an Amazon Elastic Load Balancer. However, EC2 instances created with the `ec2_instances` module are not gated behind a load balancer. They are directly exposed to the VPC they are deployed in, and optionally accessible via the Internet if you specify `public_tcp` or `public_udp` ports.
 
-## Only Bash is supported for "user data."
+## Only Bash is supported for "user data".
 
 The phrase "user data" refers to instructions given to EC2 instances when they are created. EC2 allows user data to be supplied as shell scripts, or as the [cloud-init](https://cloudinit.readthedocs.io/en/latest/) standard for configuring instances.
 
-Provose currently only support user data via Bash shell scripts, and does not support other shells or the cloud-init standard.
+Provose currently only supports user data via Bash shell scripts, and does not support other shells or the cloud-init standard.
