@@ -167,7 +167,7 @@ terrafrom apply "plan.out"
 
 ## Begin using Terraform remote state
 
-Now that we have created the S3 bucket we need tos store remote state, we need to change the `terraform` block at the beginning of our `terraform.tf` file to reference remote state:
+Now that we have created the S3 bucket we need to store remote state, we need to change the `terraform` block at the beginning of our `terraform.tf` file to reference remote state:
 
 ```terraform
 terraform {
@@ -231,7 +231,7 @@ You should rerun `terraform init` every time you update Provose, or if you chang
 
 You can now use Provose modules--like [`containers`](../reference/containers/), [`s3_buckets`](../reference/s3_buckets/), [`mysql_clusters`](../mysql_clusters/), and more--to configure the AWS infrastructure that you need.
 
-Below is an example of two
+Below is an example of two modules implemented in `myproject.tf`
 
 ```terraform
 {% include v1.0/tutorial/full_example/myproject.tf %}
