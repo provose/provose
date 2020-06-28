@@ -10,7 +10,7 @@ grand_parent: Docs - v1.0 (Latest)
 
 The `source` parameter is used in Terraform modules to describe where to find the module.
 
-When using Provose, you should set `source` to be `"github.com/provose/provose?ref=v1.0.1"`. Always make sure that the `ref=` parameter is pinned to a specific version to avoid Provose upgrading without your intention.
+When using Provose, you should set `source` to be `"github.com/provose/provose?ref=v1.0.2"`. Always make sure that the `ref=` parameter is pinned to a specific version to avoid Provose upgrading without your intention.
 
 If you want to make modifications to Provose and use them, you should clone the Provose repository on GitHub with with shell command `git clone --recurse-submodules https://github.com/provose/provose.git`. After that, you can set the `source` parameter to be the local filesystem path where you cloned the repository.
 
