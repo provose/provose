@@ -35,7 +35,7 @@ This Provose configuration sets up AWS Aurora MySQL database clusters.
 
 - `apply_immediately` -- **Optional** Defaults to `true`, which means that changes to the database are applied immediately. If set to `false`, any changes to the database configuration made through Provose or Terraform will be applied during the database's next maintenance window. Be careful that making configuration changes can result in a database outage.
 
-- `deletion_protection` -- **Optional.** Defaults to `true`, which is the opposite of the typical Terraform configuration. When set to `true`, the database cannot be deleted. Set to `false` if you are oka with deleting this database when running `terraform destroy` or other commands.
+- `deletion_protection` -- **Optional.** Defaults to `true`, which is the opposite of the typical Terraform configuration. When set to `true`, the database cannot be deleted. Set to `false` if you are okay with deleting this database when running `terraform destroy` or other commands.
 
 ## Outputs
 
