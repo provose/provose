@@ -49,3 +49,8 @@ and then run `terraform apply`.
 This may happen if you tried to delete the entire Provose module and then ran `terraform apply` or `terraform destroy`. This confuses Terraform because it does not know what to do with the now orphaned resources created by the module now that the module's existence has been wiped out.
 
 It is easier to try and delete the resources created by your Provose module before removing the module entirely. You can read how to delete a Provose module in [Uninstalling Provose](../uninstalling/).
+It is easier to try and delete the resources created by your Provose module before removing the module entirely.
+
+### `Error deleting ECS cluster: ClusterContainsTasksException: The Cluster cannot be deleted while Tasks are active.`
+
+This happens when you are deleting an Elastic Container Service cluster that still has tasks in it. Because Provose abstracts over ECS clusters, services, and tasks, they tend to be deleted all at the same time. However, deleting the cluster may not succeed until the tasks have finished draining. You can solve this by logging into the AWS console to stop the tasks belonging to the cluster you want to delete.
