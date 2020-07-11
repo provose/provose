@@ -216,7 +216,7 @@ resource "aws_ecs_task_definition" "containers" {
       environment = try(each.value.environment, {})
       secrets = {
         for secret_env_name, secret_text_name in try(each.value.secrets, {}) :
-        secret_env_name => aws_secretsmanager_secret.secrets[secret_text_name].arn
+        secret_env_name => aws_secretsmanager_secret_version.secrets[secret_text_name].arn
       }
       efs_volumes = try(each.value.efs_volumes, {})
       bind_mounts = try(each.value.bind_mounts, [])
