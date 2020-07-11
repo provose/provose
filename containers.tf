@@ -726,6 +726,7 @@ resource "aws_spot_instance_request" "containers__instance" {
   user_data = <<EOF
 #!/bin/bash
 set -Eeuxo pipefail
+echo NO_PROXY=169.254.169.254,169.254.170.2,/var/run/docker.sock >> /etc/ecs/ecs.config
 echo ECS_CLUSTER=${each.value.container_name} >> /etc/ecs/ecs.config
 echo ECS_BACKEND_HOST= >> /etc/ecs/ecs.config
 
