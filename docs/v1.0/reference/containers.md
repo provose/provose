@@ -95,17 +95,17 @@ This example shows ten nginx "Hello World" containers running on AWS Fargate.
 
 - `vpc` -- **Optional.** This mapping configures network access to the container from within the VPC that Provose creates.
 
-- `https` -- **Optional.** This mapping configures the Application Load Balancer (ALB) that allows HTTP/HTTPS traffic from within the VPC. Use this if your container is an HTTP server.
+  - `https` -- **Optional.** This mapping configures the Application Load Balancer (ALB) that allows HTTP/HTTPS traffic from within the VPC. Use this if your container is an HTTP server.
 
-  - `public_dns_names` -- **Required.** A list of DNS names--like `example.com` or `subdomain.example.com` to point at this container. Your AWS account must own the underlying domain name and be able to set the DNS records. Provose will also generate Amazon Certificate Manager (ACM) certificate for the DNS names provided--enabling access to the container via HTTPS.
+    - `vpc_dns_names` -- **Required.** A list of DNS names--like `example.com` or `subdomain.example.com` to point at this container. **These domains must be used to serve internal traffic to your VPC. The `vpc` Provose configuration does not serve traffic to the public Internet.** Your AWS account must own the underlying domain name and be able to set the DNS records. Provose will also generate Amazon Certificate Manager (ACM) certificate for the DNS names provided--enabling access to the container via HTTPS.
 
-  - `internal_http_port` -- **Required.** This is the port exposed by the container to serve HTTP requests. The load balancer listens on port 80 and 443 to forward ports to the given port on the container.
+    - `internal_http_port` -- **Required.** This is the port exposed by the container to serve HTTP requests. The load balancer listens on port 80 and 443 to forward ports to the given port on the container.
 
-  - `internal_http_health_check_path` -- **Required.** This is a URL path, like `/robots.txt`, that the Application Load Balancer (ALB) checks to determine whether the container is healthy. This path must return a 200 OK If the ALB decides a container is unhealthy, it will be removed from routing.
+    - `internal_http_health_check_path` -- **Required.** This is a URL path, like `/robots.txt`, that the Application Load Balancer (ALB) checks to determine whether the container is healthy. This path must return a 200 OK If the ALB decides a container is unhealthy, it will be removed from routing.
 
-  - `internal_http_health_check_timeout` -- **Optional.** This sets the timeout for the HTTP requests that the Application Load Balancer (ALB)'s health checks. If this field is omitted, it defaults to 5 seconds.
+    - `internal_http_health_check_timeout` -- **Optional.** This sets the timeout for the HTTP requests that the Application Load Balancer (ALB)'s health checks. If this field is omitted, it defaults to 5 seconds.
 
-  - `stickiness_cookie_duration_seconds` -- **Optional.** If this value is present, it enables _stickiness_ on the Application Load Balancer. Stickiness is the mechanism for client requests to consistently be routed to the same container instance behind the Application Load Balancer (ALB). The ALB sets an HTTP cookie for the first client request it receives, and then checks for the cookie on subsequent requests. The cookie eventually expires, and this value sets the expiration for the cookie--in seconds.
+    - `stickiness_cookie_duration_seconds` -- **Optional.** If this value is present, it enables _stickiness_ on the Application Load Balancer. Stickiness is the mechanism for client requests to consistently be routed to the same container instance behind the Application Load Balancer (ALB). The ALB sets an HTTP cookie for the first client request it receives, and then checks for the cookie on subsequent requests. The cookie eventually expires, and this value sets the expiration for the cookie--in seconds.
 
 - `s3_buckets` -- **Optional.** This is a mapping of S3 buckets to the classes of permissions available to the instances. The four classes of permissions available are `list`, `get`, `put`, and `delete`, and the values for each one is `true` or `false`. To use this configuration, place the `s3_buckets` key **inside** a block that defines a container. Below is an example of how to give the container access to two buckets--one with `list` and `get` permissions, and another with `get` and `delete` permissions.
 
