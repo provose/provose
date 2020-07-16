@@ -57,12 +57,98 @@ resource "aws_volume_attachment" "statsd_graphite_grafana" {
   instance_id = aws_instance.statsd_graphite_grafana[count.index].id
 }
 
+resource "aws_iam_role" "statsd_graphite_grafana" {
+  count = var.statsd_graphite_grafana != null ? 1 : 0
+  name  = "P-v1---${var.provose_config.name}---grafana---i-r"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid    = ""
+        Effect = "Allow"
+        Principal = {
+          Service = "ec2.amazonaws.com"
+        }
+        Action = "sts:AssumeRole"
+      }
+    ]
+  })
+}
+
+# This is the poliy that Grafana needs to pull information from Cloudwatch.
+# The original source of the policy is
+# https://grafana.com/docs/grafana/latest/features/datasources/cloudwatch/
+resource "aws_iam_policy" "statsd_graphite_grafana" {
+  count = var.statsd_graphite_grafana != null ? 1 : 0
+  name  = "P-v1---${var.provose_config.name}---grafana---policy"
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Sid    = "AllowReadingMetricsFromCloudWatch"
+        Effect = "Allow"
+        Action = [
+          "cloudwatch:DescribeAlarmsForMetric",
+          "cloudwatch:DescribeAlarmHistory",
+          "cloudwatch:DescribeAlarms",
+          "cloudwatch:ListMetrics",
+          "cloudwatch:GetMetricStatistics",
+          "cloudwatch:GetMetricData"
+        ]
+        Resource = "*"
+      },
+      {
+        Sid    = "AllowReadingLogsFromCloudWatch"
+        Effect = "Allow"
+        Action = [
+          "logs:DescribeLogGroups",
+          "logs:GetLogGroupFields",
+          "logs:StartQuery",
+          "logs:StopQuery",
+          "logs:GetQueryResults",
+          "logs:GetLogEvents"
+        ]
+        Resource = "*"
+      },
+      {
+        "Sid" : "AllowReadingTagsInstancesRegionsFromEC2",
+        "Effect" : "Allow",
+        "Action" : [
+          "ec2:DescribeTags",
+          "ec2:DescribeInstances",
+          "ec2:DescribeRegions"
+        ]
+        "Resource" : "*"
+      },
+      {
+        Sid      = "AllowReadingResourcesForTags"
+        Effect   = "Allow"
+        Action   = "tag:GetResources"
+        Resource = "*"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "statsd_graphite_grafana" {
+  count      = var.statsd_graphite_grafana != null ? 1 : 0
+  role       = aws_iam_role.statsd_graphite_grafana[count.index].name
+  policy_arn = aws_iam_policy.statsd_graphite_grafana[count.index].arn
+}
+
+resource "aws_iam_instance_profile" "statsd_graphite_grafana" {
+  count = var.statsd_graphite_grafana != null ? 1 : 0
+  name  = "P-v1---${var.provose_config.name}---grafana---i-p"
+  role  = aws_iam_role.statsd_graphite_grafana[count.index].name
+}
+
 resource "aws_instance" "statsd_graphite_grafana" {
   count                  = var.statsd_graphite_grafana != null ? 1 : 0
   ami                    = data.aws_ami.amazon_linux_2_ecs_gpu_hvm_ebs.id
   subnet_id              = aws_subnet.vpc[0].id
   instance_type          = var.statsd_graphite_grafana.instance_type
-  vpc_security_group_ids = [aws_security_group.statsd_graphite_grafana[0].id]
+  iam_instance_profile   = aws_iam_instance_profile.statsd_graphite_grafana[count.index].name
+  vpc_security_group_ids = [aws_security_group.statsd_graphite_grafana[count.index].id]
   key_name               = try(var.statsd_graphite_grafana.key_name, null)
   /*
   root_block_device {
