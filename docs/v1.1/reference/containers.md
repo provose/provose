@@ -46,13 +46,13 @@ This example shows ten nginx "Hello World" containers running on AWS Fargate.
 
 - `instances` -- **Required.** This is an object that defines how this container is run.
 
-  - `instance_type` -- **Required.** Set this to `"FARGATE"` to deploy the containers on AWS Fargate. Note that with Fargate, it will not be possible to use `bind_mounts` to mount to the host. If you want to deploy these containers on AWS EC2 instances, set this to the instance type of your choice, like `"t3.small"`. Keep in mind that AWS does not make all instance types available in all Availability Zones.
+  - `instance_type` -- **Required.** Set this to `"FARGATE"` to deploy the containers on AWS Fargate.  Set this to `"FARGATE_SPOT"` to use Fargate with Spot instances--which can [give cost savings of up to 70%](https://aws.amazon.com/blogs/compute/deep-dive-into-fargate-spot-to-run-your-ecs-tasks-for-up-to-70-less/). Note that with Fargate, it will not be possible to use `bind_mounts` to mount to the host. However, if you want to deploy these containers on AWS EC2 instances, set this to the instance type of your choice, like `"t3.small"`. Keep in mind that AWS does not make all instance types available in all Availability Zones.
 
   - `container_count` -- **Required.** This is the number of containers to deploy.
 
-  - `instance_count` -- **Optional.** This field is required if `instance_type` is an EC2 instance type, but is unused when `instance_type` is `"FARGATE"`.
+  - `instance_count` -- **Optional.** This field is required if `instance_type` is an EC2 instance type, but is unused when `instance_type` is `"FARGATE"` or `"FARGATE_SPOT"`.
 
-  - `key_name` -- **Optional.** Set this to the name of an AWS EC2 key pair in your account to enable SSH access to the instances. This only works if the `instance_type` is an EC2 instance type and _not_ `"FARGATE"`.
+  - `key_name` -- **Optional.** Set this to the name of an AWS EC2 key pair in your account to enable SSH access to the instances. This only works if the `instance_type` is an EC2 instance type and _not_ `"FARGATE"` or `"FARGATE_SPOT"`.
 
   - `bash_user_data` -- **Optional.** This is a bash script that will be run on the creation of the underlying AWS instances. This field does nothing if the container is deployed with AWS Fargate.
 

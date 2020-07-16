@@ -1,8 +1,8 @@
 locals {
-  launch_type = {
+  container_compatibility = {
     for name, container in var.containers :
     name => (container.instances.instance_type == "FARGATE" ? "FARGATE" :
-    (container.instances.instance_type == "FARGATE_SPOT" ? "FARGATE_SPOT" : "EC2"))
+    (container.instances.instance_type == "FARGATE_SPOT" ? "FARGATE" : "EC2"))
   }
   network_mode = {
     for name, container in var.containers :
@@ -14,7 +14,7 @@ locals {
     # money by usin the "bridge" network adapter, which is Docker's built-in virtual
     # networking interface. However, this, according to Amazon, is less performant.
     # So we only use the "bridge" mode for ECS EC2 containers.
-    name => local.launch_type[name] == "EC2" ? "bridge" : "awsvpc"
+    name => local.container_compatibility[name] == "EC2" ? "bridge" : "awsvpc"
   }
   target_type = {
     for name, container in var.containers :
@@ -158,6 +158,12 @@ resource "aws_ecs_cluster" "containers" {
   for_each = var.containers
 
   name = each.key
+  capacity_providers = (
+    each.value.instances.instance_type == "FARGATE" ? ["FARGATE"] :
+    (
+      each.value.instances.instance_type == "FARGATE_SPOT" ? ["FARGATE_SPOT"] : null
+    )
+  )
   tags = {
     Name    = each.key
     Provose = var.provose_config.name
@@ -170,7 +176,7 @@ resource "aws_ecs_task_definition" "containers" {
   family                   = each.key
   cpu                      = each.value.instances.cpu
   memory                   = each.value.instances.memory
-  requires_compatibilities = [local.launch_type[each.key]]
+  requires_compatibilities = [local.container_compatibility[each.key]]
   network_mode             = local.network_mode[each.key]
   task_role_arn            = aws_iam_role.iam__ecs_task_execution_role[each.key].arn
   execution_role_arn       = aws_iam_role.iam__ecs_task_execution_role[each.key].arn
@@ -400,12 +406,26 @@ resource "aws_ecs_service" "containers" {
   # The platform version must be null when specifying an EC2 launch type.
   # We need platform version 1.4.0 or better in order to use
   # Amazon Elastic Filesystem (EFS) with Fargate instances.
-  platform_version = local.launch_type[each.key] == "EC2" ? null : "1.4.0"
+  platform_version = local.container_compatibility[each.key] == "EC2" ? null : "1.4.0"
   desired_count    = each.value.instances.container_count
-  launch_type      = local.launch_type[each.key]
-  cluster          = aws_ecs_cluster.containers[each.key].id
-  task_definition  = aws_ecs_task_definition.containers[each.key].arn
+  # If we are launching a Fargate container, then we use the
+  # "capacity_provider_strategy" block as opposed to a launch_type. We only
+  # use the launch_type for EC2 containers.
+  launch_type     = local.container_compatibility[each.key] == "EC2" ? "EC2" : null
+  cluster         = aws_ecs_cluster.containers[each.key].id
+  task_definition = aws_ecs_task_definition.containers[each.key].arn
 
+  dynamic "capacity_provider_strategy" {
+    for_each = {
+      for capacity_provider_name in ["FARGATE", "FARGATE_SPOT"] :
+      capacity_provider_name => capacity_provider_name
+      if capacity_provider_name == each.value.instances.instance_type
+    }
+    content {
+      capacity_provider = each.value.instances.instance_type
+      weight            = 1
+    }
+  }
   dynamic "load_balancer" {
     for_each = {
       for name, target_group in aws_lb_target_group.containers__public_https :
@@ -475,7 +495,7 @@ resource "aws_instance" "containers__instance" {
           ! can(var.containers[container_name].instances.spot_instance)
         )
       ]
-      if local.launch_type[container_name] == "EC2"
+      if local.container_compatibility[container_name] == "EC2"
     ]),
     flatten([
       for container_name, ecs_instance_profile in module.aws_iam_instance_profile__containers.instance_profiles : [
@@ -489,7 +509,7 @@ resource "aws_instance" "containers__instance" {
           ! can(var.containers[container_name].instances.spot_instance)
         )
       ]
-      if local.launch_type[container_name] == "EC2"
+      if local.container_compatibility[container_name] == "EC2"
     ])
   )
   associate_public_ip_address = true
@@ -660,15 +680,15 @@ resource "aws_route53_record" "containers__vpc_https" {
 resource "aws_spot_instance_request" "containers__instance" {
   for_each = zipmap(
     flatten([
-      for container_name, launch_type in local.launch_type : [
+      for container_name, container_compatibility in local.container_compatibility : [
         for i in range(var.containers[container_name].instances.instance_count) :
         join("-", [container_name, "host", i])
         if can(var.containers[container_name].instances.spot_instance)
       ]
-      if launch_type == "EC2"
+      if container_compatibility == "EC2"
     ]),
     flatten([
-      for container_name, launch_type in local.launch_type : [
+      for container_name, container_compatibility in local.container_compatibility : [
         for i in range(var.containers[container_name].instances.instance_count) :
         {
           index          = i
@@ -677,7 +697,7 @@ resource "aws_spot_instance_request" "containers__instance" {
         }
         if can(var.containers[container_name].instances.spot_instance)
       ]
-      if launch_type == "EC2"
+      if container_compatibility == "EC2"
     ])
   )
   # Special spot instance 
