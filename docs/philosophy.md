@@ -21,4 +21,4 @@ Furthermore, it is important that Provose's defaults are not needlessly expensiv
 
 ## Provose standardizes on x86_64 Amazon Linux 2 on Amazon Web Services
 
-There are other architectures, other AMIs, and other cloud provider, but in an effort to reduce the surface area for debugging, Provose will limit itself to running software on x86_64 Amazon Linux 2 instances on Amazon Web Services, although we do use [custom Amazon Machine Images](/amazon-machine-images-amis.html).
+There are other architectures, other AMIs, and other cloud provider, but in an effort to reduce the surface area for debugging, Provose will limit itself to running software on x86_64 Amazon Linux 2 instances on Amazon Web Services, although we do use [custom Amazon Machine Images](/amazon-machine-images-amis/).
