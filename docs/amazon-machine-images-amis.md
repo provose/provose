@@ -5,7 +5,7 @@ nav_order: 8
 
 # Provose Amazon Machine Images (AMIs)
 
-These are Amazon Machine Images that are built for the [Provose](https://provose.com) project. Provose is a new and easy way to configure cloud infrastructure. Provose uses these images internally for launching hosts for [`aws_instance`][1], [`container`][2], and other configurations.
+These are Amazon Machine Images that are built for the [Provose](https://provose.com) project. Provose is a new and easy way to configure cloud infrastructure. Provose uses these images internally for launching hosts for [`ec2_instances`][1], [`containers`][2], and other configurations.
 
 ## Building these AMIs
 
