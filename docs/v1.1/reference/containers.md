@@ -23,7 +23,7 @@ Provose can pull publicly-available Docker images from Docker hub, or you can us
 This example shows a total of four nginx "Hello World" containers running on two EC2 instances of the `t3.small` instance type.
 
 ```terraform
-{% include v1.0/reference/containers/hello_ec2.tf %}
+{% include v1.1/reference/containers/hello_ec2.tf %}
 ```
 
 ### Running a public Docker image on AWS Fargate.
@@ -31,7 +31,7 @@ This example shows a total of four nginx "Hello World" containers running on two
 This example shows ten nginx "Hello World" containers running on AWS Fargate.
 
 ```terraform
-{% include v1.0/reference/containers/hello_fargate.tf %}
+{% include v1.1/reference/containers/hello_fargate.tf %}
 ```
 
 ## Inputs
@@ -46,7 +46,7 @@ This example shows ten nginx "Hello World" containers running on AWS Fargate.
 
 - `instances` -- **Required.** This is an object that defines how this container is run.
 
-  - `instance_type` -- **Required.** Set this to `"FARGATE"` to deploy the containers on AWS Fargate.  Set this to `"FARGATE_SPOT"` to use Fargate with Spot instances--which can [give cost savings of up to 70%](https://aws.amazon.com/blogs/compute/deep-dive-into-fargate-spot-to-run-your-ecs-tasks-for-up-to-70-less/). Note that with Fargate, it will not be possible to use `bind_mounts` to mount to the host. However, if you want to deploy these containers on AWS EC2 instances, set this to the instance type of your choice, like `"t3.small"`. Keep in mind that AWS does not make all instance types available in all Availability Zones.
+  - `instance_type` -- **Required.** Set this to `"FARGATE"` to deploy the containers on AWS Fargate. Set this to `"FARGATE_SPOT"` to use Fargate with Spot instances--which can [give cost savings of up to 70%](https://aws.amazon.com/blogs/compute/deep-dive-into-fargate-spot-to-run-your-ecs-tasks-for-up-to-70-less/). Note that with Fargate, it will not be possible to use `bind_mounts` to mount to the host. However, if you want to deploy these containers on AWS EC2 instances, set this to the instance type of your choice, like `"t3.small"`. Keep in mind that AWS does not make all instance types available in all Availability Zones.
 
   - `container_count` -- **Required.** This is the number of containers to deploy.
 

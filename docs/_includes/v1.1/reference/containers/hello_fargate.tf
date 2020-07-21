@@ -26,6 +26,8 @@ module "myproject-fargate" {
         }
       }
       instances = {
+        # set `instance_type` to be "FARGATE_SPOT" to save money by
+        # using Spot instances behidn the scenes.
         instance_type   = "FARGATE"
         container_count = 10
         cpu             = 256
