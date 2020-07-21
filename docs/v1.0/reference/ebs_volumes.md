@@ -2,8 +2,9 @@
 # TODO: Create an example that shows both creating an EBS volume and mounting
 # it with the ec2_instances module.
 title: ebs_volumes
-#parent: Reference
-#grand_parent: Docs - v1.0 (Latest)
+#parent: Reference v1.0
+#grand_parent: Docs - v1.0
+search_exclude: true
 nav_exclude: true
 ---
 

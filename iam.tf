@@ -5,31 +5,22 @@
 resource "aws_iam_role" "iam__ecs_task_execution_role" {
   for_each = var.containers
 
-  name               = "P-v1---${var.provose_config.name}---${each.key}---e-t-e-r"
-  assume_role_policy = <<EOF
-{
-"Version": "2012-10-17",
-"Statement": [
-{
-    "Sid": "",
-    "Effect": "Allow",
-    "Principal": {
-    "Service": "ecs-tasks.amazonaws.com"
-    },
-    "Action": "sts:AssumeRole"
-},
-{
-    "Sid": "",
-    "Effect": "Allow",
-    "Principal": {
-    "Service": "ec2.amazonaws.com"
-    },
-    "Action": "sts:AssumeRole"
-
-}
-]
-}
-EOF
+  name = "P-v1---${var.provose_config.name}---${each.key}---e-t-e-r"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Principal = {
+          Service = [
+            "ecs-tasks.amazonaws.com",
+            "ec2.amazonaws.com"
+          ]
+        }
+        Action = "sts:AssumeRole"
+      }
+    ]
+  })
   tags = {
     Provose = var.provose_config.name
   }
@@ -52,7 +43,7 @@ module "aws_iam_instance_profile__containers" {
       path                  = "/"
       role_name             = role.name
     }
-    if try(local.launch_type[container_name] == "EC2", false)
+    if try(local.container_compatibility[container_name] == "EC2", false)
   }
 }
 
