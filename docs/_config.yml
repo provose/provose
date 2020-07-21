@@ -32,7 +32,7 @@ url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: neocrym
 github_username: neocrym
 
-latest_provose_version: v1.0
+latest_provose_version: v1.1
 
 # Build settings
 remote_theme: pmarsceill/just-the-docs
