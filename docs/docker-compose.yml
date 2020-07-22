@@ -8,4 +8,4 @@ services:
       - "4000:4000"
     volumes:
       - ".:/srv/jekyll"
-    entrypoint: "bundle exec jekyll serve --host=0.0.0.0"
+    entrypoint: "bundle exec jekyll serve --incremental --host=0.0.0.0"
