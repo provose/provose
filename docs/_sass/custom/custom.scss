@@ -3,7 +3,12 @@
 // use the lists to describe how to make deeply-nested JSON documents.
 .main-content ul {
   border-left: 2px solid $grey-lt-300;
+  margin-top: 2em;
   padding-left: 3em;
+}
+
+.main-content ul > li {
+  margin-bottom: 2em;
 }
 
 // This gives a larger font size to code snippets without syntax highlighting.
@@ -11,8 +16,9 @@
 // these snippets are 12px--which can look a little too small when
 // next to the surrounding text.
 p > code.language-plaintext,
-li > code.language-plaintext {
-  font-size: 14px;
+li > code.language-plaintext,
+a > code.language-plaintext {
+  font-size: 1em;
 }
 
 // Don't cut off hyperlinks. Let them wrap as they normally would.
