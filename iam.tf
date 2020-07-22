@@ -1,7 +1,6 @@
 # Generally all of our containers are allowed access to the same stuff,
 # (just to simplify things), but we need different roles because different
 # containers are allowed access to different secrets.
-# TODO: Write assume_role_policy with jsondecode() syntax.
 resource "aws_iam_role" "iam__ecs_task_execution_role" {
   for_each = var.containers
 
@@ -48,9 +47,14 @@ module "aws_iam_instance_profile__containers" {
 }
 
 resource "aws_iam_role_policy" "iam__ecs_task_execution_role_policy_for_secrets" {
-  for_each = { for key, val in var.containers : key => val if length(try(val.secrets, {})) > 0 }
-  name     = "P-v1---${var.provose_config.name}---${each.key}---iam-ecs-task-execution-role-policy-for-secrets"
-  role     = aws_iam_role.iam__ecs_task_execution_role[each.key].id
+  for_each = {
+    for key, val in var.containers :
+    key => val
+    if length(try(val.secrets, {})) > 0
+  }
+  # TODO: This name here is too long. We need to replace it with a better one.
+  name = "P-v1---${var.provose_config.name}---${each.key}---iam-ecs-task-execution-role-policy-for-secrets"
+  role = aws_iam_role.iam__ecs_task_execution_role[each.key].id
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
