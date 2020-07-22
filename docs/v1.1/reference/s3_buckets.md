@@ -1,7 +1,7 @@
 ---
 title: s3_buckets
 parent: Reference v1.1
-grand_parent: Docs - v1.1 (Latest)
+grand_parent: Docs - v1.1 (LATEST)
 ---
 
 # s3_buckets
