@@ -5,7 +5,7 @@ nav_order: 8
 
 # Provose Amazon Machine Images (AMIs)
 
-These are Amazon Machine Images that are built for the [Provose](https://provose.com) project. Provose is a new and easy way to configure cloud infrastructure. Provose uses these images internally for launching hosts for [`aws_instance`][1], [`container`][2], and other configurations.
+These are Amazon Machine Images that are built for the [Provose](https://provose.com) project. Provose is a new and easy way to configure cloud infrastructure. Provose uses these images internally for launching hosts for [`ec2_instances`][1], [`containers`][2], and other configurations.
 
 ## Building these AMIs
 
@@ -22,7 +22,7 @@ AMI is `amzn2-ami-ecs-gpu-hvm-2.0.20200218-x86_64-ebs`. It comes installed with 
 | **AWS AMI ID:** | ami-08b64fc665987971b |
 | **AWS AMI source:** | 826470379119/provose-docker-amazon-linux-2--v0.1 |
 
-[1]: /{{ site.latest_provose_version }}/reference/aws_instance.html
-[2]: /{{ site.latest_provose_version }}/reference/container.html
+[1]: /{{ site.latest_provose_version }}/reference/ec2_instances/
+[2]: /{{ site.latest_provose_version }}/reference/containers/
 [3]: https://packer.io/
 [4]: https://github.com/provose/provose-amis
