@@ -12,8 +12,27 @@ variable "ebs_volumes" {
 
 variable "ec2_instances" {
   type        = any
-  default     = {}
+  default     = null
   description = "Sets up bare AWS EC2 instances."
+
+  validation {
+    condition = var.ec2_instances != null
+    error_message = "The `ec2_instances` module has been deprecated since Provose 2.0. Please migrate to the `ec2_on_demand_instances` module."
+  }
+}
+
+variable "ec2_on_demand_instances" {
+  type        = any
+  default     = {}
+  description = "Sets up bare AWS EC2 On-Demand instances."
+
+  validation {
+    condition = ! contains([
+      for instance_config in var.ec2_on_demand_instances :
+      instance_config.instances.instance_type != "FARGATE"
+    ], false)
+    error_message = "You cannot use the \"FARGATE\" instance type when provisioning an EC2 instance. You can only use that with the `containers` module."
+  }
 }
 
 variable "elastic_file_systems" {

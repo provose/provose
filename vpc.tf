@@ -46,6 +46,16 @@ resource "aws_subnet" "vpc" {
   }
 }
 
+locals {
+  # This is a dictionary mapping that turns Availability Zones into subnets.
+  # This is necessary because--for historical reasons--we use integer indexes
+  # for indexing both availability zones and subnets.
+  vpc__map_availability_zone_to_subnet_id = {
+    for index in range(length(data.aws_availability_zones.available.names)) :
+    data.aws_availability_zones.available.names[index] => aws_subnet.vpc[index].id
+  }
+}
+
 # == Output ==
 
 output "vpc" {
