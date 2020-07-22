@@ -5,6 +5,12 @@ nav_order: 4
 
 # Changelog
 
+## v2.0.0
+
+**Currently in development. This list is going to grow with time.**
+
+- We replaced the v1.x `ec2_instances` module with the brand-new (and slightly incompatible) [`ec2_on_demand_instances` module](../2.0/reference/ec2_on_demand_instances/).
+
 ## v1.1.0
 
 **July 21, 2020.**

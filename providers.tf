@@ -7,6 +7,7 @@ terraform {
     random  = "2.2.1"
     local   = "1.4.0"
   }
+  experiments = [variable_validation]
 }
 
 locals {
