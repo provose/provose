@@ -5,7 +5,15 @@ nav_order: 4
 
 # Changelog
 
+## v2.0.0
+
+**Currently in development. This list is going to grow with time.**
+
+- We replaced the v1.x `ec2_instances` module with the brand-new (and slightly incompatible) [`ec2_on_demand_instances` module](../2.0/reference/ec2_on_demand_instances/).
+
 ## v1.1.0
+
+**July 21, 2020.**
 
 - Add the `internal_http_health_check_success_status_codes` parameter to the [`containers` module](../v1.1/reference/containers/).
 - Added support for AWS Fargate Spot instances to the [`containers` module](../v1.1/reference/containers/).
@@ -13,14 +21,14 @@ nav_order: 4
 
 ## v1.0.2
 
-**June 28, 2020**
+**June 28, 2020.**
 
 - Various minor fixes to the Provose documentation.
 - We checked in an example `terraform.tf` to the root of the Provose GitHub repository, but this file was causing errors with Terraform so we subsequently removed it.
 
 ## v1.0.1
 
-**June 22, 2020**
+**June 22, 2020.**
 
 - Fixed an error when computing the `for_each` values for Elastic File System mount targets.
 

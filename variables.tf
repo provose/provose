@@ -16,7 +16,7 @@ variable "ec2_instances" {
   description = "Sets up bare AWS EC2 instances."
 
   validation {
-    condition = var.ec2_instances != null
+    condition     = var.ec2_instances == null
     error_message = "The `ec2_instances` module has been deprecated since Provose 2.0. Please migrate to the `ec2_on_demand_instances` module."
   }
 }

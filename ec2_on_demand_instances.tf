@@ -218,12 +218,24 @@ resource "aws_instance" "ec2_on_demand_instances" {
       try(local.ec2_on_demand_instances__times_count[each.key].root_block_device.volume_size_gb, 0),
       local.minimum_aws_ami_root_volume_size_gb
     )
-    delete_on_termination = try(local.ec2_on_demand_instances__times_count[each.key].root_block_device.delete_on_termination, true)
-    encrypted             = try(local.ec2_on_demand_instances__times_count[each.key].root_block_device.encrypted, false)
-    kms_key_id            = try(local.ec2_on_demand_instances__times_count[each.key].root_block_device.kms_key_id, null)
+    delete_on_termination = try(
+      local.ec2_on_demand_instances__times_count[each.key].root_block_device.delete_on_termination,
+      true
+    )
+    encrypted = try(
+      local.ec2_on_demand_instances__times_count[each.key].root_block_device.encrypted,
+      false
+    )
+    kms_key_id = try(
+      local.ec2_on_demand_instances__times_count[each.key].root_block_device.kms_key_id,
+      null
+    )
   }
 
-  user_data = try(local.ec2_on_demand_instances__times_count[each.key].instances.bash_user_data, null)
+  user_data = try(
+    local.ec2_on_demand_instances__times_count[each.key].instances.bash_user_data,
+    null
+  )
 
   tags = {
     Name    = each.key
