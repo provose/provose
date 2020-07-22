@@ -5,6 +5,13 @@ nav_order: 4
 
 # Changelog
 
+## v1.0.2
+
+**June 28, 2020.**
+
+- Various minor fixes to the Provose documentation.
+- We checked in an example `terraform.tf` to the root of the Provose GitHub repository, but this file was causing errors with Terraform so we subsequently removed it.
+
 ## v1.0.1
 
 **June 22, 2020**
