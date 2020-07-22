@@ -53,6 +53,10 @@ locals {
   vpc__map_availability_zone_to_subnet_id = {
     for index in range(length(data.aws_availability_zones.available.names)) :
     data.aws_availability_zones.available.names[index] => aws_subnet.vpc[index].id
+    if(
+      can(data.aws_availability_zones.available.names[index]) &&
+      can(aws_subnet.vpc[index].id)
+    )
   }
 }
 

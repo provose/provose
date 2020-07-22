@@ -33,6 +33,36 @@ variable "ec2_on_demand_instances" {
     ], false)
     error_message = "You cannot use the \"FARGATE\" instance type when provisioning an EC2 instance. You can only use that with the `containers` module."
   }
+
+  validation {
+    condition = ! contains([
+      for instance_config in var.ec2_on_demand_instances :
+      ! can(instance_config.spot_price)
+    ], false)
+    error_message = "You cannot specify a Spot price with an EC2 On-Demand instance. You are probably looking to use the `ec2_spot_instances` key instead."
+  }
+
+  validation {
+    condition = ! contains([
+      for instance_config in var.ec2_on_demand_instances :
+      ! can(instance_config.spot_type)
+    ], false)
+    error_message = "You cannot specify a Spot type with an EC2 On-Demand instance. You are probably looking to use the `ec2_spot_instances` key instead."
+  }
+}
+
+variable "ec2_spot_instances" {
+  type        = any
+  default     = {}
+  description = "Sets up bare AWS Spot instances."
+
+  validation {
+    condition = ! contains([
+      for instance_config in var.ec2_spot_instances :
+      instance_config.instances.instance_type != "FARGATE"
+    ], false)
+    error_message = "You cannot use the \"FARGATE\" instance type when provisioning an EC2 instance. You can only use that with the `containers` module."
+  }
 }
 
 variable "elastic_file_systems" {
