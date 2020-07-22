@@ -1,7 +1,7 @@
 ---
 title: provose_config
 parent: Reference v1.1
-grand_parent: Docs - v1.1 (Latest)
+grand_parent: Docs - v1.1 (LATEST)
 ---
 
 # provose_config
