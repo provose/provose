@@ -1,5 +1,4 @@
 locals {
-
   ec2_on_demand_instances__times_count = zipmap(
     flatten([
       for instance_name, instance_config in var.ec2_on_demand_instances : [
@@ -125,7 +124,7 @@ resource "aws_iam_role_policy" "ec2_on_demand_instances__secrets" {
     if length(try(val.secrets, {})) > 0
   }
 
-  name = "P-v1---${var.provose_config.name}---${each.key}---secrets"
+  name = "P-v1---${var.provose_config.name}---ec2-o-d-${each.key}---secrets"
   role = aws_iam_role.ec2_on_demand_instances[each.key].id
   policy = jsonencode({
     Version = "2012-10-17"
@@ -170,6 +169,7 @@ resource "aws_instance" "ec2_on_demand_instances" {
   # Required parameters
   instance_type = local.ec2_on_demand_instances__times_count[each.key].instances.instance_type
 
+  # Optional parameters
 
   key_name = try(
     local.ec2_on_demand_instances__times_count[each.key].instances.key_name,
