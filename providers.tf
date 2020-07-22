@@ -33,4 +33,11 @@ provider "aws" {
 
 locals {
   AWS_COMMAND = local.aws_access_key != null && local.aws_secret_key != null ? "AWS_ACCESS_KEY_ID='${local.aws_access_key}' AWS_SECRET_ACCESS_KEY_ID='${local.aws_secret_key}' aws --region ${data.aws_region.current.name} " : "aws --region ${data.aws_region.current.name} "
+
+  # This is an environment variable dictionary that we can use with the local-exec provisioner.
+  AWS_ENVIRONMENT = {
+    AWS_ACCESS_KEY_ID        = local.aws_access_key
+    AWS_SECRET_ACCESS_KEY_ID = local.aws_secret_key
+    AWS_DEFAULT_REGION       = data.aws_region.current.name
+  }
 }
