@@ -77,6 +77,12 @@ variable "elasticsearch_clusters" {
   description = "Sets up Elasticsearch clusters with Kibana using Amazon's managed offering for Elasticsearch."
 }
 
+variable "https_redirects" {
+  type        = any
+  default     = {}
+  description = "Sets up HTTP(S) 301 or 302 redirects using the Application Load Balancer shared by every instance of Provose. You must own the source domain name in your AWS account, but the destination domain name can be anywhere on the Internet."
+}
+
 variable "images" {
   type        = any
   default     = {}
