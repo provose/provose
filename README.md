@@ -12,6 +12,10 @@ Provose is distributed under the MIT license. You can download Provose at [githu
 
 Provose is easy to learn. You can get started with just a few lines of code.
 
+## Subscribe to the Provose newsletter for updates
+
+[Click here](https://provose.substack.com/) to find the Provose newsletter.
+
 ## Here is what Provose code looks like.
 
 Below is an example of what Provose looks like, provisioning
