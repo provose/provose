@@ -62,9 +62,11 @@ resource "aws_acm_certificate" "openvpn__ca" {
   count            = var.openvpn != null ? 1 : 0
   private_key      = tls_private_key.openvpn__ca[count.index].private_key_pem
   certificate_body = tls_self_signed_cert.openvpn__ca[count.index].cert_pem
-  tags = {
-    Provose = var.provose_config.name
-  }
+  # Commenting these lines out to try and debug an error that says
+  # "Tagging is not permitted on re-import."
+  #  tags = {
+  #    Provose = var.provose_config.name
+  #  }
 }
 
 ## SERVER

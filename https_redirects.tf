@@ -136,10 +136,10 @@ resource "aws_acm_certificate" "https_redirects" {
 resource "aws_route53_record" "https_redirects__https_validation" {
   for_each = aws_acm_certificate.https_redirects
 
-  name       = each.value.domain_validation_options.0.resource_record_name
-  type       = each.value.domain_validation_options.0.resource_record_type
+  name       = tolist(each.value.domain_validation_options)[0].resource_record_name
+  type       = tolist(each.value.domain_validation_options)[0].resource_record_type
   zone_id    = data.aws_route53_zone.https_redirects[each.value.domain_name].zone_id
-  records    = [each.value.domain_validation_options.0.resource_record_value]
+  records    = [tolist(each.value.domain_validation_options)[0].resource_record_value]
   ttl        = 60
   depends_on = [aws_acm_certificate.https_redirects]
 }

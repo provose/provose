@@ -35,7 +35,6 @@ resource "aws_s3_bucket" "terraform" {
   # Terraform.
   bucket = "terraform-state.example-internal.com"
   acl    = "private"
-  region = "us-east-1"
 
   # For security and compliance reasons, Provose recommends that you
   # configure AWS Key Management Service (KMS) encryption at rest for
