@@ -95,6 +95,12 @@ variable "jumphost" {
   description = "Creates a jumphost"
 }
 
+variable "lustre_file_systems" {
+  type        = any
+  default     = {}
+  description = "Sets up an AWS FSx managed Lustre distributed filesystem."
+}
+
 variable "mysql_clusters" {
   type        = any
   default     = {}
