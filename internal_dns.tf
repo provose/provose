@@ -23,10 +23,10 @@ resource "aws_acm_certificate" "internal_dns" {
 # but we need to do DNS certificate validation with the public (NOT internal)
 # hosted zone.
 resource "aws_route53_record" "internal_dns__validation" {
-  name    = aws_acm_certificate.internal_dns.domain_validation_options.0.resource_record_name
-  type    = aws_acm_certificate.internal_dns.domain_validation_options.0.resource_record_type
+  name    = tolist(aws_acm_certificate.internal_dns.domain_validation_options)[0].resource_record_name
+  type    = tolist(aws_acm_certificate.internal_dns.domain_validation_options)[0].resource_record_type
   zone_id = data.aws_route53_zone.external_dns.id
-  records = [aws_acm_certificate.internal_dns.domain_validation_options.0.resource_record_value]
+  records = [tolist(aws_acm_certificate.internal_dns.domain_validation_options)[0].resource_record_value]
   ttl     = 60
 }
 

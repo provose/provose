@@ -637,10 +637,10 @@ resource "aws_acm_certificate" "containers__public_https" {
 resource "aws_route53_record" "containers__public_https_validation" {
   for_each = aws_acm_certificate.containers__public_https
 
-  name       = each.value.domain_validation_options.0.resource_record_name
-  type       = each.value.domain_validation_options.0.resource_record_type
+  name       = tolist(each.value.domain_validation_options)[0].resource_record_name
+  type       = tolist(each.value.domain_validation_options)[0].resource_record_type
   zone_id    = data.aws_route53_zone.external_dns__for_containers[each.value.domain_name].zone_id
-  records    = [each.value.domain_validation_options.0.resource_record_value]
+  records    = [tolist(each.value.domain_validation_options)[0].resource_record_value]
   ttl        = 60
   depends_on = [aws_acm_certificate.containers__public_https]
 }

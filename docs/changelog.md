@@ -10,6 +10,8 @@ nav_order: 4
 **Currently in development. This list is going to grow with time.**
 
 - We replaced the v1.x `ec2_instances` module with the brand-new (and slightly incompatible) [`ec2_on_demand_instances` module](../2.0/reference/ec2_on_demand_instances/).
+- We upgraded our pin of the Terraform AWS provider version 2.54.0 to [3.0.0](https://registry.terraform.io/providers/hashicorp/aws/3.0.0/docs). The new provider version is not backwards-compatible. We had to make some changes in how we verify Amazon Certificate Manager (ACM) certificates.
+- We also updated the following Terraform providers: [TLS to 2.2.0](https://registry.terraform.io/providers/hashicorp/tls/2.2.0/docs) and [random to 2.3.0](https://registry.terraform.io/providers/hashicorp/random/2.3.0/docs).
 
 ## v1.1.0
 

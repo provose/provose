@@ -1,10 +1,10 @@
 terraform {
   required_providers {
     archive = "1.3.0"
-    aws     = "2.54.0"
+    aws     = "3.0.0"
     null    = "2.1.2"
-    tls     = "2.1.1"
-    random  = "2.2.1"
+    tls     = "2.2.0"
+    random  = "2.3.0"
     local   = "1.4.0"
   }
   experiments = [variable_validation]

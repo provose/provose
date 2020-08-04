@@ -12,7 +12,6 @@ resource "aws_s3_bucket" "this" {
   for_each = local.iter
   bucket   = each.value
   acl      = "log-delivery-write"
-  region   = data.aws_region.current.name
   # We let `terraform destroy` delete automatically-created S3 buckets for logs,
   # even though it is possible that many users are required to preserve their
   # logs.
