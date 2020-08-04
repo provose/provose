@@ -44,6 +44,7 @@ resource "aws_fsx_lustre_file_system" "lustre_file_systems" {
   export_path                 = try(each.value.s3_export_path, null)
   imported_file_chunk_size    = try(each.value.imported_file_chunk_size_mb, null)
   tags = {
+    Name    = each.key
     Provose = var.provose_config.name
   }
 }
