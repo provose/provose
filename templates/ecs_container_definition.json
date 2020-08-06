@@ -5,6 +5,7 @@ ${jsonencode([{
     "cpu" = cpu
     "memory" = memory
     "networkMode" = network_mode
+    "user" = user
     "command" = command
     "entryPoint" = entrypoint
     "portMappings" = [

@@ -60,6 +60,14 @@ This example shows ten nginx "Hello World" containers running on AWS Fargate.
 
   - `memory` -- **Required.** The amount of memory--in megabytes--given to each container. This must be in [proportion](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html). For example, a Fargate task with 256 CPU units can have 512, 1024, or 2048 megabytes of memory.
 
+- `user` -- **Optional.** Defines an alternate user to run the container's command. This is equivalent to passing `--user` to `docker run`. Docker containers typically have a default user they run as, and this key is only needed to override that default. You can specify a user or group either by name or by UID and GID, in the following formats:
+    - `"user"`
+    - `"user:group"`
+    - `"uid"`
+    - `"gid"`
+    - `"user:gid"`
+    - `"uid:group"`
+
 - `entrypoint` -- **Optional.** Defines a custom container entrypoint, if you do not want to use the entrypoint defined within the container.
 
 - `command` -- **Optional.** Defines a custom container command. Use this if you do not want to use the command defined within the container.
