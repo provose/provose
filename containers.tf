@@ -191,6 +191,7 @@ resource "aws_ecs_task_definition" "containers" {
       cpu          = each.value.instances.cpu
       memory       = each.value.instances.memory
       network_mode = local.network_mode[each.key]
+      user         = try(each.value.user, null)
       command      = try(each.value.command, null)
       entrypoint   = try(each.value.entrypoint, null)
       ports = flatten([
