@@ -37,7 +37,7 @@ resource "aws_fsx_lustre_file_system" "lustre_file_systems" {
   for_each                    = var.lustre_file_systems
   deployment_type             = each.value.deployment_type
   storage_capacity            = each.value.storage_capacity_gb
-  per_unit_storage_throughput = each.value.per_unit_storage_throughput_mb_per_tb
+  per_unit_storage_throughput = try(each.value.per_unit_storage_throughput_mb_per_tb, null)
   subnet_ids                  = [aws_subnet.vpc[0].id]
   security_group_ids          = [aws_security_group.lustre_file_systems[0].id]
   import_path                 = try(each.value.s3_import_path, null)
