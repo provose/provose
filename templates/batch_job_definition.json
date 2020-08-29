@@ -1,0 +1,16 @@
+${jsonencode({
+    "image" = "${image_name}:${image_tag}"
+    "vcpus" = vcpus
+    "memory" = memory
+    "user" = user
+    "privileged" = privileged
+    "command" = command
+    "environment" = [
+        for env_key, env_value in environment: {
+                "name" = env_key
+            "value" = tostring(env_value)
+            }
+        ],
+        "jobRoleArn": job_role_arn
+    })
+}
