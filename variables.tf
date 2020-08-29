@@ -1,3 +1,9 @@
+variable "batch" {
+  type        = any
+  default     = {}
+  description = "Sets up AWS Batch configuration."
+}
+
 variable "containers" {
   type        = any
   default     = {}
