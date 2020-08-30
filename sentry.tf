@@ -1,7 +1,7 @@
 locals {
   sentry_version = try(
     var.sentry.engine_version,
-    "20.6.0"
+    "20.8.0"
   )
 }
 
