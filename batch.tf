@@ -197,7 +197,7 @@ resource "aws_batch_job_queue" "batch" {
     flatten([
       for compute_environment_name, compute_environment_config in var.batch : [
         for queue_name, queue_config in try(var.batch[compute_environment_name].job_queues, []) :
-        join("-", [compute_environment_name, "queue", queue_name])
+        join("---", [compute_environment_name, queue_name])
       ]
     ]),
     flatten([
@@ -226,7 +226,7 @@ resource "aws_batch_job_definition" "batch" {
     flatten([
       for compute_environment_name, compute_environment_config in var.batch : [
         for job_name, job_config in try(var.batch[compute_environment_name].job_definitions, []) :
-        join("-", [compute_environment_name, "job", job_name])
+        join("---", [compute_environment_name, job_name])
       ]
     ]),
     flatten([
