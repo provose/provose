@@ -4,7 +4,7 @@ variable "some_secret" {
 }
 
 module "myproject" {
-  source = "github.com/provose/provose?ref=v2.0.0-beta1"
+  source = "github.com/provose/provose?ref=v2.0.0-beta4"
   provose_config = {
     authentication = {
       aws = {

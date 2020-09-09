@@ -207,7 +207,7 @@ In `myproject.tf`, we will enter the bare minimum Provose configuration:
 
 ```terraform
 module "myproject" {
-  source = "github.com/provose/provose?ref=v2.0.0-beta1"
+  source = "github.com/provose/provose?ref=v2.0.0-beta4"
   provose_config = {
     authentication = {
       aws = {
