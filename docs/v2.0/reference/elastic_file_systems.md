@@ -16,6 +16,10 @@ Provose helps you create Elastic File Systems and makes them accessible within y
 
 ## Examples
 
+### The simplest example
+
+This creates an unencrypted filesystem, defaulting to `"bursting"` as the throughput mode and with the performance mode being `"generalPurpose"`.
+
 ```terraform
 {% include v2.0/reference/elastic_file_systems/main.tf %}
 ```
@@ -23,6 +27,19 @@ Provose helps you create Elastic File Systems and makes them accessible within y
 ## Inputs
 
 Currently, there are no additional inputs for creating Elastic File Systems.
+
+Currently, there are no *required* parameters for creating Elastic File Systems. Below are optional parameters for tuning performance or security. Beware that changing any of these parameters for an already-existing filesystem may cause Terraform to delete and recreate your filesystem.
+
+
+ - `performance_mode` -- **Optional.** This is the performance mode for the filesystem. This defaults to the value `"generalPurpose"` but can be set to `"maxIO"` for better performance.
+
+ - `throughput_mode` -- **Optional.** This sets the throughput mode for the filesytem. The default value is `"bursting"` which provides additional IOPS for this filesystem in bursts. To provision IOPS for this filesystem, set it to `"provisioned"`.
+
+ - `provisioned_throughput_in_mib_per_second` -- **Optional.** When the `throughput_mode` is set to `"provisioned"`, use this input to set how much throughput to provision in mebibytes per second.
+
+ - `encrypted` -- **Optional.** Set to `true` to encrypt the filesystem at rest. The default is `false`.
+
+ - `kms_key_id` -- **Optional.** The ID for the AWS Key Management System key used to encrypt the filesystem. Only use this parameter when you are setting `encrypted` to `true`.
 
 ## Outputs
 
