@@ -25,7 +25,12 @@ resource "aws_security_group" "elastic_file_systems" {
 resource "aws_efs_file_system" "elastic_file_systems" {
   for_each = var.elastic_file_systems
 
-  creation_token = each.key
+  creation_token                  = each.key
+  encrypted                       = try(each.value.encrypted, false)
+  kms_key_id                      = try(each.value.kms_key_id, null)
+  performance_mode                = try(each.value.performance_mode, "generalPurpose")
+  provisioned_throughput_in_mibps = try(each.value.provisioned_throughput_in_mib_per_second, null)
+  throughput_mode                 = try(each.value.throughput_mode, null)
   tags = {
     Name    = each.key
     Provose = var.provose_config.name
