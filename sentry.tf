@@ -1,10 +1,3 @@
-locals {
-  sentry_version = try(
-    var.sentry.engine_version,
-    "20.8.0"
-  )
-}
-
 resource "aws_security_group" "sentry" {
   count                  = var.sentry != null ? 1 : 0
   vpc_id                 = aws_vpc.vpc.id
@@ -66,10 +59,10 @@ python3 -m pip install docker-compose
 ln -sv /usr/local/bin/docker-compose /usr/bin/docker-compose
 mkdir -p /sentry
 cd /sentry
-wget https://github.com/getsentry/onpremise/archive/${local.sentry_version}.zip
-unzip ${local.sentry_version}.zip
-rm -f ${local.sentry_version}.zip
-cd onpremise-${local.sentry_version}
+wget https://github.com/getsentry/onpremise/archive/${var.sentry.engine_version}.zip
+unzip ${var.sentry.engine_version}.zip
+rm -f ${var.sentry.engine_version}.zip
+cd onpremise-${var.sentry.engine_version}
 
 # Run the installer, but don't interactively create a user.
 CI=1 ./install.sh
@@ -87,8 +80,8 @@ Wants=network-online.target
 [Service]
 Type=simple
 User=root
-WorkingDirectory=/sentry/onpremise-${local.sentry_version}
-ExecStart=/usr/local/bin/docker-compose -f /sentry/onpremise-${local.sentry_version}/docker-compose.yml up
+WorkingDirectory=/sentry/onpremise-${var.sentry.engine_version}
+ExecStart=/usr/local/bin/docker-compose -f /sentry/onpremise-${var.sentry.engine_version}/docker-compose.yml up
 Restart=on-failure
 
 [Install]
