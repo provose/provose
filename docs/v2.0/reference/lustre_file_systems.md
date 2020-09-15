@@ -12,6 +12,10 @@ This Provose configuration sets up AWS FSx Lustre clusters. Lustre is a high-per
 
 AWS FSx Lustre is appropriate for compute workloads that require large amounts of data and would otherwise be I/O-bound. For example, terabyte-scale machine learning typically requires fast storage, and FSx Lustre is a popular choice.
 
+### Beware of long timeouts
+
+AWS FSx Lustre clusters can take a long time to deploy--even multiple hours. By default, Terraform will wait 30 minutes before timing out. When this happens, you should use the AWS Web Console or the command line to check the status of your cluster. When you see a timeout from Terraform, you should not rerun Terraform because this will cause it to destroy the cluster before it has finished deploying.
+
 ## Examples
 
 ```terraform
