@@ -159,12 +159,12 @@ resource "aws_batch_compute_environment" "batch" {
     instance_role       = module.aws_iam_instance_profile__batch__execution_role.instance_profiles[each.key].arn
     spot_iam_fleet_role = aws_iam_role.batch__spot_fleet_role[each.key].arn
     # TODO: Let the user set the bid percentage for AWS Batch compute environments with Spot Instances.
-    bid_percentage = 100
-    instance_type  = each.value.instances.instance_types
-    type           = each.value.instances.compute_environment_type
-    max_vcpus      = each.value.instances.max_vcpus
-    min_vcpus      = each.value.instances.min_vcpus
-
+    bid_percentage     = 100
+    instance_type      = each.value.instances.instance_types
+    type               = each.value.instances.compute_environment_type
+    max_vcpus          = each.value.instances.max_vcpus
+    min_vcpus          = each.value.instances.min_vcpus
+    image_id           = try(each.value.instances.ami_id, null)
     security_group_ids = [aws_security_group.batch[each.key].id]
     subnets            = aws_subnet.vpc[*].id
     tags = {

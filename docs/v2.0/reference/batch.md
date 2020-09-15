@@ -58,7 +58,9 @@ The names you provide Provose for queue and job names are global within the AWS 
 
     - `min_vcpus` -- **Required.** This is the minimum number of virtual CPUs (vCPUs) to maintain in the Compute Environment. These many vCPUs will be continually available for new jobs, even if the queue is empty. However, you can set this value to `0` to instruct AWS Batch to shut off the compute resources when the queue is empty.
 
-    - `max_vcpus` -- **Required.** This is the maximum number of virtual CPUs (vCPUs) t
+    - `max_vcpus` -- **Required.** This is the maximum number of virtual CPUs (vCPUs) that are available in the Compute Environment.o
+
+    - `ami_id` -- **Optional.** If you wish, you can set this to a custom Amazon Machine Image for the compute resources to run. Presumably most of your job's software is written in the Docker container, but you may need a custom AMI to mount filesystems or install device drivers.
 
 - `job_queues` -- **Required.** This is **mapping** *from* queue names to objects with the given keys.
 
