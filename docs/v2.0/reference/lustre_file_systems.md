@@ -21,11 +21,14 @@ AWS FSx Lustre is appropriate for compute workloads that require large amounts o
 ## Inputs
 
  - `deployment_type` -- **Required.** The filesystem deployment type. Currently this can be one of the following values. The [AWS documentation has more information](https://aws.amazon.com/blogs/aws/amazon-fsx-for-lustre-persistent-storage/) about the differences between the deployment types.
+ 
      - `"SCRATCH_1"` -- The original storage type for AWS FSx Lustre. This is typically used for storing temporary data and intermediate computations. This storage type is not replicated, which makes it less reliable for long-term storage.
+
      - `"SCRATCH_2"` -- A scratch storage type with a much higher burst speed. This is also not replicated.
+
      - `"PERSISTENT_1"` -- A storage type that offers replication in the same Availability Zone (AZ), which makes it more appropriate for long-term storage.
 
- - `storage_capacity_gb` -- **Required.** This is the total storage capacity of the Lustre cluster in gibibytes. The minimum value is 1200, which is about 1.2 tebibytes. Larger valid values are multiples of 2400 GIB.
+ - `storage_capacity_gb` -- **Required.** This is the total storage capacity of the Lustre cluster in gibibytes. The minimum value is 1200, which is about 1.2 tebibytes. The next valid value is 2400. From there, the valid capacity values go up in increments of 2400 for the `"PERSISTENT_1"` and `"SCRATCH_2"` types, and in increments of 3600  for the `"SCRATCH_1"` type.
 
  - `per_unit_storage_throughput_mb_per_tb` -- **Optional.** This field is required only for the `"PERSISTENT_1"` `deployment_type`. It describes the throughput speed *per tebibyte* of provisioned storage. Valid values are 50, 100, and 200. More information about this key can be found under [PerUnitStorageThroughput in the AWS documentation](https://docs.aws.amazon.com/fsx/latest/APIReference/API_CreateFileSystemLustreConfiguration.html).
 
