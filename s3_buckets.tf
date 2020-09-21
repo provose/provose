@@ -19,6 +19,50 @@ locals {
         if contains(try(keys(container.s3_buckets), []), bucket_global_name)
       ]
   ]))
+
+  ec2_on_demand_instances_with_s3_buckets = zipmap(
+    flatten([
+      for instance_name, instance in local.ec2_on_demand_instances__times_count : [
+        for bucket_global_name, bucket in var.s3_buckets :
+        "${instance_name}--${bucket_global_name}"
+        if contains(try(keys(instance.s3_buckets), []), bucket_global_name)
+      ]
+    ]),
+    flatten([
+      for instance_name, instance in local.ec2_on_demand_instances__times_count : [
+        for bucket_global_name, bucket in var.s3_buckets :
+        {
+          instance_name      = instance_name
+          instance           = instance
+          bucket_global_name = bucket_global_name
+          bucket             = bucket
+          permissions        = instance.s3_buckets[bucket_global_name].permissions
+        }
+        if contains(try(keys(instance.s3_buckets), []), bucket_global_name)
+      ]
+  ]))
+
+  ec2_spot_instances_with_s3_buckets = zipmap(
+    flatten([
+      for instance_name, instance in local.ec2_spot_instances__times_count : [
+        for bucket_global_name, bucket in var.s3_buckets :
+        "${instance_name}--${bucket_global_name}"
+        if contains(try(keys(instance.s3_buckets), []), bucket_global_name)
+      ]
+    ]),
+    flatten([
+      for instance_name, instance in local.ec2_spot_instances__times_count : [
+        for bucket_global_name, bucket in var.s3_buckets :
+        {
+          instance_name      = instance_name
+          instance           = instance
+          bucket_global_name = bucket_global_name
+          bucket             = bucket
+          permissions        = instance.s3_buckets[bucket_global_name].permissions
+        }
+        if contains(try(keys(instance.s3_buckets), []), bucket_global_name)
+      ]
+  ]))
 }
 
 resource "aws_s3_bucket" "s3_buckets" {
@@ -142,6 +186,113 @@ resource "aws_iam_role_policy" "s3_buckets__container_iam__delete" {
     aws_iam_role.iam__ecs_task_execution_role
   ]
 }
+
+resource "aws_iam_role_policy" "s3_buckets__ec2_on_demand_instances__list" {
+  for_each = {
+    for key, config in local.ec2_on_demand_instances_with_s3_buckets :
+    key => config if config.permissions.list == true
+  }
+
+  name = "P-v1---${var.provose_config.name}---${each.key}---list-r-p"
+  role = aws_iam_role.ec2_on_demand_instances[each.value.instance_name].id
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect = "Allow"
+      Action = [
+        "s3:HeadBucket",
+        "s3:ListBucket"
+      ]
+      Resource = [
+        "arn:aws:s3:::${each.value.bucket_global_name}",
+        "arn:aws:s3:::${each.value.bucket_global_name}/*"
+      ]
+    }]
+  })
+  depends_on = [
+    aws_iam_role.ec2_on_demand_instances
+  ]
+}
+
+resource "aws_iam_role_policy" "s3_buckets__ec2_on_demand_instances__get" {
+  for_each = {
+    for key, config in local.ec2_on_demand_instances_with_s3_buckets :
+    key => config if config.permissions.get == true
+  }
+
+  name = "P-v1---${var.provose_config.name}---${each.key}---get-r-p"
+  role = aws_iam_role.ec2_on_demand_instances[each.value.instance_name].id
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect = "Allow"
+      Action = [
+        "s3:GetObject",
+        "s3:GetObjectAcl",
+        "s3:GetObjectTagging",
+        "s3:GetObjectVersion",
+        "s3:GetObjectVersionAcl",
+        "s3:GetObjectVersionTagging"
+      ]
+      Resource = [
+        "arn:aws:s3:::${each.value.bucket_global_name}",
+        "arn:aws:s3:::${each.value.bucket_global_name}/*"
+      ]
+    }]
+  })
+  depends_on = [
+    aws_iam_role.ec2_on_demand_instances
+  ]
+}
+
+resource "aws_iam_role_policy" "s3_buckets__ec2_on_demand_instances__put" {
+  for_each = {
+    for key, config in local.ec2_on_demand_instances_with_s3_buckets :
+    key => config if config.permissions.put == true
+  }
+
+  name = "P-v1---${var.provose_config.name}---${each.key}---put-r-p"
+  role = aws_iam_role.ec2_on_demand_instances[each.value.instance_name].id
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect = "Allow"
+      Action = "s3:PutObject"
+      Resource = [
+        "arn:aws:s3:::${each.value.bucket_global_name}",
+        "arn:aws:s3:::${each.value.bucket_global_name}/*"
+      ]
+    }]
+  })
+  depends_on = [
+    aws_iam_role.ec2_on_demand_instances
+  ]
+}
+
+resource "aws_iam_role_policy" "s3_buckets__ec2_on_demand_instances__delete" {
+  for_each = {
+    for key, config in local.ec2_on_demand_instances_with_s3_buckets :
+    key => config if config.permissions.delete == true
+  }
+
+  name = "P-v1---${var.provose_config.name}---${each.key}---delete-r-p"
+  role = aws_iam_role.ec2_on_demand_instances[each.value.instance_name].id
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect = "Allow"
+      Action = "s3:DeleteObject"
+      Resource = [
+        "arn:aws:s3:::${each.value.bucket_global_name}",
+        "arn:aws:s3:::${each.value.bucket_global_name}/*"
+      ]
+    }]
+  })
+  depends_on = [
+    aws_iam_role.ec2_on_demand_instances
+  ]
+}
+
 
 # == Output == 
 
