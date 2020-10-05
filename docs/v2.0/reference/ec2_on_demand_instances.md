@@ -1,7 +1,7 @@
 ---
 title: ec2_on_demand_instances
 parent: Reference v2.0
-grand_parent: Docs - v2.0
+grand_parent: Docs - v2.0 (LATEST)
 ---
 
 # ec2_on_demand_instances

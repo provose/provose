@@ -1,7 +1,7 @@
 ---
 title: redis_clusters
 parent: Reference v1.1
-grand_parent: Docs - v1.1 (LATEST)
+grand_parent: Docs - v1.1
 ---
 
 # redis_clusters

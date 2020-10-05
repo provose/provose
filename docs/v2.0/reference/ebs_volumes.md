@@ -3,7 +3,7 @@
 # it with the ec2_instances module.
 title: ebs_volumes
 #parent: Reference v2.0
-#grand_parent: Docs - v2.0
+#grand_parent: Docs - v2.0 (LATEST)
 nav_exclude: true
 ---
 

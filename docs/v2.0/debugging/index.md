@@ -1,6 +1,6 @@
 ---
 title: Debugging
-parent: Docs - v2.0
+parent: Docs - v2.0 (LATEST)
 has_children: false
 nav_order: 4
 has_toc: true

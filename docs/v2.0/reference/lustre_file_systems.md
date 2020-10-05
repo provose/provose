@@ -1,7 +1,7 @@
 ---
 title: lustre_file_systems
 parent: Reference v2.0
-grand_parent: Docs - v2.0
+grand_parent: Docs - v2.0 (LATEST)
 ---
 
 # lustre_file_systems

@@ -1,6 +1,6 @@
 ---
 title: Uninstalling Provose
-parent: Docs - v1.0 (Latest)
+parent: Docs - v1.0
 nav_order: 5
 has_children: false
 has_toc: true
