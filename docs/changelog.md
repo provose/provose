@@ -5,6 +5,12 @@ nav_order: 4
 
 # Changelog
 
+## v3.0.0
+
+**TBD.**
+
+- Updated the Terraform AWS provider to version [3.9.0](https://registry.terraform.io/providers/hashicorp/aws/3.9.0/docs). The new provider is not backwards compatible. We had to add a field in order to provision Luster clusters.
+
 ## v2.0.0
 
 **October 5, 2020.**
