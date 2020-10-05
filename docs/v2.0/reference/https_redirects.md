@@ -1,7 +1,7 @@
 ---
 title: http_redirects
 parent: Reference v2.0
-grand_parent: Docs - v2.0 (BETA)
+grand_parent: Docs - v2.0
 ---
 
 # http_redirects
@@ -24,9 +24,9 @@ This module redirects traffic with the public-facing Application Load Balancer (
 
 There are two _forwarding types_ that govern how the redirects work.
 
- - `"DOMAIN_NAME"` -- This takes all HTTP(S) URLs under your source DNS name and forwards it to the corresponding location in the destination DNS name. For example, if your source name is `source.example.com` and you want to forward requests to `https://destination.com`, setting your `forwarding_type` to `"DOMAIN_NAME"` will send the URL `"https://source.example.com/some-path?q=a"` to `"https://destination.com?some-path?q=a"`.
+- `"DOMAIN_NAME"` -- This takes all HTTP(S) URLs under your source DNS name and forwards it to the corresponding location in the destination DNS name. For example, if your source name is `source.example.com` and you want to forward requests to `https://destination.com`, setting your `forwarding_type` to `"DOMAIN_NAME"` will send the URL `"https://source.example.com/some-path?q=a"` to `"https://destination.com?some-path?q=a"`.
 
- - `"EXACT_URL"` -- This takes HTTP(S) URLs from the source and sends them to the exact same URL at the destination. For example, if your source name is `"source.example.com"` and you want to forward requests to `"https://destination.com"`, setting your `forwarding_type` to `"EXACT_URL"` will send `"https://source.example.com/some-path?q=a"`to `"https://destination.com"`. You can also set your destination to something like `"https://destination.com?some-path?q=a"` and all source URLs will go there.
+- `"EXACT_URL"` -- This takes HTTP(S) URLs from the source and sends them to the exact same URL at the destination. For example, if your source name is `"source.example.com"` and you want to forward requests to `"https://destination.com"`, setting your `forwarding_type` to `"EXACT_URL"` will send `"https://source.example.com/some-path?q=a"`to `"https://destination.com"`. You can also set your destination to something like `"https://destination.com?some-path?q=a"` and all source URLs will go there.
 
 ## Examples
 
@@ -36,7 +36,7 @@ There are two _forwarding types_ that govern how the redirects work.
 
 ## Inputs
 
-- `destination` -- **Required.**  This is the destination URL to send redirects to, like `https://example.com`. You should always include the protocol (like `"http"` or "`https"`). This can be an exact URL if the `forwarding_type` is `"EXACT_URL"`, or a generic domain name if the `forwarding_type` is `"DOMAIN_NAME"`.
+- `destination` -- **Required.** This is the destination URL to send redirects to, like `https://example.com`. You should always include the protocol (like `"http"` or "`https"`). This can be an exact URL if the `forwarding_type` is `"EXACT_URL"`, or a generic domain name if the `forwarding_type` is `"DOMAIN_NAME"`.
 
 - `forwarding_type` -- **Optional.** This specifies whether all possible sources are sent to corresponding destination URLs (`"DOMAIN_NAME"`) or whether to send them to the exact same destination URL (`"EXACT_URL"`).
 

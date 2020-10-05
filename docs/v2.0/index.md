@@ -1,5 +1,5 @@
 ---
-title: Docs - v2.0 (BETA)
+title: Docs - v2.0
 has_children: true
 nav_order: 9
 ---

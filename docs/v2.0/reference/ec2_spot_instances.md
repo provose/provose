@@ -1,7 +1,7 @@
 ---
 title: ec2_spot_instances
 parent: Reference v2.0
-grand_parent: Docs - v2.0 (BETA)
+grand_parent: Docs - v2.0
 ---
 
 # ec2_spot_instances
