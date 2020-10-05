@@ -43,6 +43,7 @@ resource "aws_fsx_lustre_file_system" "lustre_file_systems" {
   import_path                 = try(each.value.s3_import_path, null)
   export_path                 = try(each.value.s3_export_path, null)
   imported_file_chunk_size    = try(each.value.imported_file_chunk_size_mb, null)
+  auto_import_policy          = try(each.value.auto_import_policy, "NONE")
   lifecycle {
     # Not sure if this fixes anything, but we put this here because
     # there seem to be some weirdness with Terraform tainting this
