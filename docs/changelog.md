@@ -7,14 +7,16 @@ nav_order: 4
 
 ## v2.0.0
 
-**Currently in development. This list is going to grow with time.**
+**October 5, 2020.**
 
-- We replaced the v1.x `ec2_instances` module with the brand-new (and slightly incompatible) [`ec2_on_demand_instances` module](../2.0/reference/ec2_on_demand_instances/).
-- We upgraded our pin of the Terraform AWS provider version 2.54.0 to [3.0.0](https://registry.terraform.io/providers/hashicorp/aws/3.0.0/docs). The new provider version is not backwards-compatible. We had to make some changes in how we verify Amazon Certificate Manager (ACM) certificates.
-- We also updated the following Terraform providers: [TLS to 2.2.0](https://registry.terraform.io/providers/hashicorp/tls/2.2.0/docs) and [random to 2.3.0](https://registry.terraform.io/providers/hashicorp/random/2.3.0/docs).
+- Replaced the v1.x `ec2_instances` module with the brand-new (and slightly incompatible) [`ec2_on_demand_instances` module](../2.0/reference/ec2_on_demand_instances/).
+- Upgraded our pin of the Terraform AWS provider version 2.54.0 to [3.0.0](https://registry.terraform.io/providers/hashicorp/aws/3.0.0/docs). The new provider version is not backwards-compatible. We had to make some changes in how we verify Amazon Certificate Manager (ACM) certificates.
+- Updated the following Terraform providers: [TLS to 2.2.0](https://registry.terraform.io/providers/hashicorp/tls/2.2.0/docs) and [random to 2.3.0](https://registry.terraform.io/providers/hashicorp/random/2.3.0/docs).
 - You can now specify a custom user for [containers](../v2.0/reference/containers/), just like with `docker run --user`.
-- We added the ability to specify arbitrary HTTPS redirects using the [`https_redirects` module](../v2.0/reference/https_redirects/). This uses an AWS Application Load Balancer to route traffic from any Route 53 zone in the AWS account to any target on the web.
-- We added support for AWS FSx Lustre--Amazon Web Services' managed offering of the high-performance Lustre filesystem--in the [`lustre_file_systems` module](../v2.0/reference/lustre_file_systems/).
+- Added the ability to specify arbitrary HTTPS redirects using the [`https_redirects` module](../v2.0/reference/https_redirects/). This uses an AWS Application Load Balancer to route traffic from any Route 53 zone in the AWS account to any target on the web.
+- Added support for AWS FSx Lustre--Amazon Web Services' managed offering of the high-performance Lustre filesystem--in the [`lustre_file_systems` module](../v2.0/reference/lustre_file_systems/).
+- Added support for AWS Elastic File Systems (EFS) by creating the [`elastic_file_systems` module](../v2.0/elastic_file_systems/) module.
+- Added support for granting access to S3 buckets for EC2 On-Demand instances ([`ec2_on_demand_instances`](../v2.0/reference/ec2_on_demand_instances/)) and EC2 Spot instances ([`ec2_spot_instances`](../v2.0/reference/ec2_spot_instances/)).
 
 ## v1.1.0
 
