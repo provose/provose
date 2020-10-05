@@ -1,13 +1,30 @@
 terraform {
   required_providers {
-    archive = "1.3.0"
-    aws     = "3.0.0"
-    null    = "2.1.2"
-    tls     = "2.2.0"
-    random  = "2.3.0"
-    local   = "1.4.0"
+    archive = {
+      source  = "hashicorp/archive"
+      version = "1.3.0"
+    }
+    aws = {
+      source  = "hashicorp/aws"
+      version = "3.0.0"
+    }
+    null = {
+      source  = "hashicorp/null"
+      version = "2.1.2"
+    }
+    tls = {
+      source  = "hashicorp/tls"
+      version = "2.2.0"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = "2.3.0"
+    }
+    local = {
+      source  = "hashicorp/local"
+      version = "1.4.0"
+    }
   }
-  experiments = [variable_validation]
 }
 
 locals {
