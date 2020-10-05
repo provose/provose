@@ -1,6 +1,6 @@
 
 module "myproject-ec2" {
-  source = "github.com/provose/provose?ref=v2.0.0-beta5"
+  source = "github.com/provose/provose?ref=v2.0.0"
   provose_config = {
     authentication = {
       aws = {
