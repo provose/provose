@@ -27,36 +27,75 @@ resource "aws_security_group" "sentry" {
   }
 }
 
+resource "aws_ebs_volume" "sentry" {
+  count             = var.sentry != null ? 1 : 0
+  availability_zone = data.aws_availability_zones.available.names[0]
+  size              = try(var.sentry.volume_size_gb, 100)
+  tags = {
+    Name    = "${var.provose_config.name}-sentry-volume"
+    Provose = var.provose_config.name
+  }
+}
+
+locals {
+  sentry__ebs_volume_device_name = "/dev/sdj"
+  sentry__ebs_volume_mount_point = "/var/lib/docker"
+}
+
+resource "aws_volume_attachment" "sentry" {
+  count       = var.sentry != null ? 1 : 0
+  device_name = local.sentry__ebs_volume_device_name
+  volume_id   = aws_ebs_volume.sentry[count.index].id
+  instance_id = aws_instance.sentry["sentry"].id
+}
+
 resource "aws_instance" "sentry" {
   for_each = {
     for key in var.sentry != null ? ["sentry"] : [] :
     key => key
   }
   ami                    = data.aws_ami.amazon_linux_2_ecs_gpu_hvm_ebs.id
+  availability_zone      = data.aws_availability_zones.available.names[0]
   subnet_id              = aws_subnet.vpc[0].id
   instance_type          = var.sentry.instance_type
   vpc_security_group_ids = [aws_security_group.sentry[0].id]
   key_name               = try(var.sentry.key_name, null)
-  root_block_device {
-    volume_size = max(
-      try(var.sentry.root_volume_size_gb, 0),
-      local.minimum_aws_ami_root_volume_size_gb
-    )
-  }
-  user_data = <<USER_DATA
+  user_data              = <<USER_DATA
 #!/bin/bash
 set -Eeuxo pipefail
 
+
+mkdir -p ${local.sentry__ebs_volume_mount_point}
+if file -sL ${local.sentry__ebs_volume_device_name} | grep -q "SGI XFS filesystem data"
+then
+  echo "Filesystem already formatted"
+else
+  mkfs -t xfs ${local.sentry__ebs_volume_device_name}
+fi
+mount ${local.sentry__ebs_volume_device_name} ${local.sentry__ebs_volume_mount_point}
+# We look up the UUID because it's more permanent designation of the filesystem.
+# We write to /etc/fstab so the filesystem is mounted upon reboots.
+echo "UUID=$(lsblk -n -o UUID ${local.sentry__ebs_volume_device_name})  ${local.sentry__ebs_volume_mount_point}  xfs  defaults,nofail  0  2" >> /etc/fstab
+
+
 yum update -y
-amazon-linux-extras install docker
-systemctl start docker.service
+# amazon-linux-extras install docker
+# Recent Sentry versions require a much newer version of Docker than this AMI ships with.
+curl https://download.docker.com/linux/static/stable/x86_64/docker-19.03.9.tgz -o /docker.tar.gz
+tar xvf /docker.tar.gz
+mv /docker/* /usr/bin
+rm -rf /docker.tar.gz /docker
+systemctl restart docker.service
 usermod -a -G docker ec2-user
 chkconfig docker on
+
 
 yum install -y python3-pip wget unzip
 python3 -m pip install docker-compose
 # For some reason, /usr/local/bin/docker-compose is not in $PATH?
 ln -sv /usr/local/bin/docker-compose /usr/bin/docker-compose
+
+
 mkdir -p /sentry
 cd /sentry
 wget https://github.com/getsentry/onpremise/archive/${var.sentry.engine_version}.zip
@@ -64,12 +103,15 @@ unzip ${var.sentry.engine_version}.zip
 rm -f ${var.sentry.engine_version}.zip
 cd onpremise-${var.sentry.engine_version}
 
+
 # Run the installer, but don't interactively create a user.
 CI=1 ./install.sh
+
 
 # Create a user noninteractively.
 docker-compose run web sentry createuser --email '${var.sentry.superuser.email}' --password '${var.sentry.superuser.password}' --superuser --no-input
 chown -R ec2-user /sentry
+
 
 cat > /etc/systemd/system/sentry.service <<-TEMPLATE
 [Unit]
