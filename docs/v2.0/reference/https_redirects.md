@@ -1,14 +1,14 @@
 ---
-title: http_redirects
+title: https_redirects
 parent: Reference v2.0
 grand_parent: Docs - v2.0 (LATEST)
 ---
 
-# http_redirects
+# https_redirects
 
 ## Description
 
-The Provose `http_redirects` module is mapping of DNS names and settings on how to select redirects for them.
+The Provose `https_redirects` module is mapping of DNS names and settings on how to select redirects for them.
 
 ### What this module does
 
