@@ -164,6 +164,10 @@ resource "aws_ecs_cluster" "containers" {
       each.value.instances.instance_type == "FARGATE_SPOT" ? ["FARGATE_SPOT"] : null
     )
   )
+  setting {
+    name  = "containerInsights"
+    value = "enabled"
+  }
   tags = {
     Name    = each.key
     Provose = var.provose_config.name

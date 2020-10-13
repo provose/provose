@@ -14,7 +14,9 @@ Provose abstracts over ECS concepts like clusters, services, task definitions, a
 
 Provose supports running containers on EC2 instances or via AWS Fargate. It is generally easier to use AWS Fargate, but you should choose EC2 if you want to be able to SSH into the host instances or bind-mount host paths into your containers.
 
-Provose can pull publicly-available Docker images from Docker hub, or you can use the Provose images module to build and upload your own containers to Provose-managed Elastic Container Registry image repositories.
+Provose can pull publicly-available Docker images from Docker Hub, or you can use the Provose images module to build and upload your own containers to Provose-managed Elastic Container Registry image repositories.
+
+As of Provose 3.0, this module automatically enables [AWS Container Insights](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/ContainerInsights.html), which writes some extremely useful container metrics to the [AWS CloudWatch](https://aws.amazon.com/cloudwatch/) monitoring service.
 
 ## Examples
 
