@@ -75,7 +75,7 @@ resource "aws_iam_role" "statsd_graphite_grafana" {
   })
 }
 
-# This is the poliy that Grafana needs to pull information from Cloudwatch.
+# This is the poliy that Grafana needs to READ information from Cloudwatch.
 # The original source of the policy is
 # https://grafana.com/docs/grafana/latest/features/datasources/cloudwatch/
 resource "aws_iam_policy" "statsd_graphite_grafana" {
@@ -130,6 +130,14 @@ resource "aws_iam_policy" "statsd_graphite_grafana" {
   })
 }
 
+# This policy lets the host machine WRITE metrics to CloudWatch.
+# https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/create-iam-roles-for-cloudwatch-agent-commandline.html
+resource "aws_iam_role_policy_attachment" "statsd_graphite_grafana__cloudwatch_agent" {
+  count      = var.statsd_graphite_grafana != null ? 1 : 0
+  role       = aws_iam_role.statsd_graphite_grafana[count.index].name
+  policy_arn = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
+}
+
 resource "aws_iam_role_policy_attachment" "statsd_graphite_grafana" {
   count      = var.statsd_graphite_grafana != null ? 1 : 0
   role       = aws_iam_role.statsd_graphite_grafana[count.index].name
@@ -150,19 +158,17 @@ resource "aws_instance" "statsd_graphite_grafana" {
   iam_instance_profile   = aws_iam_instance_profile.statsd_graphite_grafana[count.index].name
   vpc_security_group_ids = [aws_security_group.statsd_graphite_grafana[count.index].id]
   key_name               = try(var.statsd_graphite_grafana.key_name, null)
-  /*
-  root_block_device {
-    volume_size = max(
-      try(var.statsd_graphite_grafana.root_volume_size_gb, 0),
-      local.minimum_aws_ami_root_volume_size_gb
-    )
-  }
-  */
-  user_data = <<USER_DATA
+  user_data              = <<USER_DATA
 #!/bin/bash
 set -Eeuxo pipefail
 
 yum update -y
+
+# Install and start Amazon CloudWatch Agent to collect metrics.
+yum install -y amazon-cloudwatch-agent
+amazon-cloudwatch-agent-ctl -a start
+
+# Install Docker
 amazon-linux-extras install docker
 systemctl start docker.service
 usermod -a -G docker ec2-user
