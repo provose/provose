@@ -24,9 +24,9 @@ When your cluster has finished deploying, Terraform might consider it *"tainted"
 then run this command:
 
 ```
-terraform untaint module.{your-module-name}.aws_fsx_lustre_file_system.lustre_file_systems["{your-cluster-name}"]
+terraform untaint 'module.{your-module-name}.aws_fsx_lustre_file_system.lustre_file_systems["{your-cluster-name}"]'
 ```
-with replacing `{your-module-name}` and `{your-cluster-name}` as appropriate.
+with replacing `{your-module-name}` and `{your-cluster-name}` as appropriate. Make sure to wrap your resource name in single quotes (`'`) to prevent your shell from interpreting the `[`, `]`. and `"` characters.
 
 ## Examples
 
