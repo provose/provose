@@ -12,9 +12,21 @@ This Provose configuration sets up AWS FSx Lustre clusters. Lustre is a high-per
 
 AWS FSx Lustre is appropriate for compute workloads that require large amounts of data and would otherwise be I/O-bound. For example, terabyte-scale machine learning typically requires fast storage, and FSx Lustre is a popular choice.
 
-### Beware of long timeouts
+### Beware of long timeouts and "tainting"
 
-AWS FSx Lustre clusters can take a long time to deploy--even multiple hours. By default, Terraform will wait 30 minutes before timing out. When this happens, you should use the AWS Web Console or the command line to check the status of your cluster. When you see a timeout from Terraform, you should not rerun Terraform because this will cause it to destroy the cluster before it has finished deploying.
+AWS FSx Lustre clusters can take a long time to deploy--even multiple hours. By default, Terraform will wait 30 minutes before timing out. When this happens, you should use the AWS Web Console or the command line to check the status of your cluster. When you see a timeout from Terraform, you should **not** rerun Terraform before the cluster has finished deploying, otherwise this will destroy your cluster.
+
+When your cluster has finished deploying, Terraform might consider it *"tainted"* because it timed out during the cluster's creation. However, in all likelihood, your cluster is most likely fine. If Terraform says something like 
+
+```
+# module.{your-module-name}.aws_fsx_lustre_file_system.lustre_file_systems["{your-cluster-name}"] is tainted, so must be replaced
+```
+then run this command:
+
+```
+terraform untaint module.{your-module-name}.aws_fsx_lustre_file_system.lustre_file_systems["{your-cluster-name}"]
+```
+with replacing `{your-module-name}` and `{your-cluster-name}` as appropriate.
 
 ## Examples
 
