@@ -62,6 +62,30 @@ If you are looking to deploy the same application across multiple services--perh
 
   - `kms_key_id` -- **Optional.** This is the Amazon Resource Name (ARN) for the custom AWS Key Management Service (KMS) key that you would like to use to encrypt the drive.
 
+- `s3_buckets` -- **Optional.** This is a mapping of S3 buckets to the classes of permissions available to the instances. The four classes of permissions available are `list`, `get`, `put`, and `delete`, and the values for each one is `true` or `false`. To use this configuration, place the `s3_buckets` key **inside** a block that defines an instance. Below is an example of how to give an EC2 instance access to two buckets--one with `list` and `get` permissions, and another with `get` and `delete` permissions.
+
+```terraform
+s3_buckets = {
+  "some-bucket-name.example-internal.com" = {
+    permissions = {
+      list   = true
+      get    = true
+      put    = false
+      delete = false
+    }
+  }
+  "another-bucket.com" = {
+    permissions = {
+      list   = false
+      get    = true
+      put    = false
+      delete = true
+    }
+  }
+}
+```
+
+
 ## Outputs
 
 - `ec2_on_demand_instances.aws_security_group.ec2_on_demand_instances` -- A map with a key for every instance and every value is a Terraform [`aws_security_group`](https://www.terraform.io/docs/providers/aws/r/security_group.html) type.
