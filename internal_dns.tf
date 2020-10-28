@@ -4,8 +4,8 @@ locals {
 }
 
 resource "aws_route53_zone" "internal_dns" {
-  name = var.provose_config.internal_root_domain
-
+  name    = var.provose_config.internal_root_domain
+  comment = "Provose private zone for module ${var.provose_config.name}, DNS path ${var.provose_config.internal_subdomain}.${var.provose_config.internal_root_domain}, and VPC ${aws_vpc.vpc.id}"
   vpc {
     vpc_id = aws_vpc.vpc.id
   }

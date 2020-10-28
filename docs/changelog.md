@@ -11,6 +11,7 @@ nav_order: 4
 
 - Updated the Terraform AWS provider to version [3.9.0](https://registry.terraform.io/providers/hashicorp/aws/3.9.0/docs). The new provider is not backwards compatible. We had to add a field in order to provision Luster clusters.
 - Enabled [AWS Container Insights](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/ContainerInsights.html) by default for all clusters created with the [containers](../v3.0/reference/containers/) module. Users might notice a small increase in their bill due to the increased writes to AWS CloudWatch, but it should be worth it given how much easier it makes debugging containers.
+- Changed the Comment field on AWS Route 53 Hosted Zones from the value `"Managed by Terraform"` to a more descriptive comment like "`Provose private zone for module [...], DNS path [...com], and VPC vpc-[...]."`
 
 ## v2.0.0
 
