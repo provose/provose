@@ -1,7 +1,7 @@
 ---
 title: images
-parent: Reference v3.0
-grand_parent: Docs - v3.0 (BETA)
+parent: Reference
+grand_parent: Docs
 ---
 
 # images

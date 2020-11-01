@@ -1,6 +1,6 @@
 ---
 title: Release notes
-parent: Docs - v3.0 (BETA)
+parent: Docs
 nav_order: 1
 ---
 

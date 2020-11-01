@@ -1,7 +1,7 @@
 ---
 title: http_redirects
-parent: Reference v3.0
-grand_parent: Docs - v3.0 (BETA)
+parent: Reference
+grand_parent: Docs
 ---
 
 # http_redirects
