@@ -1,7 +1,7 @@
 ---
 title: s3_buckets
-parent: Reference v1.0
-grand_parent: Docs - v1.0
+parent: Reference
+grand_parent: Docs
 search_exclude: true
 ---
 
