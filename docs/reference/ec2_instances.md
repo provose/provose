@@ -14,7 +14,7 @@ The Provose `ec2_instances` module supports the creation and deployment of Amazo
 ## Examples
 
 ```terraform
-{% include v1.0/reference/ec2_instances/main.tf %}
+{% include_relative examples/ec2_instances/main.tf %}
 ```
 
 ## Inputs

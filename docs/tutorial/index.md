@@ -234,7 +234,7 @@ You can now use Provose modules--like [`containers`](../reference/containers/), 
 Below is an example of two modules implemented in `myproject.tf`
 
 ```terraform
-{% include v1.0/tutorial/full_example/myproject.tf %}
+{% include_relative examples/full_example/myproject.tf %}
 ```
 
 You can read more about Provose's capabilities in the [Reference](../reference/).

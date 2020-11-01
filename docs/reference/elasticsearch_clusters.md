@@ -16,7 +16,7 @@ The Provose `elasticsearch_clusters` creates [Elasticsearch](https://www.elastic
 ### Running a single node of Elasticsearch 7.1 with Logstash
 
 ```terraform
-{% include v1.0/reference/elasticsearch_clusters/simple.tf %}
+{% include_relative examples/elasticsearch_clusters/simple.tf %}
 ```
 
 ## Inputs
