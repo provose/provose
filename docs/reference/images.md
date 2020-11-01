@@ -19,7 +19,7 @@ To upload new versions of your container manually, visit the [Elastic Container 
 ## Examples
 
 ```terraform
-{% include v2.0/reference/images/image.tf %}
+{% include_relative examples/images/image.tf %}
 ```
 
 ## Inputs

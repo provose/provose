@@ -19,7 +19,7 @@ AWS FSx Lustre clusters can take a long time to deploy--even multiple hours. By 
 ## Examples
 
 ```terraform
-{% include v2.0/reference/lustre_file_systems/example_one.tf %}
+{% include_relative examples/lustre_file_systems/example_one.tf %}
 ```
 
 ## Inputs

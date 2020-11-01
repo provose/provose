@@ -25,7 +25,7 @@ For #2 or #3, you would install your credentials in an appropriate file and then
 ## Examples
 
 ```terraform
-{% include v2.0/reference/provose_config/main.tf %}
+{% include_relative examples/provose_config/main.tf %}
 ```
 
 ## Inputs

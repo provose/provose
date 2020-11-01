@@ -13,7 +13,7 @@ This Provose configuration sets up AWS Aurora MySQL database clusters.
 ## Examples
 
 ```terraform
-{% include v2.0/reference/mysql_clusters/two.tf %}
+{% include_relative examples/mysql_clusters/two.tf %}
 ```
 
 ## Inputs

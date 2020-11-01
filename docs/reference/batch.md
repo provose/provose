@@ -45,7 +45,7 @@ The names you provide Provose for queue and job names are global within the AWS 
 ## Examples
 
 ```terraform
-{% include v2.0/reference/batch/first.tf %}
+{% include_relative examples/batch/first.tf %}
 ```
 
 ## Inputs

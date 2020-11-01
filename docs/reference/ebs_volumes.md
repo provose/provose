@@ -20,7 +20,7 @@ The Provose `ebs_volumes` module configures Elastic Block Storage (EBS) volumes 
 ### Creating two EBS volumes in different availability zones.
 
 ```terraform
-{% include v2.0/reference/ebs_volumes/main.tf %}
+{% include_relative examples/ebs_volumes/main.tf %}
 ```
 
 ## Inputs

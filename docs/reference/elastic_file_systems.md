@@ -21,7 +21,7 @@ Provose helps you create Elastic File Systems and makes them accessible within y
 This creates an unencrypted filesystem, defaulting to `"bursting"` as the throughput mode and with the performance mode being `"generalPurpose"`.
 
 ```terraform
-{% include v2.0/reference/elastic_file_systems/main.tf %}
+{% include_relative examples/elastic_file_systems/main.tf %}
 ```
 
 ## Inputs

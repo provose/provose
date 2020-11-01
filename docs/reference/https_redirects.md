@@ -31,7 +31,7 @@ There are two _forwarding types_ that govern how the redirects work.
 ## Examples
 
 ```terraform
-{% include v2.0/reference/https_redirects/main.tf %}
+{% include_relative examples/https_redirects/main.tf %}
 ```
 
 ## Inputs

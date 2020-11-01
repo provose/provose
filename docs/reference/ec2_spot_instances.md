@@ -23,7 +23,7 @@ If you are looking to deploy the same application across multiple services--perh
 ## Examples
 
 ```terraform
-{% include v2.0/reference/ec2_spot_instances/main.tf %}
+{% include_relative examples/ec2_spot_instances/main.tf %}
 ```
 
 ## Inputs
