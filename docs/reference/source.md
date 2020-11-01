@@ -19,7 +19,7 @@ THe `source` parameter comes from Terraform's underlying module syntax--not Prov
 ## Examples
 
 ```terraform
-{% include v3.0/reference/source/source.tf %}
+{% include_relative examples/source/source.tf %}
 ```
 
 ## Inputs

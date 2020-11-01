@@ -25,7 +25,7 @@ As of Provose 3.0, this module automatically enables [AWS Container Insights](ht
 This example shows a total of four nginx "Hello World" containers running on two EC2 instances of the `t3.small` instance type.
 
 ```terraform
-{% include v3.0/reference/containers/hello_ec2.tf %}
+{% include_relative examples/containers/hello_ec2.tf %}
 ```
 
 ### Running a public Docker image on AWS Fargate.
@@ -33,7 +33,7 @@ This example shows a total of four nginx "Hello World" containers running on two
 This example shows ten nginx "Hello World" containers running on AWS Fargate.
 
 ```terraform
-{% include v3.0/reference/containers/hello_fargate.tf %}
+{% include_relative examples/containers/hello_fargate.tf %}
 ```
 
 ## Inputs

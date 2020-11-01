@@ -31,7 +31,7 @@ with replacing `{your-module-name}` and `{your-cluster-name}` as appropriate. Ma
 ## Examples
 
 ```terraform
-{% include v3.0/reference/lustre_file_systems/example_one.tf %}
+{% include_relative examples/lustre_file_systems/example_one.tf %}
 ```
 
 ## Inputs
