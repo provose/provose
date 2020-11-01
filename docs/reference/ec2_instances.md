@@ -1,7 +1,7 @@
 ---
 title: ec2_instances
-parent: Reference v1.1
-grand_parent: Docs - v1.1
+parent: Reference
+grand_parent: Docs
 ---
 
 # ec2_instances

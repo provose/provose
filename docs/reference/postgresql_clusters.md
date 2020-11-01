@@ -1,7 +1,7 @@
 ---
 title: postgresql_clusters
-parent: Reference v1.1
-grand_parent: Docs - v1.1
+parent: Reference
+grand_parent: Docs
 ---
 
 # postgresql_clusters

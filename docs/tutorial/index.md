@@ -1,6 +1,6 @@
 ---
 title: Tutorial
-parent: Docs - v1.1
+parent: Docs
 nav_order: 2
 ---
 
