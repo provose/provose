@@ -13,7 +13,7 @@ The Provose `s3_buckets` module is a mapping of S3 buckets--which must have glob
 ## Examples
 
 ```terraform
-{% include v1.1/reference/s3_buckets/main.tf %}
+{% include_relative examples/s3_buckets/main.tf %}
 ```
 
 ## Inputs

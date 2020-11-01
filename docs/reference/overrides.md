@@ -15,7 +15,7 @@ Sometimes a new version of Provose changes the name of a Terraform resource, whi
 ## Examples
 
 ```terraform
-{% include v1.1/reference/overrides/main.tf %}
+{% include_relative examples/overrides/main.tf %}
 ```
 
 ## Inputs

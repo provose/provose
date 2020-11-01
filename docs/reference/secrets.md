@@ -15,7 +15,7 @@ The Provose `secrets` module is a mapping of names to secret values. These are s
 This is an example of defining secrets with the Provose `secrets` module, and then consuming them in the [`containers` module](../containers/).
 
 ```terraform
-{% include v1.1/reference/secrets/secrets.tf %}
+{% include_relative examples/secrets/secrets.tf %}
 ```
 
 ## Inputs

@@ -15,7 +15,7 @@ Currently, Provose only supports setting up clusters that contain a single insta
 ## Examples
 
 ```terraform
-{% include v1.1/reference/redis_clusters/main.tf %}
+{% include_relative examples/redis_clusters/main.tf %}
 ```
 
 ## Inputs

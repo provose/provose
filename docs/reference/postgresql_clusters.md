@@ -13,7 +13,7 @@ This Provose configuration sets up AWS Aurora PostgreSQL clusters.
 ## Examples
 
 ```terraform
-{% include v1.1/reference/postgresql_clusters/two.tf %}
+{% include_relative examples/postgresql_clusters/two.tf %}
 ```
 
 ## Inputs
