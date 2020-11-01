@@ -1,7 +1,7 @@
 ---
 title: elasticsearch_clusters
-parent: Reference v2.0
-grand_parent: Docs - v2.0 (LATEST)
+parent: Reference
+grand_parent: Docs
 ---
 
 # elasticsearch_clusters

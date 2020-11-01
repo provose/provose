@@ -1,6 +1,6 @@
 ---
 title: Release notes
-parent: Docs - v2.0 (LATEST)
+parent: Docs
 nav_order: 1
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: Docs - v2.0 (LATEST)
+title: Docs
 has_children: true
 nav_order: 10
 ---

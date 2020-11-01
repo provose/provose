@@ -1,7 +1,7 @@
 ---
 title: elastic_file_systems
-parent: Reference v2.0
-grand_parent: Docs - v2.0 (LATEST)
+parent: Reference
+grand_parent: Docs
 ---
 
 # elastic_file_systems
