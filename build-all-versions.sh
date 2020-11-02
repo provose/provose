@@ -15,3 +15,4 @@ rm -rfv docs _site
 ./fix-titles.sh v3.0 "v3.0 (Beta)"
 jekyll build
 touch docs/.nojekyll
+cp CNAME docs
