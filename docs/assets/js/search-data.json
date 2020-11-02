@@ -923,14 +923,14 @@
     "url": "/v3.0/tutorial/",
     "relUrl": "/v3.0/tutorial/"
   },"154": {
-    "doc": "Reference",
+    "doc": "Reference v1.1 (Deprecated)",
     "title": "Provose v1.1 Reference",
     "content": "This is the reference page for Provose modules. ",
     "url": "/v1.1/reference/#provose-v11-reference",
     "relUrl": "/v1.1/reference/#provose-v11-reference"
   },"155": {
-    "doc": "Reference",
-    "title": "Reference",
+    "doc": "Reference v1.1 (Deprecated)",
+    "title": "Reference v1.1 (Deprecated)",
     "content": " ",
     "url": "/v1.1/reference/",
     "relUrl": "/v1.1/reference/"
@@ -995,14 +995,14 @@
     "url": "/v2.0/tutorial/",
     "relUrl": "/v2.0/tutorial/"
   },"166": {
-    "doc": "Reference",
+    "doc": "Reference v2.0 (Stable)",
     "title": "Provose v2.0 Reference",
     "content": "This is the reference page for Provose modules. ",
     "url": "/v2.0/reference/#provose-v20-reference",
     "relUrl": "/v2.0/reference/#provose-v20-reference"
   },"167": {
-    "doc": "Reference",
-    "title": "Reference",
+    "doc": "Reference v2.0 (Stable)",
+    "title": "Reference v2.0 (Stable)",
     "content": " ",
     "url": "/v2.0/reference/",
     "relUrl": "/v2.0/reference/"
@@ -1241,14 +1241,14 @@
     "url": "/v1.0/",
     "relUrl": "/v1.0/"
   },"207": {
-    "doc": "Reference",
+    "doc": "Reference v3.0 (Beta)",
     "title": "Provose v3.0 Reference",
     "content": "This is the reference page for Provose modules. ",
     "url": "/v3.0/reference/#provose-v30-reference",
     "relUrl": "/v3.0/reference/#provose-v30-reference"
   },"208": {
-    "doc": "Reference",
-    "title": "Reference",
+    "doc": "Reference v3.0 (Beta)",
+    "title": "Reference v3.0 (Beta)",
     "content": " ",
     "url": "/v3.0/reference/",
     "relUrl": "/v3.0/reference/"

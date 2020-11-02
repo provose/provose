@@ -6,4 +6,5 @@ export TITLE_NAME=$2
 find $DIR_NAME \( -type d -name .git -prune \) -o -type f -iname '*.md' -exec sed -i "s/^title: Docs/title: Docs $TITLE_NAME/" {} ';'
 find $DIR_NAME \( -type d -name .git -prune \) -o -type f -iname '*.md' -exec sed -i "s/^parent: Docs/parent: Docs $TITLE_NAME/" {} ';'
 find $DIR_NAME \( -type d -name .git -prune \) -o -type f -iname '*.md' -exec sed -i "s/^grand_parent: Docs/grand_parent: Docs $TITLE_NAME/" {} ';'
+find $DIR_NAME \( -type d -name .git -prune \) -o -type f -iname '*.md' -exec sed -i "s/^title: Reference/title: Reference $TITLE_NAME/" {} ';'
 find $DIR_NAME \( -type d -name .git -prune \) -o -type f -iname '*.md' -exec sed -i "s/^parent: Reference/parent: Reference $TITLE_NAME/" {} ';'
