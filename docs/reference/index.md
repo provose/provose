@@ -1,5 +1,5 @@
 ---
-title: Reference v1.0
+title: Reference
 parent: Docs
 search_exclude: true
 has_children: true
