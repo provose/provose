@@ -1,4 +1,5 @@
 ---
+search_exclude: true
 title: Uninstalling Provose
 parent: Docs
 nav_order: 5
