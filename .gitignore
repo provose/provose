@@ -1,3 +1,4 @@
+.DS_Store
 # Ignore .zip files, typically used to upload to AWS Lambda
 *.zip
 
