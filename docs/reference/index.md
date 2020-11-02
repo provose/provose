@@ -1,5 +1,5 @@
 ---
-title: Reference v1.1
+title: Reference
 parent: Docs
 has_children: true
 nav_order: 3
