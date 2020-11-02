@@ -1,4 +1,5 @@
 ---
+search_exclude: true
 title: ec2_spot_instances
 parent: Reference
 grand_parent: Docs

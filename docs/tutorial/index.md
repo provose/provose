@@ -1,4 +1,5 @@
 ---
+search_exclude: true
 title: Tutorial
 parent: Docs
 nav_order: 2

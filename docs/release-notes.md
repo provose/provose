@@ -1,4 +1,5 @@
 ---
+search_exclude: true
 title: Release notes
 parent: Docs
 nav_order: 1

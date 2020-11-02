@@ -1,4 +1,5 @@
 ---
+search_exclude: true
 title: https_redirects
 parent: Reference
 grand_parent: Docs

@@ -1,4 +1,5 @@
 ---
+search_exclude: true
 title: lustre_file_systems
 parent: Reference
 grand_parent: Docs

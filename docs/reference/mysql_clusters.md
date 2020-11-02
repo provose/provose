@@ -1,4 +1,5 @@
 ---
+search_exclude: true
 title: mysql_clusters
 parent: Reference
 grand_parent: Docs

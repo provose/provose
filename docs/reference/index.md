@@ -1,4 +1,5 @@
 ---
+search_exclude: true
 title: Reference
 parent: Docs
 has_children: true

@@ -1,4 +1,5 @@
 ---
+search_exclude: true
 title: batch
 parent: Reference
 grand_parent: Docs
