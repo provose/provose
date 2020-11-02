@@ -1,4 +1,5 @@
 ---
+search_exclude: true
 title: ec2_instances
 parent: Reference
 grand_parent: Docs

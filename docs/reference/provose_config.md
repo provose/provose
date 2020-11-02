@@ -1,4 +1,5 @@
 ---
+search_exclude: true
 title: provose_config
 parent: Reference
 grand_parent: Docs

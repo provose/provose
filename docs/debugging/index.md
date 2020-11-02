@@ -1,4 +1,5 @@
 ---
+search_exclude: true
 title: Debugging
 parent: Docs
 has_children: false

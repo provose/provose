@@ -1,4 +1,5 @@
 ---
+search_exclude: true
 title: secrets
 parent: Reference
 grand_parent: Docs

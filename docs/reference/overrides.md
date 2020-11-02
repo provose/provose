@@ -1,4 +1,5 @@
 ---
+search_exclude: true
 title: overrides
 parent: Reference
 grand_parent: Docs

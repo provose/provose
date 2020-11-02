@@ -1,4 +1,5 @@
 ---
+search_exclude: true
 title: s3_buckets
 parent: Reference
 grand_parent: Docs
