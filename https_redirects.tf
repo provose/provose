@@ -134,12 +134,19 @@ resource "aws_acm_certificate" "https_redirects" {
 # Create DNS records that will prove to Amazon Certificate Manager (ACM) that we own
 # the domain name that we are requesting certificates for.
 resource "aws_route53_record" "https_redirects__https_validation" {
-  for_each = aws_acm_certificate.https_redirects
+  for_each = {
+    for key, value in aws_acm_certificate.https_redirects :
+    key => {
+      domain_validation_options = tolist(value.domain_validation_options)[0]
+      zone_id                   = data.aws_route53_zone.https_redirects[value.domain_name].zone_id
+    }
+    if contains(keys(data.aws_route53_zone.https_redirects), value.domain_name)
+  }
 
-  name       = tolist(each.value.domain_validation_options)[0].resource_record_name
-  type       = tolist(each.value.domain_validation_options)[0].resource_record_type
-  zone_id    = data.aws_route53_zone.https_redirects[each.value.domain_name].zone_id
-  records    = [tolist(each.value.domain_validation_options)[0].resource_record_value]
+  name       = each.value.domain_validation_options.resource_record_name
+  type       = each.value.domain_validation_options.resource_record_type
+  zone_id    = each.value.zone_id
+  records    = [each.value.domain_validation_options.resource_record_value]
   ttl        = 60
   depends_on = [aws_acm_certificate.https_redirects]
 }
@@ -147,9 +154,16 @@ resource "aws_route53_record" "https_redirects__https_validation" {
 # This validates our TLS certificate with the validation DNS records
 # we just created above.
 resource "aws_acm_certificate_validation" "https_redirects__https_validation" {
-  for_each                = aws_acm_certificate.https_redirects
-  certificate_arn         = each.value.arn
-  validation_record_fqdns = [aws_route53_record.https_redirects__https_validation[each.key].fqdn]
+  for_each = {
+    for key, certificate in aws_acm_certificate.https_redirects :
+    key => {
+      certificate_arn = certificate.arn
+      fqdn            = aws_route53_record.https_redirects__https_validation[key].fqdn
+    }
+    if contains(keys(aws_route53_record.https_redirects__https_validation), key)
+  }
+  certificate_arn         = each.value.certificate_arn
+  validation_record_fqdns = [each.value.fqdn]
 }
 
 # This resource attaches our newly-created TLS certificate to our load balancer.
