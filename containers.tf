@@ -484,7 +484,8 @@ resource "aws_ecs_service" "containers" {
     aws_ecs_cluster.containers,
     aws_lb_target_group.containers__public_https
   ]
-
+  enable_ecs_managed_tags = true
+  propagate_tags          = "SERVICE"
   tags = {
     Provose = var.provose_config.name
   }
