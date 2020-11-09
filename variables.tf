@@ -113,12 +113,6 @@ variable "mysql_clusters" {
   description = "Sets up AWS Aurora MySQL clusters."
 }
 
-variable "openvpn" {
-  type        = any
-  default     = null
-  description = "Sets up an AWS EC2 Client VPN, which is a managed OpenVPN server. This also creates the Public Key Infrastructure (PKI) and creates OpenVPN client files."
-}
-
 variable "overrides" {
   type        = any
   default     = {}
