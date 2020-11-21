@@ -36,16 +36,23 @@ resource "aws_security_group" "logstash" {
 }
 
 resource "aws_instance" "logstash" {
-  for_each = local.logstash_configs
+  for_each = {
+    for key, config in local.logstash_configs :
+    key => {
+      config   = config
+      endpoint = aws_elasticsearch_domain.elasticsearch_clusters[key].endpoint
+    }
+    if contains(keys(aws_elasticsearch_domain.elasticsearch_clusters), key)
+  }
 
-  key_name               = try(each.value.key_name, null)
+  key_name               = try(each.value.config.key_name, null)
   ami                    = data.aws_ami.amazon_linux_2_ecs_gpu_hvm_ebs.id
   subnet_id              = aws_subnet.vpc[0].id
   vpc_security_group_ids = [aws_security_group.logstash[0].id]
-  instance_type          = each.value.instance_type
+  instance_type          = each.value.config.instance_type
   root_block_device {
     volume_size = max(
-      try(each.value.root_volume_size_gb, 0),
+      try(each.value.config.root_volume_size_gb, 0),
       local.minimum_aws_ami_root_volume_size_gb
     )
   }
@@ -75,7 +82,7 @@ input {
 }
 output {
   elasticsearch {
-    hosts => ["https://${aws_elasticsearch_domain.elasticsearch_clusters[each.key].endpoint}:443"]
+    hosts => ["https://${each.value.endpoint}:443"]
     ilm_enabled => false
   }
   stdout {

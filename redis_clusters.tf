@@ -32,17 +32,24 @@ resource "aws_elasticache_parameter_group" "redis_clusters" {
 }
 
 resource "aws_elasticache_cluster" "redis_clusters" {
-  for_each = var.redis_clusters
+  for_each = {
+    for key, redis in var.redis_clusters :
+    key => {
+      redis                = redis
+      parameter_group_name = aws_elasticache_parameter_group.redis_clusters[key].name
+    }
+    if contains(keys(aws_elasticache_parameter_group.redis_clusters), key)
+  }
 
-  apply_immediately    = try(each.value.apply_immediately, true)
+  apply_immediately    = try(each.value.redis.apply_immediately, true)
   cluster_id           = each.key
   engine               = "redis"
-  node_type            = each.value.instances.instance_type
+  node_type            = each.value.redis.instances.instance_type
   num_cache_nodes      = 1
-  engine_version       = each.value.engine_version
+  engine_version       = each.value.redis.engine_version
   security_group_ids   = [aws_security_group.redis_clusters[0].id]
   subnet_group_name    = aws_elasticache_subnet_group.redis_clusters[0].name
-  parameter_group_name = aws_elasticache_parameter_group.redis_clusters[each.key].name
+  parameter_group_name = each.value.parameter_group_name
   port                 = 6379
   tags = {
     Provose = var.provose_config.name

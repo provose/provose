@@ -175,59 +175,81 @@ resource "aws_ecs_cluster" "containers" {
 }
 
 resource "aws_ecs_task_definition" "containers" {
-  for_each = var.containers
+  for_each = {
+    for key, container in var.containers :
+    key => {
+      container                = container
+      image_name               = container.image.private_registry ? aws_ecr_repository.images[container.image.name].repository_url : container.image.name
+      requires_compatibilities = [local.container_compatibility[key]]
+      network_mode             = local.network_mode[key]
+      task_role_arn            = aws_iam_role.iam__ecs_task_execution_role[key].arn
+      execution_role_arn       = aws_iam_role.iam__ecs_task_execution_role[key].arn
+    }
+    if(
+      contains(keys(local.container_compatibility), key) &&
+      contains(keys(local.network_mode), key) &&
+      contains(keys(aws_iam_role.iam__ecs_task_execution_role), key) &&
+      (
+        container.image.private_registry ?
+        contains(keys(aws_ecr_repository.images), container.image.name) :
+        true
+      )
+    )
+  }
 
   family                   = each.key
-  cpu                      = each.value.instances.cpu
-  memory                   = each.value.instances.memory
-  requires_compatibilities = [local.container_compatibility[each.key]]
-  network_mode             = local.network_mode[each.key]
-  task_role_arn            = aws_iam_role.iam__ecs_task_execution_role[each.key].arn
-  execution_role_arn       = aws_iam_role.iam__ecs_task_execution_role[each.key].arn
+  cpu                      = each.value.container.instances.cpu
+  memory                   = each.value.container.instances.memory
+  requires_compatibilities = each.value.requires_compatibilities
+  network_mode             = each.value.network_mode
+  task_role_arn            = each.value.task_role_arn
+  execution_role_arn       = each.value.execution_role_arn
 
   container_definitions = templatefile(
     "${path.module}/templates/ecs_container_definition.json",
     {
       region       = data.aws_region.current.name
       task_name    = each.key
-      image_tag    = each.value.image.tag
-      image_name   = each.value.image.private_registry ? aws_ecr_repository.images[each.value.image.name].repository_url : each.value.image.name
-      cpu          = each.value.instances.cpu
-      memory       = each.value.instances.memory
-      network_mode = local.network_mode[each.key]
-      user         = try(each.value.user, null)
-      command      = try(each.value.command, null)
-      entrypoint   = try(each.value.entrypoint, null)
+      image_name   = each.value.image_name
+      image_tag    = each.value.container.image.tag
+      image_name   = each.value.image_name
+      cpu          = each.value.container.instances.cpu
+      memory       = each.value.container.instances.memory
+      network_mode = each.value.network_mode
+      user         = try(each.value.container.user, null)
+      command      = try(each.value.container.command, null)
+      entrypoint   = try(each.value.container.entrypoint, null)
       ports = flatten([
         # This port serves public HTTPS traffic.
         (
-          can(each.value.public.https.internal_http_port) ?
+          can(each.value.container.public.https.internal_http_port) ?
           [{
-            container_port = each.value.public.https.internal_http_port
+            container_port = each.value.container.public.https.internal_http_port
             # The container port and host port must match for the "awsvpc" network type.
             # When we use the "bridge" type, we say the host port is 0.
-            host_port = local.network_mode[each.key] == "awsvpc" ? each.value.public.https.internal_http_port : 0
+            host_port = each.value.network_mode == "awsvpc" ? each.value.container.public.https.internal_http_port : 0
             protocol  = "tcp"
           }] :
           []
         ),
         # This port serves HTTPS traffic from the VPC ALB.
         (
-          can(each.value.vpc.https.internal_http_port) ?
+          can(each.value.container.vpc.https.internal_http_port) ?
           [{
-            container_port = each.value.vpc.https.internal_http_port
+            container_port = each.value.container.vpc.https.internal_http_port
             # The container port and host port must match for the "awsvpc" network type.
             # When we use the "bridge" type, we say the host port is 0.
-            host_port = local.network_mode[each.key] == "awsvpc" ? each.value.vpc.https.internal_http_port : 0
+            host_port = each.value.network_mode == "awsvpc" ? each.value.container.vpc.https.internal_http_port : 0
             protocol  = "tcp"
           }] :
           []
         )
       ])
-      environment = try(each.value.environment, {})
+      environment = try(each.value.container.environment, {})
       secrets = {
-        for secret_env_name, secret_text_name in try(each.value.secrets, {}) :
+        for secret_env_name, secret_text_name in try(each.value.container.secrets, {}) :
         secret_env_name => aws_secretsmanager_secret_version.secrets[secret_text_name].arn
+        if contains(keys(aws_secretsmanager_secret_version.secrets), secret_text_name)
       }
       efs_volumes = try(each.value.efs_volumes, {})
       bind_mounts = try(each.value.bind_mounts, [])
@@ -278,40 +300,57 @@ resource "aws_ecs_task_definition" "containers" {
 # So whenever we change a field that forces us to create a new group, we
 # generate a new random name.
 resource "random_id" "containers__public_https" {
-  for_each    = local.containers_with_public_https
+  for_each = {
+    for key, container in local.containers_with_public_https :
+    key => {
+      container   = container
+      target_type = local.target_type[key]
+    }
+    if contains(keys(local.target_type), key)
+  }
   byte_length = 4
   keepers = {
     vpc_id                             = aws_vpc.vpc.id
-    internal_http_port                 = each.value.public.https.internal_http_port
-    target_type                        = local.target_type[each.key]
-    internal_http_health_check_path    = each.value.public.https.internal_http_health_check_path
-    internal_http_health_check_timeout = try(each.value.public.https.internal_http_health_check_timeout, 5)
+    internal_http_port                 = each.value.container.public.https.internal_http_port
+    target_type                        = each.value.target_type
+    internal_http_health_check_path    = each.value.container.public.https.internal_http_health_check_path
+    internal_http_health_check_timeout = try(each.value.container.public.https.internal_http_health_check_timeout, 5)
   }
 }
 
 
 resource "aws_lb_target_group" "containers__public_https" {
-  for_each = local.containers_with_public_https
-  #name        = "tg-${replace(random_id.containers__public_https[each.key].b64_url, "_", "-")}"
-  name_prefix = replace(random_id.containers__public_https[each.key].b64_url, "_", "-")
-  port        = each.value.public.https.internal_http_port
+  for_each = {
+    for key, container in local.containers_with_public_https :
+    key => {
+      container   = container
+      name_prefix = replace(random_id.containers__public_https[key].b64_url, "_", "-")
+      target_type = local.target_type[key]
+    }
+    if(
+      contains(keys(random_id.containers__public_https), key) &&
+      contains(keys(local.target_type), key)
+    )
+  }
+  name_prefix = each.value.name_prefix
+  port        = each.value.container.public.https.internal_http_port
   protocol    = "HTTP"
-  target_type = local.target_type[each.key]
+  target_type = each.value.target_type
   vpc_id      = aws_vpc.vpc.id
   depends_on  = [aws_lb.public_http_https]
   health_check {
-    path    = each.value.public.https.internal_http_health_check_path
-    timeout = try(each.value.public.https.internal_http_health_check_timeout, 5)
-    matcher = try(each.value.public.https.internal_http_health_check_success_status_codes, "200")
+    path    = each.value.container.public.https.internal_http_health_check_path
+    timeout = try(each.value.container.public.https.internal_http_health_check_timeout, 5)
+    matcher = try(each.value.container.public.https.internal_http_health_check_success_status_codes, "200")
   }
   stickiness {
     # "lb_cookie" is currently the only stickiness type.
     type = "lb_cookie"
     # 86400 seconds, or exactly 1 day, is the AWS default cookie duration when
     # stickiness is enabled.
-    cookie_duration = try(each.value.public.https.stickiness_cookie_duration_seconds, 86400)
+    cookie_duration = try(each.value.container.public.https.stickiness_cookie_duration_seconds, 86400)
     # only enable stickiness if the user sets how long it takes for the cookie to expire
-    enabled = can(each.value.public.https.stickiness_cookie_duration_seconds)
+    enabled = can(each.value.container.public.https.stickiness_cookie_duration_seconds)
   }
   tags = {
     Provose = var.provose_config.name
@@ -324,19 +363,23 @@ resource "aws_lb_target_group" "containers__public_https" {
 resource "aws_lb_listener_rule" "containers__public_https" {
   for_each = {
     for key, target_group in aws_lb_target_group.containers__public_https :
-    key => target_group if(
-      can(local.containers_with_public_https[key]) &&
-      length(aws_lb_listener.public_http_https__443) > 0
+    key => {
+      target_group     = target_group
+      public_dns_names = local.containers_with_public_https[key].public.https.public_dns_names
+    }
+    if(
+      length(aws_lb_listener.public_http_https__443) > 0 &&
+      contains(keys(local.containers_with_public_https), key)
     )
   }
   listener_arn = aws_lb_listener.public_http_https__443[0].arn
   action {
     type             = "forward"
-    target_group_arn = each.value.arn
+    target_group_arn = each.value.target_group.arn
   }
   condition {
     host_header {
-      values = local.containers_with_public_https[each.key].public.https.public_dns_names
+      values = each.value.public_dns_names
     }
   }
 }
@@ -346,42 +389,59 @@ resource "aws_lb_listener_rule" "containers__public_https" {
 # So whenever we change a field that forces us to create a new group, we
 # generate a new random name.
 resource "random_id" "containers__vpc_https" {
-  for_each    = local.containers_with_vpc_https
+  for_each = {
+    for key, container in local.containers_with_vpc_https :
+    key => {
+      container   = container
+      target_type = local.target_type[key]
+    }
+    if contains(keys(local.target_type), key)
+  }
   byte_length = 4
   keepers = {
     vpc_id                             = aws_vpc.vpc.id
-    internal_http_port                 = each.value.vpc.https.internal_http_port
-    target_type                        = local.target_type[each.key]
-    internal_http_health_check_path    = each.value.vpc.https.internal_http_health_check_path
-    internal_http_health_check_timeout = try(each.value.vpc.https.internal_http_health_check_timeout, 5)
+    internal_http_port                 = each.value.container.vpc.https.internal_http_port
+    target_type                        = each.value.target_type
+    internal_http_health_check_path    = each.value.container.vpc.https.internal_http_health_check_path
+    internal_http_health_check_timeout = try(each.value.container.vpc.https.internal_http_health_check_timeout, 5)
   }
 }
 
 
 resource "aws_lb_target_group" "containers__vpc_https" {
-  for_each = local.containers_with_vpc_https
-  #name        = "tg-${replace(random_id.containers__vpc_https[each.key].b64_url, "_", "-")}"
-  name_prefix = replace(random_id.containers__vpc_https[each.key].b64_url, "_", "-")
-  port        = each.value.vpc.https.internal_http_port
+  for_each = {
+    for key, container in local.containers_with_vpc_https :
+    key => {
+      container   = container
+      name_prefix = replace(random_id.containers__vpc_https[key].b64_url, "_", "-")
+      target_type = local.target_type[key]
+    }
+    if(
+      contains(keys(random_id.containers__vpc_https), key) &&
+      contains(keys(local.target_type), key)
+    )
+  }
+  name_prefix = each.value.name_prefix
+  port        = each.value.container.vpc.https.internal_http_port
   protocol    = "HTTP"
-  target_type = local.target_type[each.key]
+  target_type = each.value.target_type
   vpc_id      = aws_vpc.vpc.id
   depends_on = [
     aws_lb.vpc_http_https
   ]
   health_check {
-    path    = each.value.vpc.https.internal_http_health_check_path
-    timeout = try(each.value.vpc.https.internal_http_health_check_timeout, 5)
-    matcher = try(each.value.vpc.https.internal_http_health_check_success_status_codes, "200")
+    path    = each.value.container.vpc.https.internal_http_health_check_path
+    timeout = try(each.value.container.vpc.https.internal_http_health_check_timeout, 5)
+    matcher = try(each.value.container.vpc.https.internal_http_health_check_success_status_codes, "200")
   }
   stickiness {
     # "lb_cookie" is currently the only stickiness type.
     type = "lb_cookie"
     # 86400 seconds, or exactly 1 day, is the AWS default cookie duration when
     # stickiness is enabled.
-    cookie_duration = try(each.value.vpc.https.stickiness_cookie_duration_seconds, 86400)
+    cookie_duration = try(each.value.container.vpc.https.stickiness_cookie_duration_seconds, 86400)
     # only enable stickiness if the user sets how long it takes for the cookie to expire
-    enabled = can(each.value.vpc.https.stickiness_cookie_duration_seconds)
+    enabled = can(each.value.container.vpc.https.stickiness_cookie_duration_seconds)
   }
   tags = {
     Provose = var.provose_config.name
@@ -392,45 +452,76 @@ resource "aws_lb_target_group" "containers__vpc_https" {
 }
 
 resource "aws_lb_listener_rule" "containers__vpc_https" {
-  for_each     = local.containers_with_vpc_https
+  for_each = {
+    for key, container in local.containers_with_vpc_https :
+    key => {
+      container        = container
+      target_group_arn = aws_lb_target_group.containers__vpc_https[key].arn
+    }
+    if contains(keys(aws_lb_target_group.containers__vpc_https), key)
+  }
   listener_arn = aws_lb_listener.vpc_http_https__port_443[0].arn
   action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.containers__vpc_https[each.key].arn
+    target_group_arn = each.value.target_group_arn
   }
   condition {
     host_header {
-      values = each.value.vpc.https.vpc_dns_names
+      values = each.value.container.vpc.https.vpc_dns_names
     }
   }
 }
 
 resource "aws_ecs_service" "containers" {
-  for_each = var.containers
-  name     = each.key
-  # The platform version must be null when specifying an EC2 launch type.
-  # We need platform version 1.4.0 or better in order to use
-  # Amazon Elastic Filesystem (EFS) with Fargate instances.
-  platform_version = local.container_compatibility[each.key] == "EC2" ? null : "1.4.0"
-  desired_count    = each.value.instances.container_count
-  # If we are launching a Fargate container, then we use the
-  # "capacity_provider_strategy" block as opposed to a launch_type. We only
-  # use the launch_type for EC2 containers.
-  launch_type     = local.container_compatibility[each.key] == "EC2" ? "EC2" : null
-  cluster         = aws_ecs_cluster.containers[each.key].id
-  task_definition = aws_ecs_task_definition.containers[each.key].arn
+  for_each = {
+    for key, container in var.containers :
+    key => {
+      container = container
+      # The platform version must be null when specifying an EC2 launch type.
+      # We need platform version 1.4.0 or better in order to use
+      # Amazon Elastic Filesystem (EFS) with Fargate instances.
+      platform_version = local.container_compatibility[key] == "EC2" ? null : "1.4.0"
+      # If we are launching a Fargate container, then we use the
+      # "capacity_provider_strategy" block as opposed to a launch_type. We only
+      # use the launch_type for EC2 containers.
+      launch_type                 = local.container_compatibility[key] == "EC2" ? "EC2" : null
+      cluster_id                  = aws_ecs_cluster.containers[key].id
+      task_definition_arn         = aws_ecs_task_definition.containers[key].arn
+      target_group_arn            = aws_lb_target_group.containers__public_https[key].arn
+      task_definition_family      = aws_ecs_task_definition.containers[key].family
+      ecs_service_security_groups = local.ecs_service_security_groups[key]
+      assign_public_ip            = local.assign_public_ip_to_elastic_network_interface[key]
+    }
+    if(
+      contains(keys(local.container_compatibility), key) &&
+      contains(keys(aws_ecs_cluster.containers), key) &&
+      contains(keys(aws_ecs_task_definition.containers), key) &&
+      contains(keys(aws_lb_target_group.containers__public_https), key) &&
+      contains(keys(local.ecs_service_security_groups), key) &&
+      contains(keys(local.assign_public_ip_to_elastic_network_interface), key)
+    )
+  }
+
+  name = each.key
+
+  platform_version = each.value.platform_version
+  desired_count    = each.value.container.instances.container_count
+  launch_type      = each.value.launch_type
+  cluster          = each.value.cluster_id
+  task_definition  = each.value.task_definition_arn
 
   dynamic "capacity_provider_strategy" {
     for_each = {
       for capacity_provider_name in ["FARGATE", "FARGATE_SPOT"] :
       capacity_provider_name => capacity_provider_name
-      if capacity_provider_name == each.value.instances.instance_type
+      if capacity_provider_name == each.value.container.instances.instance_type
     }
     content {
-      capacity_provider = each.value.instances.instance_type
+      capacity_provider = each.value.container.instances.instance_type
       weight            = 1
     }
   }
+
   dynamic "load_balancer" {
     for_each = {
       for name, target_group in aws_lb_target_group.containers__public_https :
@@ -441,9 +532,9 @@ resource "aws_ecs_service" "containers" {
       )
     }
     content {
-      target_group_arn = aws_lb_target_group.containers__public_https[each.key].arn
-      container_name   = aws_ecs_task_definition.containers[each.key].family
-      container_port   = each.value.public.https.internal_http_port
+      target_group_arn = each.value.target_group_arn
+      container_name   = each.value.task_definition_family
+      container_port   = each.value.container.public.https.internal_http_port
     }
   }
 
@@ -457,9 +548,9 @@ resource "aws_ecs_service" "containers" {
       )
     }
     content {
-      target_group_arn = aws_lb_target_group.containers__vpc_https[each.key].arn
-      container_name   = aws_ecs_task_definition.containers[each.key].family
-      container_port   = each.value.vpc.https.internal_http_port
+      target_group_arn = each.value.target_group_arn
+      container_name   = each.value.task_definition_family
+      container_port   = each.value.container.public.https.internal_http_port
     }
   }
 
@@ -473,8 +564,8 @@ resource "aws_ecs_service" "containers" {
     }
     content {
       subnets          = aws_subnet.vpc[*].id
-      security_groups  = local.ecs_service_security_groups[each.key]
-      assign_public_ip = local.assign_public_ip_to_elastic_network_interface[each.key]
+      security_groups  = each.value.ecs_service_security_groups
+      assign_public_ip = each.value.assign_public_ip
     }
   }
 
@@ -619,10 +710,10 @@ data "aws_route53_zone" "external_dns__for_containers" {
 }
 
 resource "aws_route53_record" "containers__public_https" {
-  for_each = { for x in local.container_public_https_dns_names : x => x }
+  for_each = data.aws_route53_zone.external_dns__for_containers
 
-  zone_id = data.aws_route53_zone.external_dns__for_containers[each.key].zone_id
-  name    = each.value
+  zone_id = each.value.zone_id
+  name    = each.key
   type    = "A"
   alias {
     name                   = aws_lb.public_http_https[0].dns_name
@@ -632,8 +723,8 @@ resource "aws_route53_record" "containers__public_https" {
 }
 
 resource "aws_acm_certificate" "containers__public_https" {
-  for_each          = { for x in local.container_public_https_dns_names : x => x }
-  domain_name       = each.value
+  for_each          = aws_route53_record.containers__public_https
+  domain_name       = each.key
   validation_method = "DNS"
   options {
     certificate_transparency_logging_preference = "ENABLED"
@@ -652,9 +743,16 @@ resource "aws_route53_record" "containers__public_https_validation" {
 }
 
 resource "aws_acm_certificate_validation" "containers__public_https_validation" {
-  for_each                = aws_acm_certificate.containers__public_https
-  certificate_arn         = each.value.arn
-  validation_record_fqdns = [aws_route53_record.containers__public_https_validation[each.key].fqdn]
+  for_each = {
+    for key, certificate in aws_acm_certificate.containers__public_https :
+    key => {
+      certificate_arn         = certificate.arn
+      validation_record_fqdns = [aws_route53_record.containers__public_https_validation[key].fqdn]
+    }
+    if contains(keys(aws_route53_record.containers__public_https_validation), key)
+  }
+  certificate_arn         = each.value.certificate_arn
+  validation_record_fqdns = each.value.validation_record_fqdns
 }
 
 resource "aws_lb_listener_certificate" "containers__public_https_validation" {

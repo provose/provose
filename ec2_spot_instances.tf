@@ -119,21 +119,28 @@ resource "aws_iam_role" "ec2_spot_instances" {
 # AWS Secrets Manager secrets.
 resource "aws_iam_role_policy" "ec2_spot_instances__secrets" {
   for_each = {
-    for key, val in local.ec2_spot_instances__times_count :
-    key => val
-    if length(try(val.secrets, {})) > 0
+    for key, spot_instance in local.ec2_spot_instances__times_count :
+    key => {
+      spot_instance = spot_instance
+      iam_role      = aws_iam_role.ec2_spot_instances[key].id
+    }
+    if(
+      length(try(spot_instance.secrets, {})) > 0 &&
+      contains(keys(aws_iam_role.ec2_spot_instances), key)
+    )
   }
 
   name = "P-v1---${var.provose_config.name}---ec2-spot-${each.key}---secrets"
-  role = aws_iam_role.ec2_spot_instances[each.key].id
+  role = each.value.iam_role
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
       Effect = "Allow"
       Action = ["secretsmanager:GetSecretValue"]
       Resource = [
-        for env_var_name, secret_name in each.value.secrets :
+        for env_var_name, secret_name in each.value.spot_instance.secrets :
         aws_secretsmanager_secret.secrets[secret_name].arn
+        if contains(keys(aws_secretsmanager_secret.secrets), secret_name)
       ]
     }]
   })
@@ -167,15 +174,9 @@ resource "aws_spot_instance_request" "ec2_spot_instances" {
   # Spot instance-specific parameters
   wait_for_fulfillment = true
 
-  spot_price = try(
-    local.ec2_spot_instances__times_count[each.key].spot_price,
-    null
-  )
+  spot_price = try(each.value.ec2.spot_price, null)
 
-  spot_type = try(
-    local.ec2_spot_instances__times_count[each.key].spot_type,
-    "persistent"
-  )
+  spot_type = try(each.value.ec2.spot_type, "persistent")
 
   # Terraform does not apply the `tags` from the `aws_spot_instance_request`
   # to the actual EC2 instance spawned from the request.
@@ -200,76 +201,58 @@ EOF
 
   # =====================================
   # Parameters in common with ec2_on_demand_instances
-  for_each = aws_security_group.ec2_spot_instances
+  for_each = {
+    for key, security_group in aws_security_group.ec2_spot_instances :
+    key => {
+      security_group_id = security_group.id
+      ec2               = local.ec2_spot_instances__times_count[key]
+      subnet_id = (
+        can(local.ec2_spot_instances__times_count[key].instances.availability_zone) ?
+        local.vpc__map_availability_zone_to_subnet_id[
+          local.ec2_spot_instances__times_count[key].instances.availability_zone
+        ] : aws_subnet.vpc[0].id
+      )
+      default_iam_instance_profile = module.aws_iam_instance_profile__ec2_spot_instances.instance_profiles[key].name
+    }
+    if contains(keys(local.ec2_spot_instances__times_count), key)
+  }
 
   # Required parameters
-  instance_type = local.ec2_spot_instances__times_count[each.key].instances.instance_type
+  instance_type = each.value.ec2.instances.instance_type
 
-  key_name = try(
-    local.ec2_spot_instances__times_count[each.key].instances.key_name,
-    null
-  )
-  ami = try(
-    local.ec2_spot_instances__times_count[each.key].instances.ami_id,
-    data.aws_ami.amazon_linux_2_ecs_gpu_hvm_ebs.id
-  )
+  key_name = try(each.value.ec2.instances.key_name, null)
+  ami      = try(each.value.ec2.instances.ami_id, data.aws_ami.amazon_linux_2_ecs_gpu_hvm_ebs.id)
   # If the user is offering their own choice of Availability Zones, then AWS requires that we also
   # specify the corresponding subnet ID. Provose sets up a VPC with a subnet for every
   # Availability Zone, so when provided with an Availability Zone, we look up the corresponding
   # subnet.
   # If the user leaves the Availability Zone blank, then we put this instance in the first
   # subnet.
-  availability_zone = try(
-    local.ec2_spot_instances__times_count[each.key].instances.availability_zone,
-    null
-  )
-  subnet_id = (
-    can(local.ec2_spot_instances__times_count[each.key].instances.availability_zone) ?
-    local.vpc__map_availability_zone_to_subnet_id[
-      local.ec2_spot_instances__times_count[each.key].instances.availability_zone
-    ] : aws_subnet.vpc[0].id
-  )
+  availability_zone = try(each.value.ec2.instances.availability_zone, null)
+  subnet_id         = each.value.subnet_id
 
-  associate_public_ip_address = try(
-    local.ec2_spot_instances__times_count[each.key].associate_public_ip_address,
-    true
-  )
+  associate_public_ip_address = try(each.value.ec2.associate_public_ip_address, true)
   # We created one Security Group based on the ports opened by the input keys
   # public.tcp, public.udp, vpc.tcp, vpc.udp. Then we allow the end user to specify
   # additional Security Groups that might have more granular CIDRs.
   vpc_security_group_ids = concat(
-    [each.value.id],
-    try(local.ec2_spot_instances__times_count[each.key].vpc_security_group_ids, [])
+    [each.value.security_group_id],
+    try(each.value.ec2.vpc_security_group_ids, [])
   )
-  iam_instance_profile = try(
-    local.ec2_spot_instances__times_count[each.key].iam_instance_profile,
-    module.aws_iam_instance_profile__ec2_spot_instances.instance_profiles[each.key].name
-  )
+  iam_instance_profile = try(each.value.ec2.iam_instance_profile, each.value.default_iam_instance_profile)
 
   root_block_device {
-    volume_type = try(local.ec2_spot_instances__times_count[each.key].root_block_device.volume_type, null)
+    volume_type = try(each.value.ec2.root_block_device.volume_type, null)
     volume_size = max(
-      try(local.ec2_spot_instances__times_count[each.key].root_block_device.volume_size_gb, 0),
+      try(each.value.ec2.root_block_device.volume_size_gb, 0),
       local.minimum_aws_ami_root_volume_size_gb
     )
-    delete_on_termination = try(
-      local.ec2_spot_instances__times_count[each.key].root_block_device.delete_on_termination,
-      true
-    )
-    encrypted = try(
-      local.ec2_spot_instances__times_count[each.key].root_block_device.encrypted,
-      false
-    )
-    kms_key_id = try(
-      local.ec2_spot_instances__times_count[each.key].root_block_device.kms_key_id,
-      null
-    )
+    delete_on_termination = try(each.value.ec2.root_block_device.delete_on_termination, true)
+    encrypted             = try(each.value.ec2.root_block_device.encrypted, false)
+    kms_key_id            = try(each.value.ec2.root_block_device.kms_key_id, null)
   }
 
-  user_data = try(
-    local.ec2_spot_instances__times_count[each.key].instances.bash_user_data,
-    null
-  )
+  user_data = try(each.value.ec2.instances.bash_user_data, null)
 
   tags = {
     Name    = each.key

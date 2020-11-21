@@ -8,9 +8,16 @@ resource "aws_secretsmanager_secret" "secrets" {
 }
 
 resource "aws_secretsmanager_secret_version" "secrets" {
-  for_each      = aws_secretsmanager_secret.secrets
-  secret_id     = each.value.id
-  secret_string = var.secrets[each.key]
+  for_each = {
+    for key, secret in aws_secretsmanager_secret.secrets :
+    key => {
+      secret_id     = secret.id
+      secret_string = var.secrets[key]
+    }
+    if contains(keys(var.secrets), key)
+  }
+  secret_id     = each.value.secret_id
+  secret_string = each.value.secret_string
 }
 
 # == Output ==

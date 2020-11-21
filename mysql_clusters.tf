@@ -57,16 +57,16 @@ locals {
 }
 
 resource "aws_rds_cluster_parameter_group" "mysql_clusters" {
-  for_each    = var.mysql_clusters
+  for_each    = local.mysql_clusters__parameter_group_family
   name        = "p-v1-${var.provose_config.name}-${each.key}-mysql-cluster-pg"
-  family      = local.mysql_clusters__parameter_group_family[each.key]
+  family      = each.value
   description = "Provose cluster parameter group for AWS Aurora MySQL, for module ${var.provose_config.name} and cluster ${each.key}"
 }
 
 resource "aws_db_parameter_group" "mysql_clusters" {
-  for_each    = var.mysql_clusters
+  for_each    = local.mysql_clusters__parameter_group_family
   name        = "p-v1-${var.provose_config.name}-${each.key}-mysql-db-pg"
-  family      = local.mysql_clusters__parameter_group_family[each.key]
+  family      = each.value
   description = "Provose database parameter group for AWS Aurora MySQL, for module ${var.provose_config.name} and cluster ${each.key}"
   parameter {
     name         = "max_connections"
@@ -76,30 +76,41 @@ resource "aws_db_parameter_group" "mysql_clusters" {
 }
 
 resource "aws_rds_cluster" "mysql_clusters" {
-  for_each = var.mysql_clusters
+  for_each = {
+    for key, database in var.mysql_clusters :
+    key => {
+      database             = database
+      parameter_group_name = aws_rds_cluster_parameter_group.mysql_clusters[key].name
+      # We generate final snapshot identifiers with random names so that there
+      # are no conflicts when the user creates a database, destroys it (creating the
+      # final snapshot), and then tries to create and destroy the database again.
+      # The snapshot identifier is also not allowed to have two consecutive hyphens
+      # so we make sure to remove that from the database name.
+      # The final snapshot name must be a maxiumum of 255 characters.
+      final_snapshot_identifier = "p-v1-${replace(var.provose_config.name, "--", "-")}-mysql-fs-${random_string.mysql_clusters__final_snapshot_id[key].result}"
+    }
+    if(
+      contains(keys(aws_rds_cluster_parameter_group.mysql_clusters), key) &&
+      contains(keys(random_string.mysql_clusters__final_snapshot_id), key)
+    )
+  }
 
-  apply_immediately               = try(each.value.apply_immediately, true)
+  apply_immediately               = try(each.value.database.apply_immediately, true)
   engine                          = "aurora-mysql"
   engine_mode                     = "provisioned"
   cluster_identifier              = each.key
-  master_username                 = try(each.value.username, "root")
-  master_password                 = each.value.password
+  master_username                 = try(each.value.database.username, "root")
+  master_password                 = each.value.database.password
   vpc_security_group_ids          = [aws_security_group.mysql_clusters[0].id]
-  engine_version                  = each.value.engine_version
+  engine_version                  = each.value.database.engine_version
   db_subnet_group_name            = aws_db_subnet_group.mysql_clusters[0].name
-  db_cluster_parameter_group_name = aws_rds_cluster_parameter_group.mysql_clusters[each.key].name
-  database_name                   = each.value.database_name
-  snapshot_identifier             = try(each.value.snapshot_identifier, null)
-  deletion_protection             = try(each.value.deletion_protection, true)
+  db_cluster_parameter_group_name = each.value.parameter_group_name
+  database_name                   = each.value.database.database_name
+  snapshot_identifier             = try(each.value.database.snapshot_identifier, null)
+  deletion_protection             = try(each.value.database.deletion_protection, true)
   copy_tags_to_snapshot           = true
-  # We generate final snapshot identifiers with random names so that there
-  # are no conflicts when the user creates a database, destroys it (creating the
-  # final snapshot), and then tries to create and destroy the database again.
-  # The snapshot identifier is also not allowed to have two consecutive hyphens
-  # so we make sure to remove that from the database name.
-  # The final snapshot name must be a maxiumum of 255 characters.
-  final_snapshot_identifier = "p-v1-${replace(var.provose_config.name, "--", "-")}-mysql-fs-${random_string.mysql_clusters__final_snapshot_id[each.key].result}"
-  skip_final_snapshot       = false
+  final_snapshot_identifier       = each.value.final_snapshot_identifier
+  skip_final_snapshot             = false
   tags = {
     Provose = var.provose_config.name
   }

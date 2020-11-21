@@ -83,23 +83,34 @@ data "aws_route53_zone" "https_redirects" {
 
 # Tells the load balancer how to do the redirect.
 resource "aws_lb_listener_rule" "https_redirects" {
-  for_each     = aws_route53_record.https_redirects
+  for_each = {
+    for key, record in aws_route53_record.https_redirects :
+    key => {
+      url_parts          = local.https_redirects__url_parts[key]
+      status_code        = "HTTP_${try(var.https_redirects[key].status_code, 301)}"
+      host_header_values = [key]
+    }
+    if(
+      contains(keys(local.https_redirects__url_parts), key) &&
+      contains(keys(var.https_redirects), key)
+    )
+  }
   listener_arn = aws_lb_listener.public_http_https__443[0].arn
   action {
     type = "redirect"
     redirect {
-      host        = local.https_redirects__url_parts[each.key].host
-      port        = local.https_redirects__url_parts[each.key].port
-      path        = local.https_redirects__url_parts[each.key].path
-      query       = local.https_redirects__url_parts[each.key].query
-      protocol    = local.https_redirects__url_parts[each.key].protocol
-      status_code = "HTTP_${try(var.https_redirects[each.key].status_code, 301)}"
+      host        = each.value.url_parts.host
+      port        = each.value.url_parts.port
+      path        = each.value.url_parts.path
+      query       = each.value.url_parts.query
+      protocol    = each.value.url_parts.protocol
+      status_code = each.value.status_code
     }
   }
 
   condition {
     host_header {
-      values = [each.key]
+      values = each.value.host_header_values
     }
   }
 }

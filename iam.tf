@@ -48,21 +48,28 @@ module "aws_iam_instance_profile__containers" {
 
 resource "aws_iam_role_policy" "iam__ecs_task_execution_role_policy_for_secrets" {
   for_each = {
-    for key, val in var.containers :
-    key => val
-    if length(try(val.secrets, {})) > 0
+    for key, container in var.containers :
+    key => {
+      container = container
+      role      = aws_iam_role.iam__ecs_task_execution_role[key]
+    }
+    if(
+      length(try(container.secrets, {})) > 0 &&
+      contains(keys(aws_iam_role.iam__ecs_task_execution_role), key)
+    )
   }
   # TODO: This name here is too long. We need to replace it with a better one.
   name = "P-v1---${var.provose_config.name}---${each.key}---iam-ecs-task-execution-role-policy-for-secrets"
-  role = aws_iam_role.iam__ecs_task_execution_role[each.key].id
+  role = each.value.role.id
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
       Effect = "Allow"
       Action = ["secretsmanager:GetSecretValue"]
       Resource = [
-        for env_var_name, secret_name in each.value.secrets :
+        for env_var_name, secret_name in each.value.container.secrets :
         aws_secretsmanager_secret.secrets[secret_name].arn
+        if contains(keys(aws_secretsmanager_secret.secrets), secret_name)
       ]
     }]
   })
@@ -77,9 +84,10 @@ resource "aws_iam_role_policy" "iam__ecs_task_execution_role_policy_for_secrets"
 # and joining of CloudWatch stuff.
 # TODO: Tighten this up so that containers only have the specific permissions on the instances needed.
 resource "aws_iam_role_policy" "iam" {
-  for_each = var.containers
+  #  for_each = var.containers
+  for_each = aws_iam_role.iam__ecs_task_execution_role
   name     = "P-v1---${var.provose_config.name}---${each.key}---r-p"
-  role     = aws_iam_role.iam__ecs_task_execution_role[each.key].id
+  role     = each.value.id
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{

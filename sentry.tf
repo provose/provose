@@ -159,8 +159,8 @@ resource "random_id" "sentry" {
 }
 
 resource "aws_lb_target_group" "sentry" {
-  for_each = aws_instance.sentry
-  name     = "tg-${replace(random_id.sentry[each.key].b64_url, "_", "-")}"
+  for_each = random_id.sentry
+  name     = "tg-${replace(each.value.b64_url, "_", "-")}"
   port     = 9000
   protocol = "HTTP"
   vpc_id   = aws_vpc.vpc.id
@@ -171,12 +171,12 @@ resource "aws_lb_target_group" "sentry" {
 }
 
 resource "aws_lb_listener_rule" "sentry" {
-  for_each     = aws_instance.sentry
+  for_each     = aws_lb_target_group.sentry
   listener_arn = aws_lb_listener.vpc_http_https__port_443[0].arn
 
   action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.sentry[each.key].arn
+    target_group_arn = each.value.arn
   }
 
   condition {

@@ -48,7 +48,6 @@ resource "aws_security_group" "public_http_https" {
 }
 
 resource "aws_lb" "public_http_https" {
-  #  count              = local.public_http_https_load_balancer_enabled ? 1 : 0
   for_each = {
     for key in range(local.public_http_https_load_balancer_enabled ? 1 : 0) :
     key => key
@@ -72,10 +71,8 @@ resource "aws_lb" "public_http_https" {
 }
 
 resource "aws_lb_listener" "public_http_https__443" {
-  #  count             = local.public_http_https_load_balancer_enabled ? 1 : 0
-  #  count             = length(aws_lb.public_http_https)
   for_each          = aws_lb.public_http_https
-  load_balancer_arn = aws_lb.public_http_https[each.key].arn
+  load_balancer_arn = each.value.arn
   port              = 443
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2016-08"
@@ -97,10 +94,8 @@ resource "aws_lb_listener" "public_http_https__443" {
 }
 
 resource "aws_lb_listener" "public_http_https__80" {
-  #  count             = local.public_http_https_load_balancer_enabled ? 1 : 0
-  #  count             = length(aws_lb.public_http_https)
   for_each          = aws_lb.public_http_https
-  load_balancer_arn = aws_lb.public_http_https[each.key].arn
+  load_balancer_arn = each.value.arn
   port              = 80
   protocol          = "HTTP"
 

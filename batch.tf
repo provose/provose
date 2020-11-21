@@ -153,19 +153,34 @@ resource "aws_security_group" "batch" {
 }
 
 resource "aws_batch_compute_environment" "batch" {
-  for_each = var.batch
+  for_each = {
+    for key, val in var.batch :
+    key => {
+      config                  = val
+      instance_role_arn       = module.aws_iam_instance_profile__batch__execution_role.instance_profiles[key].arn
+      service_role_arn        = aws_iam_role.batch__service_role[key].arn
+      spot_iam_fleet_role_arn = aws_iam_role.batch__spot_fleet_role[key].arn
+      security_group_ids      = [aws_security_group.batch[key].id]
+    }
+    if(
+      contains(keys(module.aws_iam_instance_profile__batch__execution_role.instance_profiles), key) &&
+      contains(keys(aws_iam_role.batch__service_role), key) &&
+      contains(keys(aws_iam_role.batch__spot_fleet_role), key) &&
+      contains(keys(aws_security_group.batch), key)
+    )
+  }
 
   compute_resources {
-    instance_role       = module.aws_iam_instance_profile__batch__execution_role.instance_profiles[each.key].arn
-    spot_iam_fleet_role = aws_iam_role.batch__spot_fleet_role[each.key].arn
+    instance_role       = each.value.instance_role_arn
+    spot_iam_fleet_role = each.value.spot_iam_fleet_role_arn
     # TODO: Let the user set the bid percentage for AWS Batch compute environments with Spot Instances.
     bid_percentage     = 100
-    instance_type      = each.value.instances.instance_types
-    type               = each.value.instances.compute_environment_type
-    max_vcpus          = each.value.instances.max_vcpus
-    min_vcpus          = each.value.instances.min_vcpus
-    image_id           = try(each.value.instances.ami_id, null)
-    security_group_ids = [aws_security_group.batch[each.key].id]
+    instance_type      = each.value.config.instances.instance_types
+    type               = each.value.config.instances.compute_environment_type
+    max_vcpus          = each.value.config.instances.max_vcpus
+    min_vcpus          = each.value.config.instances.min_vcpus
+    image_id           = try(each.value.config.instances.ami_id, null)
+    security_group_ids = each.value.security_group_ids
     subnets            = aws_subnet.vpc[*].id
     tags = {
       Provose       = var.provose_config.name
@@ -173,7 +188,7 @@ resource "aws_batch_compute_environment" "batch" {
     }
   }
 
-  service_role = aws_iam_role.batch__service_role[each.key].arn
+  service_role = each.value.service_role_arn
   type         = "MANAGED"
   depends_on = [
     aws_iam_role_policy_attachment.batch__service_role,
