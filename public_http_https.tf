@@ -2,7 +2,8 @@ locals {
   # This is true when we enable other resources that need
   # the public-facing load balancer to be provisioned.
   public_http_https_load_balancer_enabled = (
-    length(local.containers_with_public_https) > 0
+    length(local.containers_with_public_https) +
+    length(var.https_redirects) > 0
   )
 }
 
