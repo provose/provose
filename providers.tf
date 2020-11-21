@@ -34,7 +34,7 @@ locals {
 
 # TODO: There are many ways to authenticate to AWS. We should support them all.
 provider "aws" {
-  region     = var.provose_config.authentication.aws.region
+  region     = try(var.provose_config.authentication.aws.region, null)
   access_key = local.aws_access_key
   secret_key = local.aws_secret_key
 }
