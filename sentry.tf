@@ -138,6 +138,12 @@ USER_DATA
     Name    = "${var.provose_config.name}-sentry"
     Provose = var.provose_config.name
   }
+  lifecycle {
+    ignore_changes = [
+      # Amazon SSM Agent sometimes changes the instance profile.
+      iam_instance_profile,
+    ]
+  }
 }
 
 resource "aws_lb_target_group_attachment" "sentry" {

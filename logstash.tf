@@ -111,6 +111,12 @@ TEMPLATE
 systemctl start logstash
 USER_DATA
 
+  lifecycle {
+    ignore_changes = [
+      # Amazon SSM Agent sometimes changes the instance profile.
+      iam_instance_profile,
+    ]
+  }
 }
 
 resource "aws_route53_record" "logstash" {
