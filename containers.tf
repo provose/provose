@@ -251,8 +251,8 @@ resource "aws_ecs_task_definition" "containers" {
         secret_env_name => aws_secretsmanager_secret_version.secrets[secret_text_name].arn
         if contains(keys(aws_secretsmanager_secret_version.secrets), secret_text_name)
       }
-      efs_volumes = try(each.value.efs_volumes, {})
-      bind_mounts = try(each.value.bind_mounts, [])
+      efs_volumes = try(each.value.container.efs_volumes, {})
+      bind_mounts = try(each.value.container.bind_mounts, [])
     }
   )
 
@@ -260,7 +260,7 @@ resource "aws_ecs_task_definition" "containers" {
     for_each = {
       for key, val in aws_efs_file_system.elastic_file_systems :
       key => val
-      if can(each.value.efs_volumes[key])
+      if can(each.value.container.efs_volumes[key])
     }
 
     content {
@@ -268,13 +268,13 @@ resource "aws_ecs_task_definition" "containers" {
 
       efs_volume_configuration {
         file_system_id = aws_efs_file_system.elastic_file_systems[volume.key].id
-        root_directory = try(each.value.efs_volumes[volume.key].host_mount, null)
+        root_directory = try(each.value.container.efs_volumes[volume.key].host_mount, null)
       }
     }
   }
   dynamic "volume" {
     for_each = {
-      for volume_name, volume_config in try(each.value.bind_mounts, {}) :
+      for volume_name, volume_config in try(each.value.container.bind_mounts, {}) :
       volume_name => volume_config
     }
     content {
@@ -487,8 +487,6 @@ resource "aws_ecs_service" "containers" {
       launch_type                 = local.container_compatibility[key] == "EC2" ? "EC2" : null
       cluster_id                  = aws_ecs_cluster.containers[key].id
       task_definition_arn         = aws_ecs_task_definition.containers[key].arn
-      target_group_arn            = aws_lb_target_group.containers__public_https[key].arn
-      task_definition_family      = aws_ecs_task_definition.containers[key].family
       ecs_service_security_groups = local.ecs_service_security_groups[key]
       assign_public_ip            = local.assign_public_ip_to_elastic_network_interface[key]
     }
@@ -496,7 +494,6 @@ resource "aws_ecs_service" "containers" {
       contains(keys(local.container_compatibility), key) &&
       contains(keys(aws_ecs_cluster.containers), key) &&
       contains(keys(aws_ecs_task_definition.containers), key) &&
-      contains(keys(aws_lb_target_group.containers__public_https), key) &&
       contains(keys(local.ecs_service_security_groups), key) &&
       contains(keys(local.assign_public_ip_to_elastic_network_interface), key)
     )
@@ -532,8 +529,8 @@ resource "aws_ecs_service" "containers" {
       )
     }
     content {
-      target_group_arn = each.value.target_group_arn
-      container_name   = each.value.task_definition_family
+      target_group_arn = aws_lb_target_group.containers__public_https[each.key].arn
+      container_name   = aws_ecs_task_definition.containers[each.key].family
       container_port   = each.value.container.public.https.internal_http_port
     }
   }
@@ -548,9 +545,9 @@ resource "aws_ecs_service" "containers" {
       )
     }
     content {
-      target_group_arn = each.value.target_group_arn
-      container_name   = each.value.task_definition_family
-      container_port   = each.value.container.public.https.internal_http_port
+      target_group_arn = aws_lb_target_group.containers__vpc_https[each.key].arn
+      container_name   = aws_ecs_task_definition.containers[each.key].family
+      container_port   = each.value.container.vpc.https.internal_http_port
     }
   }
 
