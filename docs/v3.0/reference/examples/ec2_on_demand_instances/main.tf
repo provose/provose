@@ -1,5 +1,5 @@
 module "myproject" {
-  source = "github.com/provose/provose?ref=v3.0.0-beta1"
+  source = "github.com/provose/provose?ref=v3.0.0"
   provose_config = {
     authentication = {
       aws = {
