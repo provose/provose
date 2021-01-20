@@ -8,7 +8,7 @@ Provose is a Terraform module that deploys hundreds of underlying cloud resource
 
 Provose is distributed under the MIT license. You can download Provose at [github.com/provose/provose](https://github.com/provose/provose), which is also where you can also submit bug reports and contribute improvements.
 
-## Learn Provose from [Tutorial](https://provose.com/v1.0/tutorial/) or the [Reference](https://provose.com/v1.0/reference/).
+## Learn Provose from [Tutorial](https://provose.com/v3.0/tutorial/) or the [Reference](https://provose.com/v3.0/reference/).
 
 Provose is easy to learn. You can get started with just a few lines of code.
 
@@ -73,7 +73,15 @@ module "myproject" {
 
 ```
 
-You can also take a look at how to use Provose to provision [MySQL](https://provose.com/v1.0/reference/mysql_clusters/), [PostgreSQL](https://provose.com/v1.0/reference/postgresql_clusters/), [Elasticsearch](https://provose.com/v1.0/reference/elasticsearch_clusters/), [Redis](https://provose.com/v1.0/reference/redis_clusters/), and [Elastic Container Service](https://provose.com/v1.0/reference/containers/) clusters _and a lot more_ on Amazon Web Services.
+You can also take a look at how to use Provose to provision:
+ * [MySQL](/v3.0/reference/mysql_clusters/)
+ * [PostgreSQL](/v3.0/reference/postgresql_clusters/)
+ * [Elasticsearch](/v3.0/reference/elasticsearch_clusters/)
+ * [Redis](/v3.0/reference/redis_clusters/)
+ * [Lustre](/v3.0/reference/lustre_file_systems/)
+ * [bare EC2 instances](/v3.0/reference/ec2_on_demand_instances/)
+
+and a lot more on Amazon Web Services.
 
 ## How to report a security issue
 
@@ -89,4 +97,4 @@ If you want to build and deploy Docker images with Provose, you will also need t
 
 ## Installation
 
-Follow the [Tutorial](https://provose.com/v1.0/tutorial/) for instructions on how to install and use Provose.
+Follow the [Tutorial](https://provose.com/v3.0/tutorial/) for instructions on how to install and use Provose.
