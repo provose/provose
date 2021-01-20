@@ -18,12 +18,11 @@ Provose is easy to learn. You can get started with just a few lines of code.
 
 ## Here is what Provose code looks like.
 
-Below is an example of what Provose looks like, provisioning
-[a single AWS EC2 instance](https://provose.com/v1.0/reference/aws_instance.html):
+Below is an example of what Provose looks like, provisioning a [container serving HTTP traffic on AWS Fargate](/v3.0/reference/containers/):
 
 ```terraform
 module "myproject" {
-  source = "github.com/provose/provose?ref=v1.0.0"
+  source = "github.com/provose/provose?ref=v3.0.0"
   provose_config = {
     authentication = {
       aws = {
@@ -31,19 +30,47 @@ module "myproject" {
       }
     }
     name                 = "myproject"
+    # Provose requires a domain name to be used for internal purposes.
+    # This allows us to protect internal services using
+    # AWS Certificate Manager (ACM) certificates.
     internal_root_domain = "example-internal.com"
     internal_subdomain   = "production"
   }
-  ec2_instances = {
-    my-instance = {
-      public_tcp        = [22]
-      purchasing_option = "ON_DEMAND"
+  containers = {
+    hello = {
+      image = {
+        # This is the name of a publicly-available container on DockerHub.
+        # Private Elastic Container Registry (ECR) containers can also be used.
+        name             = "nginxdemos/hello"
+        # This is a container tag on DockerHub.
+        tag              = "latest"
+        private_registry = false
+      }
+      public = {
+        https = {
+          internal_http_port              = 80
+          internal_http_health_check_path = "/"
+          # You need to have example.com as a domain in your AWS
+          # account with DNS managed by Route 53.
+          # Provose will set up an Application Load Balancer serving
+          # HTTP and HTTPS traffic to this group of containers.
+          public_dns_names                = ["hello.example.com"]
+        }
+      }
       instances = {
-        instance_type = "t3.micro"
+        # Set this to an EC2 instance type to use AWS ECS-EC2
+        # or FARGATE_SPOT to automatically save money by using Spot
+        # instances.
+        instance_type   = "FARGATE"
+        container_count = 1
+        cpu             = 256
+        memory          = 512
       }
     }
   }
 }
+
+
 ```
 
 You can also take a look at how to use Provose to provision [MySQL](https://provose.com/v1.0/reference/mysql_clusters/), [PostgreSQL](https://provose.com/v1.0/reference/postgresql_clusters/), [Elasticsearch](https://provose.com/v1.0/reference/elasticsearch_clusters/), [Redis](https://provose.com/v1.0/reference/redis_clusters/), and [Elastic Container Service](https://provose.com/v1.0/reference/containers/) clusters _and a lot more_ on Amazon Web Services.
