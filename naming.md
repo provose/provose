@@ -22,7 +22,7 @@ The below example is an abbreviated version of a configuration that would create
 
 ```terraform
 module "example1" {
-  source = "github.com/provose/provose?ref=v1.0.0"
+  source = "github.com/provose/provose?ref=v3.0.0"
   provose_config = {
     authentication = {
         ...
@@ -55,7 +55,7 @@ module "example1" {
 }
 
 module "example2" {
-  source = "github.com/provose/provose?ref=v1.0.0"
+  source = "github.com/provose/provose?ref=v3.0.0"
   provose_config = {
     authentication = {
         ...
