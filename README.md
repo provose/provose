@@ -10,7 +10,7 @@ Provose is distributed under the MIT license. You can download Provose at [githu
 
 ## Learn Provose from [Tutorial](https://provose.com/v3.0/tutorial/) or the [Reference](https://provose.com/v3.0/reference/).
 
-Provose is easy to learn. You can get started with just a few lines of code.
+Provose is easy to learn. You can get started with just a few lines of code. You can also find an example of setting up a [Ghost.org blog on Amazon Web Services using Provose](https://github.com/provose/provose-ghost-website-example).
 
 ## Subscribe to the Provose newsletter for updates
 
