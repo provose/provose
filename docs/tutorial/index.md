@@ -28,7 +28,7 @@ If you have ideas on improving this tutorial, please [file an issue](https://git
 
 Provose requires that you have a top-level domain name in your AWS account that will be delegated to serving internal services.
 
-This domain name will be used as the base DNS name for EC2 instances, load balancers, databases, and other services that are **not** exposed to the public internet. However, Provose needs this to be a real, registered public domain name so that Provose can register Amazon Certificate Manager security certificates with it.
+This domain name is used as the root DNS name for service discovery internal to the VPC--**not** exposed to the public Internet. Provose needs this to be a real, registered public domain name attached to your AWS account so Provose can register AWS Certificate Manager (ACM) TLS certificates. These certificates are used to encrypt and authenticate traffic within the VPC.
 
 If your company's main website is served on `example.com`, you should purchase another domain, such as `example-internal.com` for Provose. This domain name may host a few publicly-accessible instances, such as SSH "bastion" hosts or VPN endpoints, but mostly will only be used to route network requests within Virtual Private Clouds (VPCs) that Provose creates.
 
@@ -56,7 +56,20 @@ The `docker` command is currently only required if you want to build and upload 
 
 Provose strongly discourages placing credentials in code.
 
-If you want to run Provose (and its underlying Terraform setup) on your local machine, we recommend placing your credentials in the `.aws/credentials` file in your home directory, with additional configuration in the `.aws/config` directory. The AWS documentation has more information on [setting up configuration and credential files](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html).
+If you want to run Provose (and its underlying Terraform setup) on your local machine, we recommend placing your credentials in the `~/.aws/credentials` file in your home directory, with additional configuration in the `~/.aws/config` directory. The AWS documentation has more information on [setting up configuration and credential files](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html).
+
+An example `~/.aws/credentials` file might look like:
+```
+[my_profile_name]
+aws_access_key_id = ...
+aws_secret_access_key = ...
+```
+
+and an example '~/.aws/config` file might look like:
+```
+[my-profile-name]
+region = us-east-1
+```
 
 If you have multiple sets of credentials in these files, you can tell Provose which credentials you want to use with the `AWS_PROFILE` environment variable.
 
@@ -66,13 +79,14 @@ If you are running Provose on an AWS EC2 instance, Provose can use the credentia
 
 ## Set up an S3 bucket to store Terraform state
 
-Terraform operates by tracking the state of your AWS configuration and then applying any differences between your local Terraform files and the state. By default, Terraform stores state information in a local file named `terraform.tfstate`, but Terraform [can also work with state stored remotely in the cloud](https://www.terraform.io/docs/state/remote.html).
+By default, Terraform stores state about your resources in a local file called `terraform.tfstate`. Terraform is also capable of storing this state in [various remote backends](https://www.terraform.io/docs/state/remote.html) like an Amazon S3 bucket. Terraform's [enterprise version](https://www.hashicorp.com/products/terraform/) also offers remote state storage, but that is beyond the scope of this tutorial. All features of Provose are available through the free and open-source version of Terraform.
 
-Provose recommends that you store your Terraform state in an Amazon S3 bucket that is accessible to every user that needs to run Terraform, but nobody else. Your Terraform state contains secrets that could be used to compromise resources in your AWS account, so make sure that nobody untrusted can access it.
+If you do not already have a project with pre-configured Terraform state, we recommend you follow these steps to:
+1. Use Terraform to create the S3 bucket that we will use to store Terraform state.
+2. Terraform stores the local state from #1 in a local `terraform.tfstate` file.
+3. We tell Terraform to move the contents of the local state file from #2 into the S3 bucket we created in #1.
 
-Terraform's [enterprise version](https://www.hashicorp.com/products/terraform/) also offers remote state storage, but that is beyond the scope of this tutorial. All features of Provose are available through the free and open-source version of Terraform.
-
-If the domain name you have chosen was `example-internal.com` and you want to deploy to the AWS region `us-east-1`, then Provose's recommended Terraform state configuration looks like:
+If the domain name you have chosen was `example-internal.com` and you want to deploy to the AWS region `us-east-1`, then the first version of our Terraform state configuration looks like this:
 
 ```terraform
 terraform {
@@ -82,10 +96,10 @@ terraform {
     path = "terraform.tfstate"
   }
   required_providers {
-    # Provose v3.0 currently uses the Terraform AWS provider 2.54.0.
+    # Provose v3.0 currently uses the Terraform AWS provider 3.9.0.
     # Stick with this version for your own code to avoid compatibility
     # issues.
-    aws = "2.54.0"
+    aws = "3.9.0"
   }
 }
 
@@ -165,7 +179,9 @@ terrafrom apply "plan.out"
 
 ## Begin using Terraform remote state
 
-Now that we have created the S3 bucket we need tos store remote state, we need to change the `terraform` block at the beginning of our `terraform.tf` file to reference remote state:
+In the previous step, we created the S3 bucket to store remote state, but we have not started using the bucket yet--Terraform is still configured to use local state.
+
+To move our state to a remote S3 bucket, we need to change the `terraform` block at the beginning of our `terraform.tf` file to reference remote state:
 
 ```terraform
 terraform {
@@ -178,12 +194,15 @@ terraform {
     acl    = "private"
   }
   required_providers {
-    # Provose v3.0 currently uses the Terraform AWS provider 2.54.0.
+    # Provose v3.0 currently uses the Terraform AWS provider 3.9.0.
     # Stick with this version for your own code to avoid compatibility
     # issues.
-    aws = "2.54.0"
+    aws = "3.9.0"
   }
 }
+
+provider "aws" {
+# ... this file continues from the previous example
 ```
 
 Rerun `terraform init` and you should see the following prompt asking if you want to copy your local state to the S3 bucket. Answer with `yes`.
