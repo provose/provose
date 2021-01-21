@@ -1,4 +1,4 @@
-FROM jekyll/builder
+FROM jekyll/builder:4.2.0
 USER root
 RUN apk add findutils
 ADD Gemfile Gemfile.lock /srv/jekyll/
