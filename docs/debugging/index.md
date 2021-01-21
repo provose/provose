@@ -54,3 +54,7 @@ It is easier to try and delete the resources created by your Provose module befo
 ## `Error deleting ECS cluster: ClusterContainsTasksException: The Cluster cannot be deleted while Tasks are active.`
 
 This happens when you are deleting an Elastic Container Service cluster that still has tasks in it. Because Provose abstracts over ECS clusters, services, and tasks, they tend to be deleted all at the same time. However, deleting the cluster may not succeed until the tasks have finished draining. You can solve this by logging into the AWS console to stop the tasks belonging to the cluster you want to delete.
+
+## `Error: you have reached your limit of 20 certificates in the last year.`
+
+This happens when you repeatedly create and delete Provose configurations. By default, Amazon rate-limits the number of certificates that can be generated via AWS Certificate Manager (ACM). To fix this, contact AWS Support for your account and request that they increase the limit named `ACM certificates created in last 365 days`.
