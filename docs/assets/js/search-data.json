@@ -188,32 +188,32 @@
     "doc": "ebs_volumes",
     "title": "ebs_volumes",
     "content": " ",
-    "url": "/v1.1/reference/ebs_volumes/",
-    "relUrl": "/v1.1/reference/ebs_volumes/"
+    "url": "/v2.0/reference/ebs_volumes/",
+    "relUrl": "/v2.0/reference/ebs_volumes/"
   },"32": {
     "doc": "ebs_volumes",
     "title": "Description",
     "content": "The Provose ebs_volumes module configures Elastic Block Storage (EBS) volumes that exist independently of any EC2 instance or ECS container. Containers and EC2 instances come with their own root volumes, but those volumes will not persist of the container or instance are destroyed and recreated. The ebs_volumes module is a great way to set up filesystems that will continue to exist even when the EC2 instance mounting the filesystem is destroyed. ",
-    "url": "/v1.1/reference/ebs_volumes/#description",
-    "relUrl": "/v1.1/reference/ebs_volumes/#description"
+    "url": "/v2.0/reference/ebs_volumes/#description",
+    "relUrl": "/v2.0/reference/ebs_volumes/#description"
   },"33": {
     "doc": "ebs_volumes",
     "title": "Examples",
-    "content": "Creating two EBS volumes in different availability zones. module \"myproject\" { source = \"github.com/provose/provose?ref=v1.1.0\" provose_config = { authentication = { aws = { region = \"us-east-1\" } } name = \"myproject\" internal_root_domain = \"example-internal.com\" internal_subdomain = \"production\" } ebs_volumes = { some_volume = { availability_zone = \"us-east-1c\" size_gb = 100 } provisioned_volume = { availability_zone = \"us-east-1a\" size_gb = 50 iops = 2500 type = \"io1\" encrypted = true } } } . ",
-    "url": "/v1.1/reference/ebs_volumes/#examples",
-    "relUrl": "/v1.1/reference/ebs_volumes/#examples"
+    "content": "Creating two EBS volumes in different availability zones. module \"myproject\" { source = \"github.com/provose/provose?ref=v2.0.0\" provose_config = { authentication = { aws = { region = \"us-east-1\" } } name = \"myproject\" internal_root_domain = \"example-internal.com\" internal_subdomain = \"production\" } ebs_volumes = { some_volume = { availability_zone = \"us-east-1c\" size_gb = 100 } provisioned_volume = { availability_zone = \"us-east-1a\" size_gb = 50 iops = 2500 type = \"io1\" encrypted = true } } } . ",
+    "url": "/v2.0/reference/ebs_volumes/#examples",
+    "relUrl": "/v2.0/reference/ebs_volumes/#examples"
   },"34": {
     "doc": "ebs_volumes",
     "title": "Inputs",
     "content": ". | availability_zone – Required. The AWS availability zone to place the EBS volume. Keep in mind that the EC2 instance that mounts this EBS volume must be in the same availability zone. | size_gb – Required. The size of the EBS volume in gigabytes. | type – Optional. The type of the EBS volume. This defaults to \"gp2\", but can also be \"standard\", \"io1\", \"sc1\", or \"st1\". The AWS documentation describes in detail what the different EBS volume types mean. | iops – Optional. The number of I/O Operations Per Second (IOS) to provision for the disk. | encrypted – Optional. Defaults to false. If set to true, this enables encryption at rest for the EBS volume. | kms_key_id – Optional. The Amazon Resource Name (ARN) for an AWS Key Management Service (KMS) key to use when encrypted is set to true. | . ",
-    "url": "/v1.1/reference/ebs_volumes/#inputs",
-    "relUrl": "/v1.1/reference/ebs_volumes/#inputs"
+    "url": "/v2.0/reference/ebs_volumes/#inputs",
+    "relUrl": "/v2.0/reference/ebs_volumes/#inputs"
   },"35": {
     "doc": "ebs_volumes",
     "title": "Outputs",
     "content": ". | ebs_volumes.aws_ebs_volume.ebs_volume – This is the underlying aws_ebs_volume resource. | . ",
-    "url": "/v1.1/reference/ebs_volumes/#outputs",
-    "relUrl": "/v1.1/reference/ebs_volumes/#outputs"
+    "url": "/v2.0/reference/ebs_volumes/#outputs",
+    "relUrl": "/v2.0/reference/ebs_volumes/#outputs"
   },"36": {
     "doc": "ebs_volumes",
     "title": "ebs_volumes",
@@ -248,32 +248,32 @@
     "doc": "ebs_volumes",
     "title": "ebs_volumes",
     "content": " ",
-    "url": "/v2.0/reference/ebs_volumes/",
-    "relUrl": "/v2.0/reference/ebs_volumes/"
+    "url": "/v1.1/reference/ebs_volumes/",
+    "relUrl": "/v1.1/reference/ebs_volumes/"
   },"42": {
     "doc": "ebs_volumes",
     "title": "Description",
     "content": "The Provose ebs_volumes module configures Elastic Block Storage (EBS) volumes that exist independently of any EC2 instance or ECS container. Containers and EC2 instances come with their own root volumes, but those volumes will not persist of the container or instance are destroyed and recreated. The ebs_volumes module is a great way to set up filesystems that will continue to exist even when the EC2 instance mounting the filesystem is destroyed. ",
-    "url": "/v2.0/reference/ebs_volumes/#description",
-    "relUrl": "/v2.0/reference/ebs_volumes/#description"
+    "url": "/v1.1/reference/ebs_volumes/#description",
+    "relUrl": "/v1.1/reference/ebs_volumes/#description"
   },"43": {
     "doc": "ebs_volumes",
     "title": "Examples",
-    "content": "Creating two EBS volumes in different availability zones. module \"myproject\" { source = \"github.com/provose/provose?ref=v2.0.0\" provose_config = { authentication = { aws = { region = \"us-east-1\" } } name = \"myproject\" internal_root_domain = \"example-internal.com\" internal_subdomain = \"production\" } ebs_volumes = { some_volume = { availability_zone = \"us-east-1c\" size_gb = 100 } provisioned_volume = { availability_zone = \"us-east-1a\" size_gb = 50 iops = 2500 type = \"io1\" encrypted = true } } } . ",
-    "url": "/v2.0/reference/ebs_volumes/#examples",
-    "relUrl": "/v2.0/reference/ebs_volumes/#examples"
+    "content": "Creating two EBS volumes in different availability zones. module \"myproject\" { source = \"github.com/provose/provose?ref=v1.1.0\" provose_config = { authentication = { aws = { region = \"us-east-1\" } } name = \"myproject\" internal_root_domain = \"example-internal.com\" internal_subdomain = \"production\" } ebs_volumes = { some_volume = { availability_zone = \"us-east-1c\" size_gb = 100 } provisioned_volume = { availability_zone = \"us-east-1a\" size_gb = 50 iops = 2500 type = \"io1\" encrypted = true } } } . ",
+    "url": "/v1.1/reference/ebs_volumes/#examples",
+    "relUrl": "/v1.1/reference/ebs_volumes/#examples"
   },"44": {
     "doc": "ebs_volumes",
     "title": "Inputs",
     "content": ". | availability_zone – Required. The AWS availability zone to place the EBS volume. Keep in mind that the EC2 instance that mounts this EBS volume must be in the same availability zone. | size_gb – Required. The size of the EBS volume in gigabytes. | type – Optional. The type of the EBS volume. This defaults to \"gp2\", but can also be \"standard\", \"io1\", \"sc1\", or \"st1\". The AWS documentation describes in detail what the different EBS volume types mean. | iops – Optional. The number of I/O Operations Per Second (IOS) to provision for the disk. | encrypted – Optional. Defaults to false. If set to true, this enables encryption at rest for the EBS volume. | kms_key_id – Optional. The Amazon Resource Name (ARN) for an AWS Key Management Service (KMS) key to use when encrypted is set to true. | . ",
-    "url": "/v2.0/reference/ebs_volumes/#inputs",
-    "relUrl": "/v2.0/reference/ebs_volumes/#inputs"
+    "url": "/v1.1/reference/ebs_volumes/#inputs",
+    "relUrl": "/v1.1/reference/ebs_volumes/#inputs"
   },"45": {
     "doc": "ebs_volumes",
     "title": "Outputs",
     "content": ". | ebs_volumes.aws_ebs_volume.ebs_volume – This is the underlying aws_ebs_volume resource. | . ",
-    "url": "/v2.0/reference/ebs_volumes/#outputs",
-    "relUrl": "/v2.0/reference/ebs_volumes/#outputs"
+    "url": "/v1.1/reference/ebs_volumes/#outputs",
+    "relUrl": "/v1.1/reference/ebs_volumes/#outputs"
   },"46": {
     "doc": "ec2_on_demand_instances",
     "title": "ec2_on_demand_instances",
@@ -461,552 +461,558 @@
     "url": "/v3.0/reference/images/#outputs",
     "relUrl": "/v3.0/reference/images/#outputs"
   },"77": {
-    "doc": "Reference v3.0 (Stable)",
-    "title": "Provose v3.0 Reference",
-    "content": "This is the reference page for Provose modules. ",
-    "url": "/v3.0/reference/#provose-v30-reference",
-    "relUrl": "/v3.0/reference/#provose-v30-reference"
-  },"78": {
-    "doc": "Reference v3.0 (Stable)",
-    "title": "Reference v3.0 (Stable)",
-    "content": " ",
-    "url": "/v3.0/reference/",
-    "relUrl": "/v3.0/reference/"
-  },"79": {
     "doc": "Docs v3.0 (Stable)",
     "title": "Provose v3.0 Documentation",
     "content": " ",
     "url": "/v3.0/#provose-v30-documentation",
     "relUrl": "/v3.0/#provose-v30-documentation"
-  },"80": {
+  },"78": {
     "doc": "Docs v3.0 (Stable)",
     "title": "Docs v3.0 (Stable)",
     "content": " ",
     "url": "/v3.0/",
     "relUrl": "/v3.0/"
-  },"81": {
-    "doc": "Debugging",
-    "title": "Debugging",
-    "content": "This page describes various common errors that Terraform may throw when running a Provose-based configuration and how to fix them. If you are receiving an error message that you don’t know how to fix, feel free to file an issue on Provose’s GitHub page. ",
-    "url": "/v3.0/debugging/#debugging",
-    "relUrl": "/v3.0/debugging/#debugging"
-  },"82": {
-    "doc": "Debugging",
-    "title": "Table of contents",
-    "content": ". | Error putting S3 policy: OperationAborted: A conflicting conditional operation is currently in progress against this resource. Please try again. | Error creating IAM instance profile [...]: EntityAlreadyExists | Error: Provider configuration not present | Error deleting ECS cluster: ClusterContainsTasksException: The Cluster cannot be deleted while Tasks are active. | . ",
-    "url": "/v3.0/debugging/#table-of-contents",
-    "relUrl": "/v3.0/debugging/#table-of-contents"
-  },"83": {
-    "doc": "Debugging",
-    "title": "Error putting S3 policy: OperationAborted: A conflicting conditional operation is currently in progress against this resource. Please try again.",
-    "content": "This error often appears when creating, deleting, or changing the security settings of an Amazon S3 bucket. It can happen for various reasons, especially if you have deleted and recreated a bucket. Try running terraform apply again. If the issue persists, file an issue on Provose’s GitHub page. Provose creates Amazon S3 buckets with the s3_buckets module. Provose also creates S3 buckets to store logs produced by Elastic Load Balancers provisioned by the containers module. ",
-    "url": "/v3.0/debugging/#error-putting-s3-policy-operationaborted-a-conflicting-conditional-operation-is-currently-in-progress-against-this-resource-please-try-again",
-    "relUrl": "/v3.0/debugging/#error-putting-s3-policy-operationaborted-a-conflicting-conditional-operation-is-currently-in-progress-against-this-resource-please-try-again"
-  },"84": {
-    "doc": "Debugging",
-    "title": "Error creating IAM instance profile [...]: EntityAlreadyExists",
-    "content": "This error often happens when a Terraform operation that was intended to destroy an IAM instance profile was interrupted. You can find the IAM instance profile in the AWS console, but attempting to delete it from the console will not resolve the error. Instead, you need to use the AWS CLI to delete the instance profile. Run the following command . aws iam delete-instance-profile --instance-profile-name &lt;name of your instance profile&gt; . and then run terraform apply. ",
-    "url": "/v3.0/debugging/#error-creating-iam-instance-profile--entityalreadyexists",
-    "relUrl": "/v3.0/debugging/#error-creating-iam-instance-profile--entityalreadyexists"
-  },"85": {
-    "doc": "Debugging",
-    "title": "Error: Provider configuration not present",
-    "content": "This may happen if you tried to delete the entire Provose module and then ran terraform apply or terraform destroy. This confuses Terraform because it does not know what to do with the now orphaned resources created by the module now that the module’s existence has been wiped out. It is easier to try and delete the resources created by your Provose module before removing the module entirely. You can read how to delete a Provose module in Uninstalling Provose. It is easier to try and delete the resources created by your Provose module before removing the module entirely. ",
-    "url": "/v3.0/debugging/#error-provider-configuration-not-present",
-    "relUrl": "/v3.0/debugging/#error-provider-configuration-not-present"
-  },"86": {
-    "doc": "Debugging",
-    "title": "Error deleting ECS cluster: ClusterContainsTasksException: The Cluster cannot be deleted while Tasks are active.",
-    "content": "This happens when you are deleting an Elastic Container Service cluster that still has tasks in it. Because Provose abstracts over ECS clusters, services, and tasks, they tend to be deleted all at the same time. However, deleting the cluster may not succeed until the tasks have finished draining. You can solve this by logging into the AWS console to stop the tasks belonging to the cluster you want to delete. ",
-    "url": "/v3.0/debugging/#error-deleting-ecs-cluster-clustercontainstasksexception-the-cluster-cannot-be-deleted-while-tasks-are-active",
-    "relUrl": "/v3.0/debugging/#error-deleting-ecs-cluster-clustercontainstasksexception-the-cluster-cannot-be-deleted-while-tasks-are-active"
-  },"87": {
-    "doc": "Debugging",
-    "title": "Debugging",
-    "content": " ",
-    "url": "/v3.0/debugging/",
-    "relUrl": "/v3.0/debugging/"
-  },"88": {
+  },"79": {
     "doc": "Tutorial",
     "title": "Provose v3.0 Tutorial",
     "content": "This is a tutorial aimed at teaching the beginner how to use Provose. It helps to be familiar with Amazon Web Services and HashiCorp Terraform, but this tutorial tries to give you the knowledge you need as you go. If you have ideas on improving this tutorial, please file an issue on Provose’s GitHub page. ",
     "url": "/v3.0/tutorial/#provose-v30-tutorial",
     "relUrl": "/v3.0/tutorial/#provose-v30-tutorial"
-  },"89": {
+  },"80": {
     "doc": "Tutorial",
     "title": "Table of contents",
     "content": ". | Buy or move a domain name in your AWS account | Install Provose’s prerequisites . | HashiCorp Terraform | AWS CLI v2 | Docker (optional) | . | Set up your credentials | Set up an S3 bucket to store Terraform state | Begin using Terraform remote state | Initialize Provose | Start using Provose modules | . ",
     "url": "/v3.0/tutorial/#table-of-contents",
     "relUrl": "/v3.0/tutorial/#table-of-contents"
-  },"90": {
+  },"81": {
     "doc": "Tutorial",
     "title": "Buy or move a domain name in your AWS account",
-    "content": "Provose requires that you have a top-level domain name in your AWS account that will be delegated to serving internal services. This domain name will be used as the base DNS name for EC2 instances, load balancers, databases, and other services that are not exposed to the public internet. However, Provose needs this to be a real, registered public domain name so that Provose can register Amazon Certificate Manager security certificates with it. If your company’s main website is served on example.com, you should purchase another domain, such as example-internal.com for Provose. This domain name may host a few publicly-accessible instances, such as SSH “bastion” hosts or VPN endpoints, but mostly will only be used to route network requests within Virtual Private Clouds (VPCs) that Provose creates. Amazon has a guide for registering a new domain and another one for transferring a domain registered elsewhere into your AWS account. ",
+    "content": "Provose requires that you have a top-level domain name in your AWS account that will be delegated to serving internal services. This domain name is used as the root DNS name for service discovery internal to the VPC–not exposed to the public Internet. Provose needs this to be a real, registered public domain name attached to your AWS account so Provose can register AWS Certificate Manager (ACM) TLS certificates. These certificates are used to encrypt and authenticate traffic within the VPC. If your company’s main website is served on example.com, you should purchase another domain, such as example-internal.com for Provose. This domain name may host a few publicly-accessible instances, such as SSH “bastion” hosts or VPN endpoints, but mostly will only be used to route network requests within Virtual Private Clouds (VPCs) that Provose creates. Amazon has a guide for registering a new domain and another one for transferring a domain registered elsewhere into your AWS account. ",
     "url": "/v3.0/tutorial/#buy-or-move-a-domain-name-in-your-aws-account",
     "relUrl": "/v3.0/tutorial/#buy-or-move-a-domain-name-in-your-aws-account"
-  },"91": {
+  },"82": {
     "doc": "Tutorial",
     "title": "Install Provose’s prerequisites",
     "content": "Whether you are running Provose on your local machine, an EC2 instance, or a Continuous Integration (CI) provider, you will need to make sure that the machine has the following dependencies installed: . HashiCorp Terraform . Provose is built on top of HashiCorp Terraform, and industry-leading infrastructure-as-code tool. Terraform’s documentation describes how to download and install the latest version of Terraform for your operating system. You will need Terraform 0.13 or newer to use Provose. AWS CLI v2 . There are some configurations on AWS that Terraform’s AWS provider does not currently support. Provose works around these limitations by setting some configurations with the AWS CLI. If you have v1 of the AWS CLI, make sure to uninstall it first. Then you can follow Amazon’s instructions for installing AWS CLI v2 on Mac, Windows, or Linux. Docker (optional) . The docker command is currently only required if you want to build and upload Docker images with the Provose images module. The Docker documentation describes how to install the docker command. ",
     "url": "/v3.0/tutorial/#install-provoses-prerequisites",
     "relUrl": "/v3.0/tutorial/#install-provoses-prerequisites"
-  },"92": {
+  },"83": {
     "doc": "Tutorial",
     "title": "Set up your credentials",
-    "content": "Provose strongly discourages placing credentials in code. If you want to run Provose (and its underlying Terraform setup) on your local machine, we recommend placing your credentials in the .aws/credentials file in your home directory, with additional configuration in the .aws/config directory. The AWS documentation has more information on setting up configuration and credential files. If you have multiple sets of credentials in these files, you can tell Provose which credentials you want to use with the AWS_PROFILE environment variable. You can also set credentials directly with the environment variables AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY. If you are running Provose on an AWS EC2 instance, Provose can use the credentials in the IAM instance profile for the instance. AWS has a documentation page about how to use instance profiles. ",
+    "content": "Provose strongly discourages placing credentials in code. If you want to run Provose (and its underlying Terraform setup) on your local machine, we recommend placing your credentials in the ~/.aws/credentials file in your home directory, with additional configuration in the ~/.aws/config directory. The AWS documentation has more information on setting up configuration and credential files. An example ~/.aws/credentials file might look like: . [my_profile_name] aws_access_key_id = ... aws_secret_access_key = ... and an example ‘~/.aws/config` file might look like: . [my-profile-name] region = us-east-1 . If you have multiple sets of credentials in these files, you can tell Provose which credentials you want to use with the AWS_PROFILE environment variable. You can also set credentials directly with the environment variables AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY. If you are running Provose on an AWS EC2 instance, Provose can use the credentials in the IAM instance profile for the instance. AWS has a documentation page about how to use instance profiles. ",
     "url": "/v3.0/tutorial/#set-up-your-credentials",
     "relUrl": "/v3.0/tutorial/#set-up-your-credentials"
-  },"93": {
+  },"84": {
     "doc": "Tutorial",
     "title": "Set up an S3 bucket to store Terraform state",
-    "content": "Terraform operates by tracking the state of your AWS configuration and then applying any differences between your local Terraform files and the state. By default, Terraform stores state information in a local file named terraform.tfstate, but Terraform can also work with state stored remotely in the cloud. Provose recommends that you store your Terraform state in an Amazon S3 bucket that is accessible to every user that needs to run Terraform, but nobody else. Your Terraform state contains secrets that could be used to compromise resources in your AWS account, so make sure that nobody untrusted can access it. Terraform’s enterprise version also offers remote state storage, but that is beyond the scope of this tutorial. All features of Provose are available through the free and open-source version of Terraform. If the domain name you have chosen was example-internal.com and you want to deploy to the AWS region us-east-1, then Provose’s recommended Terraform state configuration looks like: . terraform { # Look out. We're going to replace this `backend \"local\"` block with # a `backend \"s3\"` block later in the tutorial. backend \"local\" { path = \"terraform.tfstate\" } required_providers { # Provose v3.0 currently uses the Terraform AWS provider 2.54.0. # Stick with this version for your own code to avoid compatibility # issues. aws = \"2.54.0\" } } provider \"aws\" { region = \"us-east-1\" } # This is an AWS Key Management Service (KMS) key that we will use to # encrypt the AWS S3 bucket. resource \"aws_kms_key\" \"terraform\" { description = \"Used to encrypt the Terraform state S3 bucket at rest.\" tags = { Provose = \"terraform\" } lifecycle { prevent_destroy = true } } # This is where we store the Terraform remote tfstate. resource \"aws_s3_bucket\" \"terraform\" { # This should be a globally-unique Amazon S3 bucket, although it # should not be accessible outside of the AWS credentials you use to run # Terraform. bucket = \"terraform-state.example-internal.com\" acl = \"private\" # For security and compliance reasons, Provose recommends that you # configure AWS Key Management Service (KMS) encryption at rest for # the bucket. server_side_encryption_configuration { rule { apply_server_side_encryption_by_default { kms_master_key_id = aws_kms_key.terraform.arn sse_algorithm = \"aws:kms\" } } } versioning { enabled = true } tags = { Provose = \"terraform\" } # This lifecycle parameter prevents Terraform from destroying the # bucket that contains its own state. lifecycle { prevent_destroy = true } } # This prevents public access to our remote Terraform tfstate. resource \"aws_s3_bucket_public_access_block\" \"terraform\" { bucket = aws_s3_bucket.terraform.id block_public_acls = true block_public_policy = true ignore_public_acls = true restrict_public_buckets = true lifecycle { prevent_destroy = true } } . We recommend that you place the above configuration in a file named terraform.tf. To keep things organized, you may want to put your Provose configuration into a separate file. This configuration creates the S3 bucket that you will use for remote state, but Terraform must store state in the local file terraform.tfstate before the S3 bucket is created. After saving terraform.tf, run the following commands: . terraform init terraform plan -out plan.out terrafrom apply \"plan.out\" . ",
+    "content": "By default, Terraform stores state about your resources in a local file called terraform.tfstate. Terraform is also capable of storing this state in various remote backends like an Amazon S3 bucket. Terraform’s enterprise version also offers remote state storage, but that is beyond the scope of this tutorial. All features of Provose are available through the free and open-source version of Terraform. If you do not already have a project with pre-configured Terraform state, we recommend you follow these steps to: . | Use Terraform to create the S3 bucket that we will use to store Terraform state. | Terraform stores the local state from #1 in a local terraform.tfstate file. | We tell Terraform to move the contents of the local state file from #2 into the S3 bucket we created in #1. | . If the domain name you have chosen was example-internal.com and you want to deploy to the AWS region us-east-1, then the first version of our Terraform state configuration looks like this: . terraform { # Look out. We're going to replace this `backend \"local\"` block with # a `backend \"s3\"` block later in the tutorial. backend \"local\" { path = \"terraform.tfstate\" } required_providers { # Provose v3.0 currently uses the Terraform AWS provider 3.9.0. # Stick with this version for your own code to avoid compatibility # issues. aws = \"3.9.0\" } } provider \"aws\" { region = \"us-east-1\" } # This is an AWS Key Management Service (KMS) key that we will use to # encrypt the AWS S3 bucket. resource \"aws_kms_key\" \"terraform\" { description = \"Used to encrypt the Terraform state S3 bucket at rest.\" tags = { Provose = \"terraform\" } lifecycle { prevent_destroy = true } } # This is where we store the Terraform remote tfstate. resource \"aws_s3_bucket\" \"terraform\" { # This should be a globally-unique Amazon S3 bucket, although it # should not be accessible outside of the AWS credentials you use to run # Terraform. bucket = \"terraform-state.example-internal.com\" acl = \"private\" # For security and compliance reasons, Provose recommends that you # configure AWS Key Management Service (KMS) encryption at rest for # the bucket. server_side_encryption_configuration { rule { apply_server_side_encryption_by_default { kms_master_key_id = aws_kms_key.terraform.arn sse_algorithm = \"aws:kms\" } } } versioning { enabled = true } tags = { Provose = \"terraform\" } # This lifecycle parameter prevents Terraform from destroying the # bucket that contains its own state. lifecycle { prevent_destroy = true } } # This prevents public access to our remote Terraform tfstate. resource \"aws_s3_bucket_public_access_block\" \"terraform\" { bucket = aws_s3_bucket.terraform.id block_public_acls = true block_public_policy = true ignore_public_acls = true restrict_public_buckets = true lifecycle { prevent_destroy = true } } . We recommend that you place the above configuration in a file named terraform.tf. To keep things organized, you may want to put your Provose configuration into a separate file. This configuration creates the S3 bucket that you will use for remote state, but Terraform must store state in the local file terraform.tfstate before the S3 bucket is created. After saving terraform.tf, run the following commands: . terraform init terraform plan -out plan.out terrafrom apply \"plan.out\" . ",
     "url": "/v3.0/tutorial/#set-up-an-s3-bucket-to-store-terraform-state",
     "relUrl": "/v3.0/tutorial/#set-up-an-s3-bucket-to-store-terraform-state"
-  },"94": {
+  },"85": {
     "doc": "Tutorial",
     "title": "Begin using Terraform remote state",
-    "content": "Now that we have created the S3 bucket we need tos store remote state, we need to change the terraform block at the beginning of our terraform.tf file to reference remote state: . terraform { backend \"s3\" { # This is the name of the S3 bucket we use to store Terraform state. # We create this bucket below. bucket = \"terraform-state.example-internal.com\" key = \"tfstate\" region = \"us-east-1\" acl = \"private\" } required_providers { # Provose v3.0 currently uses the Terraform AWS provider 2.54.0. # Stick with this version for your own code to avoid compatibility # issues. aws = \"2.54.0\" } } . Rerun terraform init and you should see the following prompt asking if you want to copy your local state to the S3 bucket. Answer with yes. Initializing the backend... Do you want to copy existing state to the new backend? Pre-existing state was found while migrating the previous \"local\" backend to the newly configured \"s3\" backend. No existing state was found in the newly configured \"s3\" backend. Do you want to copy this state to the new \"s3\" backend? Enter \"yes\" to copy and \"no\" to start with an empty state. Enter a value: yes . ",
+    "content": "In the previous step, we created the S3 bucket to store remote state, but we have not started using the bucket yet–Terraform is still configured to use local state. To move our state to a remote S3 bucket, we need to change the terraform block at the beginning of our terraform.tf file to reference remote state: . terraform { backend \"s3\" { # This is the name of the S3 bucket we use to store Terraform state. # We create this bucket below. bucket = \"terraform-state.example-internal.com\" key = \"tfstate\" region = \"us-east-1\" acl = \"private\" } required_providers { # Provose v3.0 currently uses the Terraform AWS provider 3.9.0. # Stick with this version for your own code to avoid compatibility # issues. aws = \"3.9.0\" } } provider \"aws\" { # ... this file continues from the previous example . Rerun terraform init and you should see the following prompt asking if you want to copy your local state to the S3 bucket. Answer with yes. Initializing the backend... Do you want to copy existing state to the new backend? Pre-existing state was found while migrating the previous \"local\" backend to the newly configured \"s3\" backend. No existing state was found in the newly configured \"s3\" backend. Do you want to copy this state to the new \"s3\" backend? Enter \"yes\" to copy and \"no\" to start with an empty state. Enter a value: yes . ",
     "url": "/v3.0/tutorial/#begin-using-terraform-remote-state",
     "relUrl": "/v3.0/tutorial/#begin-using-terraform-remote-state"
-  },"95": {
+  },"86": {
     "doc": "Tutorial",
     "title": "Initialize Provose",
     "content": "Now that you have Terraform’s remote state configuration set up, create another file named after the project you want to create with Provose. In these examples, we will go with the name myproject. In myproject.tf, we will enter the bare minimum Provose configuration: . module \"myproject\" { source = \"github.com/provose/provose?ref=v3.0.0\" provose_config = { authentication = { aws = { region = \"us-east-1\" } } name = \"myproject\" internal_root_domain = \"example-internal.com\" internal_subdomain = \"myproject\" } } . Run terraform init again to download Provose v3.0.0 and the Terraform modules and providers that Provose depends on. You should rerun terraform init every time you update Provose, or if you change any Terraform modules or providers that you use elsewhere in your code. ",
     "url": "/v3.0/tutorial/#initialize-provose",
     "relUrl": "/v3.0/tutorial/#initialize-provose"
-  },"96": {
+  },"87": {
     "doc": "Tutorial",
     "title": "Start using Provose modules",
     "content": "You can now use Provose modules–like containers, s3_buckets, mysql_clusters, and more–to configure the AWS infrastructure that you need. Below is an example of two . # This is the Terraform `random_password` resource that we use to generate secure random # passwords for the AWS Aurora MySQL clusters that we provision below. # You can read more about the provider here # https://www.terraform.io/docs/providers/random/r/password.html resource \"random_password\" \"bigcluster_password\" { # AWS RDS passwords must be between 8 and 41 characters length = 41 # This is a list of special characters that can be included in the # password. This lits omits characters that often need to be # escaped. override_special = \"()-_=+[]{}&lt;&gt;?\" } # This is another `random_password` resource that we use for the other cluster. resource \"random_password\" \"smallcluster_password\" { length = 41 override_special = \"()-_=+[]{}&lt;&gt;?\" } module \"myproject\" { # These are various settings that are core to Provose. source = \"github.com/provose/provose?ref=v3.0.0\" provose_config = { authentication = { aws = { # Provose is going to pull AWS credentials from you environment. # If you want to specify your keys in code, you can set the # `access_key` and `secret_key` map keys here. region = \"us-east-1\" } } name = \"myproject\" internal_root_domain = \"example-internal.com\" internal_subdomain = \"myproject\" } # These are two S3 buckets, which will be made available to one of the # below containers. s3_buckets = { \"bucket-one.example-internal.com\" = { versioning = false } \"another-bucket.example-internal.com\" = { versioning = true } } # These are Docker images that we upload to Elastic Container Registry (ECR). images = { # We build this container from a local path and upload it to the registry. \"example/webserver\" = { local_path = \"../src/webserver\" } # We create the ECR image repository for this container, but you need to # build and upload the image yourself. \"example/anotherimage\" = {} } # These are Aurora MySQL clusters. mysql_clusters = { # This creates an AWS Aurora MySQL cluster available # at the host bigcluster.myproject.example-internal.com. # This host is only available within the VPC. bigcluster = { engine_version = \"5.7.mysql_aurora.2.08.0\" database_name = \"exampledb\" password = random_password.bigcluster_password.result instances = { instance_type = \"db.r5.large\" instance_count = 1 } } # This creates a cluster at bigmy.production.example-internal.com. # This host is only available within the VPC. smallcluster = { engine_version = \"5.7.mysql_aurora.2.08.0\" database_name = \"otherdb\" password = random_password.smallcluster_password.result instances = { instance_type = \"db.t3.small\" instance_count = 3 } } } # These are names and values for secrets stored in AWS Secrets Manager. secrets = { bigcluster_password = random_password.bigcluster_password.result smallcluster_password = random_password.smallcluster_password.result } # These are Docker containers that we run on AWS Elastic Container Service (ECS). # When `private_registry` is `true`, we access one of the images from the # ECR repositories defined above in the `images` section. # When `private_registry` is `false`, we look for publicly-available containers # on Docker Hub. containers = { # This is an example of a container that runs an image that we privately # built and uploaded to ECR. # We run the container on AWS Fargate--which means that there are no EC2 # hosts exposed directly to the user. # The container is given access to one of the above MySQL # clusters via environment variables and the Secrets Manager. web = { image = { name = \"example/webserver\" tag = \"latest\" private_registry = true } public = { https = { internal_http_port = 8000 internal_http_health_check_path = \"/\" public_dns_names = [\"web.test.example.com\"] } } instances = { instance_type = \"FARGATE\" container_count = 10 cpu = 256 memory = 512 } environment = { MYSQL_HOST = \"bigcluster.myproject.example-internal.com\" MYSQL_USER = \"root\" MYSQL_DATABASE = \"exampledb\" MYSQL_PORT = 3306 } secrets = { MYSQL_PASSWORD = \"bigcluster_password\" } } # This is an example of a container that runs a publicly-available # image from Docker Hub on a few `t2.small` EC2 instances. helloworld = { image = { name = \"nginxdemos/hello\" tag = \"latest\" private_registry = false } public = { https = { internal_http_port = 80 internal_http_health_check_path = \"/\" public_dns_names = [\"helloworld.example.com\"] } } instances = { instance_type = \"t2.small\" container_count = 4 instance_count = 2 cpu = 256 memory = 512 } } } } . You can read more about Provose’s capabilities in the Reference. ",
     "url": "/v3.0/tutorial/#start-using-provose-modules",
     "relUrl": "/v3.0/tutorial/#start-using-provose-modules"
-  },"97": {
+  },"88": {
     "doc": "Tutorial",
     "title": "Tutorial",
     "content": " ",
     "url": "/v3.0/tutorial/",
     "relUrl": "/v3.0/tutorial/"
+  },"89": {
+    "doc": "Debugging",
+    "title": "Debugging",
+    "content": "This page describes various common errors that Terraform may throw when running a Provose-based configuration and how to fix them. If you are receiving an error message that you don’t know how to fix, feel free to file an issue on Provose’s GitHub page. ",
+    "url": "/v3.0/debugging/#debugging",
+    "relUrl": "/v3.0/debugging/#debugging"
+  },"90": {
+    "doc": "Debugging",
+    "title": "Table of contents",
+    "content": ". | Error putting S3 policy: OperationAborted: A conflicting conditional operation is currently in progress against this resource. Please try again. | Error creating IAM instance profile [...]: EntityAlreadyExists | Error: Provider configuration not present | Error deleting ECS cluster: ClusterContainsTasksException: The Cluster cannot be deleted while Tasks are active. | Error: you have reached your limit of 20 certificates in the last year. | . ",
+    "url": "/v3.0/debugging/#table-of-contents",
+    "relUrl": "/v3.0/debugging/#table-of-contents"
+  },"91": {
+    "doc": "Debugging",
+    "title": "Error putting S3 policy: OperationAborted: A conflicting conditional operation is currently in progress against this resource. Please try again.",
+    "content": "This error often appears when creating, deleting, or changing the security settings of an Amazon S3 bucket. It can happen for various reasons, especially if you have deleted and recreated a bucket. Try running terraform apply again. If the issue persists, file an issue on Provose’s GitHub page. Provose creates Amazon S3 buckets with the s3_buckets module. Provose also creates S3 buckets to store logs produced by Elastic Load Balancers provisioned by the containers module. ",
+    "url": "/v3.0/debugging/#error-putting-s3-policy-operationaborted-a-conflicting-conditional-operation-is-currently-in-progress-against-this-resource-please-try-again",
+    "relUrl": "/v3.0/debugging/#error-putting-s3-policy-operationaborted-a-conflicting-conditional-operation-is-currently-in-progress-against-this-resource-please-try-again"
+  },"92": {
+    "doc": "Debugging",
+    "title": "Error creating IAM instance profile [...]: EntityAlreadyExists",
+    "content": "This error often happens when a Terraform operation that was intended to destroy an IAM instance profile was interrupted. You can find the IAM instance profile in the AWS console, but attempting to delete it from the console will not resolve the error. Instead, you need to use the AWS CLI to delete the instance profile. Run the following command . aws iam delete-instance-profile --instance-profile-name &lt;name of your instance profile&gt; . and then run terraform apply. ",
+    "url": "/v3.0/debugging/#error-creating-iam-instance-profile--entityalreadyexists",
+    "relUrl": "/v3.0/debugging/#error-creating-iam-instance-profile--entityalreadyexists"
+  },"93": {
+    "doc": "Debugging",
+    "title": "Error: Provider configuration not present",
+    "content": "This may happen if you tried to delete the entire Provose module and then ran terraform apply or terraform destroy. This confuses Terraform because it does not know what to do with the now orphaned resources created by the module now that the module’s existence has been wiped out. It is easier to try and delete the resources created by your Provose module before removing the module entirely. You can read how to delete a Provose module in Uninstalling Provose. It is easier to try and delete the resources created by your Provose module before removing the module entirely. ",
+    "url": "/v3.0/debugging/#error-provider-configuration-not-present",
+    "relUrl": "/v3.0/debugging/#error-provider-configuration-not-present"
+  },"94": {
+    "doc": "Debugging",
+    "title": "Error deleting ECS cluster: ClusterContainsTasksException: The Cluster cannot be deleted while Tasks are active.",
+    "content": "This happens when you are deleting an Elastic Container Service cluster that still has tasks in it. Because Provose abstracts over ECS clusters, services, and tasks, they tend to be deleted all at the same time. However, deleting the cluster may not succeed until the tasks have finished draining. You can solve this by logging into the AWS console to stop the tasks belonging to the cluster you want to delete. ",
+    "url": "/v3.0/debugging/#error-deleting-ecs-cluster-clustercontainstasksexception-the-cluster-cannot-be-deleted-while-tasks-are-active",
+    "relUrl": "/v3.0/debugging/#error-deleting-ecs-cluster-clustercontainstasksexception-the-cluster-cannot-be-deleted-while-tasks-are-active"
+  },"95": {
+    "doc": "Debugging",
+    "title": "Error: you have reached your limit of 20 certificates in the last year.",
+    "content": "This happens when you repeatedly create and delete Provose configurations. By default, Amazon rate-limits the number of certificates that can be generated via AWS Certificate Manager (ACM). To fix this, contact AWS Support for your account and request that they increase the limit named ACM certificates created in last 365 days. ",
+    "url": "/v3.0/debugging/#error-you-have-reached-your-limit-of-20-certificates-in-the-last-year",
+    "relUrl": "/v3.0/debugging/#error-you-have-reached-your-limit-of-20-certificates-in-the-last-year"
+  },"96": {
+    "doc": "Debugging",
+    "title": "Debugging",
+    "content": " ",
+    "url": "/v3.0/debugging/",
+    "relUrl": "/v3.0/debugging/"
+  },"97": {
+    "doc": "Reference v3.0 (Stable)",
+    "title": "Provose v3.0 Reference",
+    "content": "This is the reference page for Provose modules. ",
+    "url": "/v3.0/reference/#provose-v30-reference",
+    "relUrl": "/v3.0/reference/#provose-v30-reference"
   },"98": {
+    "doc": "Reference v3.0 (Stable)",
+    "title": "Reference v3.0 (Stable)",
+    "content": " ",
+    "url": "/v3.0/reference/",
+    "relUrl": "/v3.0/reference/"
+  },"99": {
     "doc": "Home",
     "title": "Provose is the easiest way to manage your Amazon Web Services infrastructure.",
     "content": " ",
     "url": "/#provose-is-the-easiest-way-to-manage-your-amazon-web-services-infrastructure",
     "relUrl": "/#provose-is-the-easiest-way-to-manage-your-amazon-web-services-infrastructure"
-  },"99": {
+  },"100": {
     "doc": "Home",
     "title": "Provose is built on top of HashiCorp Terraform, an industry-leading infrastructure-as-code tool.",
     "content": "Provose is a Terraform module that deploys hundreds of underlying cloud resources–containers, databases, TLS certificates, DNS rules, and more–with just a few lines of code. Provose is a layer on top of Terraform that makes intelligent configuration choices for you and reduces the amount of code needed. ",
     "url": "/#provose-is-built-on-top-of-hashicorp-terraform-an-industry-leading-infrastructure-as-code-tool",
     "relUrl": "/#provose-is-built-on-top-of-hashicorp-terraform-an-industry-leading-infrastructure-as-code-tool"
-  },"100": {
+  },"101": {
     "doc": "Home",
     "title": "Provose is free and open-source software forever.",
     "content": "Provose is distributed under the MIT license. You can download Provose at github.com/provose/provose, which is also where you can also submit bug reports and contribute improvements. ",
     "url": "/#provose-is-free-and-open-source-software-forever",
     "relUrl": "/#provose-is-free-and-open-source-software-forever"
-  },"101": {
+  },"102": {
     "doc": "Home",
     "title": "Learn Provose from Tutorial or the Reference.",
-    "content": "Provose is easy to learn. You can get started with just a few lines of code. ",
+    "content": "Provose is easy to learn. You can get started with just a few lines of code. You can also find an example of setting up a Ghost.org blog on Amazon Web Services using Provose. ",
     "url": "/#learn-provose-from-tutorial-or-the-reference",
     "relUrl": "/#learn-provose-from-tutorial-or-the-reference"
-  },"102": {
+  },"103": {
     "doc": "Home",
     "title": "Sign up for the Provose newsletter for release announcements and occasional tips.",
     "content": "Don’t worry, we won’t email you too often. ",
     "url": "/#sign-up-for-the-provose-newsletter-for-release-announcements-and-occasional-tips",
     "relUrl": "/#sign-up-for-the-provose-newsletter-for-release-announcements-and-occasional-tips"
-  },"103": {
+  },"104": {
     "doc": "Home",
     "title": "Here is what Provose code looks like.",
     "content": "Below is an example of what Provose looks like, provisioning a container serving HTTP traffic on AWS Fargate: . module \"myproject\" { source = \"github.com/provose/provose?ref=v3.0.0\" provose_config = { authentication = { aws = { region = \"us-east-1\" } } name = \"myproject\" # Provose requires a domain name to be used for internal purposes. # This allows us to protect internal services using # AWS Certificate Manager (ACM) certificates. internal_root_domain = \"example-internal.com\" internal_subdomain = \"production\" } containers = { hello = { image = { # This is the name of a publicly-available container on DockerHub. # Private Elastic Container Registry (ECR) containers can also be used. name = \"nginxdemos/hello\" # This is a container tag on DockerHub. tag = \"latest\" private_registry = false } public = { https = { internal_http_port = 80 internal_http_health_check_path = \"/\" # You need to have example.com as a domain in your AWS # account with DNS managed by Route 53. # Provose will set up an Application Load Balancer serving # HTTP and HTTPS traffic to this group of containers. public_dns_names = [\"hello.example.com\"] } } instances = { # Set this to an EC2 instance type to use AWS ECS-EC2 # or FARGATE_SPOT to automatically save money by using Spot # instances. instance_type = \"FARGATE\" container_count = 1 cpu = 256 memory = 512 } } } } . You can also take a look at how to use Provose to provision: . | MySQL | PostgreSQL | Elasticsearch | Redis | Lustre | bare EC2 instances | . and a lot more on Amazon Web Services. ",
     "url": "/#here-is-what-provose-code-looks-like",
     "relUrl": "/#here-is-what-provose-code-looks-like"
-  },"104": {
+  },"105": {
     "doc": "Home",
     "title": "Home",
     "content": " ",
     "url": "/",
     "relUrl": "/"
-  },"105": {
+  },"106": {
     "doc": "lustre_file_systems",
     "title": "lustre_file_systems",
     "content": " ",
     "url": "/v3.0/reference/lustre_file_systems/",
     "relUrl": "/v3.0/reference/lustre_file_systems/"
-  },"106": {
+  },"107": {
     "doc": "lustre_file_systems",
     "title": "Description",
     "content": "This Provose configuration sets up AWS FSx Lustre clusters. Lustre is a high-performance networked filesytem commonly used in supercomputing. AWS FSx Lustre is Amazon Web Services’ managed Lustre offering. AWS FSx Lustre is appropriate for compute workloads that require large amounts of data and would otherwise be I/O-bound. For example, terabyte-scale machine learning typically requires fast storage, and FSx Lustre is a popular choice. Beware of long timeouts and “tainting” . AWS FSx Lustre clusters can take a long time to deploy–even multiple hours. By default, Terraform will wait 30 minutes before timing out. When this happens, you should use the AWS Web Console or the command line to check the status of your cluster. When you see a timeout from Terraform, you should not rerun Terraform before the cluster has finished deploying, otherwise this will destroy your cluster. When your cluster has finished deploying, Terraform might consider it “tainted” because it timed out during the cluster’s creation. However, in all likelihood, your cluster is most likely fine. If Terraform says something like . # module.{your-module-name}.aws_fsx_lustre_file_system.lustre_file_systems[\"{your-cluster-name}\"] is tainted, so must be replaced . then run this command: . terraform untaint 'module.{your-module-name}.aws_fsx_lustre_file_system.lustre_file_systems[\"{your-cluster-name}\"]' . with replacing {your-module-name} and {your-cluster-name} as appropriate. Make sure to wrap your resource name in single quotes (') to prevent your shell from interpreting the [, ]. and \" characters. ",
     "url": "/v3.0/reference/lustre_file_systems/#description",
     "relUrl": "/v3.0/reference/lustre_file_systems/#description"
-  },"107": {
+  },"108": {
     "doc": "lustre_file_systems",
     "title": "Examples",
     "content": "module \"myproject\" { source = \"github.com/provose/provose?ref=v3.0.0\" provose_config = { authentication = { aws = { region = \"us-east-1\" } } name = \"myproject\" internal_root_domain = \"example-internal.com\" internal_subdomain = \"myproject\" } # Here we create an AWS S3 bucket that we will use as the data repository # for our Lustre cluster. Data repositories are not necessary if you want # to spin up an empty Lustre cluster. s3_buckets = { \"mydata.myproject.example-internal.com\" = { versioning = false } } lustre_file_systems = { mydatacache = { # SCRATCH_2 clusters are appropriate for when you need fast reads and writes, # but do not need automated replication. If you want higher guarantees of # persistence, use the \"PERSISTENT\" deployment type. deployment_type = \"SCRATCH_2\" # Currently this is the smallest storage size that can be deployed. storage_capacity_gb = 12000 # Here we specify the S3 bucket and key prefix for loading into this # cluster. These can be set to different paths, but if they are set to the # same path, then writes to these files in Lustre will be written back # to S3. s3_import_path = \"s3://mydata.myproject.example-internal.com/prefix/\" s3_export_path = \"s3://mydata.myproject.example-internal.com/prefix/\" } } } . ",
     "url": "/v3.0/reference/lustre_file_systems/#examples",
     "relUrl": "/v3.0/reference/lustre_file_systems/#examples"
-  },"108": {
+  },"109": {
     "doc": "lustre_file_systems",
     "title": "Inputs",
     "content": ". | deployment_type – Required. The filesystem deployment type. Currently this can be one of the following values. The AWS documentation has more information about the differences between the deployment types. | \"SCRATCH_1\" – The original storage type for AWS FSx Lustre. This is typically used for storing temporary data and intermediate computations. This storage type is not replicated, which makes it less reliable for long-term storage. | \"SCRATCH_2\" – A scratch storage type with a much higher burst speed. This is also not replicated. | \"PERSISTENT_1\" – A storage type that offers replication in the same Availability Zone (AZ), which makes it more appropriate for long-term storage. | . | storage_capacity_gb – Required. This is the total storage capacity of the Lustre cluster in gibibytes. The minimum value is 1200, which is about 1.2 tebibytes. The next valid value is 2400. From there, the valid capacity values go up in increments of 2400 for the \"PERSISTENT_1\" and \"SCRATCH_2\" types, and in increments of 3600 for the \"SCRATCH_1\" type. | per_unit_storage_throughput_mb_per_tb – Optional. This field is required only for the \"PERSISTENT_1\" deployment_type. It describes the throughput speed per tebibyte of provisioned storage. Valid values are 50, 100, and 200. More information about this key can be found under PerUnitStorageThroughput in the AWS documentation. | s3_import_path – Optional. If entered, this is an Amazon S3 path that can be used as a data repository for importing data into the Lustre cluster. | s3_export_path – Optional. If entered, this is an Amazon S3 path that the Lustre cluster will export to. | auto_import_policy – Optional. If you have specified s3_import_path to import data from an S3 bucket into your Lustre filesystem, you can set the following options for importing new data: . | \"NONE\" – This is the default value. AWS will not update your Lustre cluster with files created or changed after the Lustre cluster is created. | \"NEW\" – This setting will automatically import new files from S3 into Lustre, but not changed files or deletions. | \"NEW_CHANGED\" – This setting will automatically import new files and changed files. Files deleted from S3 will not be deleted in Lustre. | . | imported_file_chunk_size_mb – Optional. This value can be set if s3_import_path is set. It determines the stripe count and the maximum amount of data–in mebibytes–that can be located on a single physical disk. This value defaults to 1024, but can be set to any value between 1 and 512000 inclusive. | . ",
     "url": "/v3.0/reference/lustre_file_systems/#inputs",
     "relUrl": "/v3.0/reference/lustre_file_systems/#inputs"
-  },"109": {
+  },"110": {
     "doc": "lustre_file_systems",
     "title": "Outputs",
     "content": ". | lustre_file_systems.aws_security_group.lustre_file_systems – This is a mapping between the cluster namd and the underlying aws_security_group resource. The security group opens up this filesystem to all traffic in the containing VPC. | lustre_file_systems.aws_fsx_lustre_file_system.lustre_file_systems – This is a mapping between the cluster name and the underlying aws_fsx_lustre_filesystem resource . | lustre_file_systems.aws_route53_record.lustre_file_systems – This is a mapping between the cluster name and the underlying aws_route53_record resource. | . ",
     "url": "/v3.0/reference/lustre_file_systems/#outputs",
     "relUrl": "/v3.0/reference/lustre_file_systems/#outputs"
-  },"110": {
+  },"111": {
     "doc": "mysql_clusters",
     "title": "mysql_clusters",
     "content": " ",
     "url": "/v3.0/reference/mysql_clusters/",
     "relUrl": "/v3.0/reference/mysql_clusters/"
-  },"111": {
+  },"112": {
     "doc": "mysql_clusters",
     "title": "Description",
     "content": "This Provose configuration sets up AWS Aurora MySQL database clusters. ",
     "url": "/v3.0/reference/mysql_clusters/#description",
     "relUrl": "/v3.0/reference/mysql_clusters/#description"
-  },"112": {
+  },"113": {
     "doc": "mysql_clusters",
     "title": "Examples",
     "content": "resource \"random_password\" \"my1_password\" { # AWS RDS passwords must be between 8 and 41 characters length = 41 # This is a list of special characters that can be included in the # password. This lits omits characters that often need to be # escaped. override_special = \"()-_=+[]{}&lt;&gt;?\" } resource \"random_password\" \"bigmy_password\" { length = 41 override_special = \"()-_=+[]{}&lt;&gt;?\" } module \"myproject\" { source = \"github.com/provose/provose?ref=v3.0.0\" provose_config = { authentication = { aws = { region = \"us-east-1\" } } name = \"myproject\" internal_root_domain = \"example-internal.com\" internal_subdomain = \"production\" } mysql_clusters = { # This creates an AWS Aurora MySQL cluster available # at the host my1.production.example-internal.com. # This host is only available within the VPC. my1 = { engine_version = \"5.7.mysql_aurora.2.08.0\" database_name = \"exampledb\" password = random_password.my1_password.result instances = { instance_type = \"db.r5.large\" instance_count = 1 } } # This creates a cluster at bigmy.production.example-internal.com. # This host is only available within the VPC. bigmy = { engine_version = \"5.7.mysql_aurora.2.08.0\" database_name = \"exampledb\" password = random_password.bigmy_password.result instances = { instance_type = \"db.t3.small\" instance_count = 3 } } } } . ",
     "url": "/v3.0/reference/mysql_clusters/#examples",
     "relUrl": "/v3.0/reference/mysql_clusters/#examples"
-  },"113": {
+  },"114": {
     "doc": "mysql_clusters",
     "title": "Inputs",
     "content": ". | instances – Required. Settings for the AWS RDS instances running the MySQL cluster. | instance_type – Required. The database instance type, like \"db.r5.large\". The accepted database instance types for AWS Aurora MySQL can be found here on the AWS website. | instance_count – Required. The number of database instances in the cluster. Provose requires that all database instances be of the same instance_type. | . | engine_version – Required. This is the version of the AWS Aurora MySQL cluster. See below to see the supported engine versions for AWS Aurora MySQL. | database_name – Required. The name of the initial database created by AWS RDS. You can create additional databases by logging into the instance with \"root\" as the username and the password you set below. | password – Required. The password for the database root user. | snapshot_identifier – Optional. If set, this is the ARN of the RDS snapshot to create this instance from. If not set, Provose provisions a blank database. | apply_immediately – Optional Defaults to true, which means that changes to the database are applied immediately. If set to false, any changes to the database configuration made through Provose or Terraform will be applied during the database’s next maintenance window. Be careful that making configuration changes can result in a database outage. | deletion_protection – Optional. Defaults to true, which is the opposite of the typical Terraform configuration. When set to true, the database cannot be deleted. Set to false if you are okay with deleting this database when running terraform destroy or other commands. | . ",
     "url": "/v3.0/reference/mysql_clusters/#inputs",
     "relUrl": "/v3.0/reference/mysql_clusters/#inputs"
-  },"114": {
+  },"115": {
     "doc": "mysql_clusters",
     "title": "Outputs",
     "content": ". | mysql_clusters.aws_db_subnet_group.mysql – A mapping of aws_db_subnet_group resources that describe the subnets for every cluster specified. Provose defaults to setting all of the subnets available in the VPC. | mysql_clusters.aws_security_group.mysql – An aws_security_group resource that governs access to the MySQL clusters. By default, the database is open to connection from anywhere within the VPC. The database is not accessible to the public Internet. | mysql_clusters.aws_rds_cluster.mysql – A mapping of aws_rds_cluster resources for every cluster specified. | mysql_clusters.aws_rds_cluster_instance.mysql – A mapping of aws_rds_cluster_instance resources–of every instance in every Aurora MySQl cluster created by Provose. | mysql.aws_route53_record.mysql – A mapping of aws_route53_record resources that give a friendly DNS name for every Aurora MySQL cluster specified. | mysql.aws_route53_record.mysql__readonly – A mapping of aws_route53_record resources that give a friendly DNS name for the readonly endpoint for every Aurora MySQL cluster specified. | . ",
     "url": "/v3.0/reference/mysql_clusters/#outputs",
     "relUrl": "/v3.0/reference/mysql_clusters/#outputs"
-  },"115": {
+  },"116": {
     "doc": "mysql_clusters",
     "title": "Supported engine versions",
     "content": "You can check which versions of AWS Aurora MySQL are available by running the following AWS CLI command and looking for the EngineVersion keys: . aws rds describe-db-engine-versions --engine aurora-mysql . Currently, the available versions are, in order from newest to oldest: . | \"5.7.mysql_aurora.2.08.0\" | \"5.7.mysql_aurora.2.07.2\" | \"5.7.mysql_aurora.2.07.1\" | \"5.7.mysql_aurora.2.07.0\" | \"5.7.mysql_aurora.2.06.0\" | \"5.7.mysql_aurora.2.05.0\" | \"5.7.mysql_aurora.2.04.8\" | \"5.7.mysql_aurora.2.04.7\" | \"5.7.mysql_aurora.2.04.6\" | \"5.7.mysql_aurora.2.04.5\" | \"5.7.mysql_aurora.2.04.4\" | \"5.7.mysql_aurora.2.04.3\" | \"5.7.mysql_aurora.2.04.2\" | \"5.7.mysql_aurora.2.04.1\" | \"5.7.mysql_aurora.2.04.0\" | \"5.7.mysql_aurora.2.03.4\" | \"5.7.mysql_aurora.2.03.3\" | \"5.7.mysql_aurora.2.03.2\" | \"5.7.12\" | . After version \"5.7.12\", AWS changed Aurora MySQL engine versioning to be in the format [compatible mysql version].mysql_aurora.[aurora version]. ",
     "url": "/v3.0/reference/mysql_clusters/#supported-engine-versions",
     "relUrl": "/v3.0/reference/mysql_clusters/#supported-engine-versions"
-  },"116": {
+  },"117": {
     "doc": "DNS and naming conventions",
     "title": "DNS and naming conventions",
     "content": "Provose requires a domain name in your AWS account to serve as the root domain name for internal services. This domain name is used as Common Name in the TLS certificates used to secure internal communications. This root domain is specified in the configuration provose_config.internal_root_domain. To enable multiple instances of Provose to share the same root domain, each Provose instance uses different subdomains, which is specified in provose_config.internal_subdomain. Provose sets up DNS names for services as subdomains of this internal subdomain. The below example is an abbreviated version of a configuration that would create four services available within the VPC: . | A Redis instance at redis1.production.example-internal.com | A Redis instance at redis2.production.example-internal.com | A PostgreSQL cluster at pg1.production.example-internal.com | A PostgreSQL cluster at pg2.production.example-internal.com | A Redis instance at redis1.testing.example-internal.com | A Redis instance at redis2.testing.example-internal.com | An Elasticsearch cluster at elastic1.testing.example-internal.com | An Elasticsearch cluster at elastic2.testing.example-internal.com | . module \"example1\" { source = \"github.com/provose/provose?ref=v3.0.0\" provose_config = { authentication = { ... } name = \"example1\" internal_root_domain = \"example-internal.com\" internal_subdomain = \"production\" } # Here, we create two Redis clusters named `redis1` and `redis2`. redis_clusters = { # This Redis cluster's DNS name is `redis1.production.example-internal.com`. redis1 = { # fill out config here } # This Redis cluster's DNS name is `redis2.production.example-internal.com`. redis2 = { # fill out config here } } postgresql_clusters = { # This PostgreSQL cluster's DNS name is `pg1.production.example-internal.com`. pg1 = { # fill out config here } # This PostgreSQL cluster's DNS name is `pg2.production.example-internal.com`. pg2 = { # fill out config here } } } module \"example2\" { source = \"github.com/provose/provose?ref=v3.0.0\" provose_config = { authentication = { ... } name = \"example2\" internal_root_domain = \"example-internal.com\" internal_subdomain = \"staging\" } # Here, we create two Redis clusters named `redis1` and `redis2`. redis_clusters = { # This cluster's DNS name is `redis1.staging.example-internal.com`. redis1 = { # fill details here... } # This cluster's DNS name is `redis2.staging.example-internal.com`. redis2 = { # fill details here... } } # Here, wqe create two Elasticsearch clusters named `elastic1` and `elastic2`. elasticsearch_clusters = { # This Elasticsearch cluster's DNS name is `elastic1.staging.example-internal.com`. elastic1 = { # fill details here... } # This Elasticsearch cluster's DNS name is `elastic2.staging.example-internal.com`. elastic2 = { # fill details here... } } } . ",
     "url": "/naming/",
     "relUrl": "/naming/"
-  },"117": {
+  },"118": {
     "doc": "overrides",
     "title": "overrides",
     "content": " ",
     "url": "/v3.0/reference/overrides/",
     "relUrl": "/v3.0/reference/overrides/"
-  },"118": {
+  },"119": {
     "doc": "overrides",
     "title": "Description",
     "content": "The overrides module exists for specific settings that are often used to maintain backwards-compatibility with older versions of Provose. They should not be used in newer versions of Provose. Sometimes a new version of Provose changes the name of a Terraform resource, which often requires that resource to be destroyed and recreated when upgrading to the newer version of Provose. This recreation may cause data loss, so to prevent it, an override key can be set to retain the old name. ",
     "url": "/v3.0/reference/overrides/#description",
     "relUrl": "/v3.0/reference/overrides/#description"
-  },"119": {
+  },"120": {
     "doc": "overrides",
     "title": "Examples",
     "content": "module \"myproject\" { source = \"github.com/provose/provose?ref=v3.0.0\" provose_config = { authentication = { aws = { region = \"us-east-1\" } } name = \"myproject\" internal_root_domain = \"example-internal.com\" internal_subdomain = \"production\" } overrides = { # `mysql-subnets` and `postgresql-subnets` are older names for the # AWS RDS database subnet groups in early versions of Provose. mysql_clusters__aws_db_subnet_group = \"mysql-subnets\" postgresql_clusters__aws_db_subnet_group = \"postgresql-subnets\" } } . ",
     "url": "/v3.0/reference/overrides/#examples",
     "relUrl": "/v3.0/reference/overrides/#examples"
-  },"120": {
+  },"121": {
     "doc": "overrides",
     "title": "Inputs",
     "content": ". | mysql_clusters__aws_db_subnet_group – Sets the name for the MySQL database subnet group. This name must be unique within the AWS account. No other database subnet group must have this name. | postgresql_clusters__aws_db_subnet_group – Sets the name for the PostgreSQL database subnet group. This name must be unique within the AWS account. No other database subnet group must have this name. | redis_clusters__aws_elasticache_subnet_group – Sets the name for the ElastiCache Redis subnet group. This name must be unique within the AWS account. No other Redis cluster subnet group must have this name. | . ",
     "url": "/v3.0/reference/overrides/#inputs",
     "relUrl": "/v3.0/reference/overrides/#inputs"
-  },"121": {
+  },"122": {
     "doc": "overrides",
     "title": "Outputs",
     "content": "There are no Terraform outputs for the overrides module. This is purely for setting configurations. ",
     "url": "/v3.0/reference/overrides/#outputs",
     "relUrl": "/v3.0/reference/overrides/#outputs"
-  },"122": {
+  },"123": {
     "doc": "Philosophy",
     "title": "Provose’s design philosophy",
     "content": "These are some of the design principles we consider when setting some of Provose’s intelligent defaults. Configuring AWS infrastructure is difficult because of the sheer number of settings needed to make a production configuration. Tools like Terraform and CloudFormation expose the full complexity of the cloud for advanced users, but Provose’s goal is to make everything simpler. ",
     "url": "/philosophy/#provoses-design-philosophy",
     "relUrl": "/philosophy/#provoses-design-philosophy"
-  },"123": {
+  },"124": {
     "doc": "Philosophy",
     "title": "Provose favors immediacy, not maintenance windows.",
     "content": "By default, Terraform schedules many changes for various resources–like RDS, ElastiCache, and DocumentDB–for the resource’s next maintenance window. Provose’s default is the opposite and changes are applied to resources immediately. However, this triggers a small amount of downtime, and this behavior can typically be disabled by setting the apply_immediately flag to false when applicable. When apply_immediately is set to false on a database, that means changes to it will be made during the next maintenance window. ",
     "url": "/philosophy/#provose-favors-immediacy-not-maintenance-windows",
     "relUrl": "/philosophy/#provose-favors-immediacy-not-maintenance-windows"
-  },"124": {
+  },"125": {
     "doc": "Philosophy",
     "title": "Provose favors affordability over scalability",
     "content": "Some of Provose’s pre-packaged configurations cannot be easily configured to autoscale to high loads, but they have been designed to use cloud resources economically at small scales. This is because Provose is appropriate for running many small-scale experiments in the cloud without breaking the bank, and in many cases scalability engineering requies domain expertise that a library like Provose would be unable to provide. Furthermore, it is important that Provose’s defaults are not needlessly expensive for most users. Cloud computing can become expensive, and cheap defaults are important. ",
     "url": "/philosophy/#provose-favors-affordability-over-scalability",
     "relUrl": "/philosophy/#provose-favors-affordability-over-scalability"
-  },"125": {
+  },"126": {
     "doc": "Philosophy",
     "title": "Provose standardizes on x86_64 Amazon Linux 2 on Amazon Web Services",
     "content": "There are other architectures, other AMIs, and other cloud provider, but in an effort to reduce the surface area for debugging, Provose will limit itself to running software on x86_64 Amazon Linux 2 instances on Amazon Web Services, although we do use custom Amazon Machine Images. ",
     "url": "/philosophy/#provose-standardizes-on-x86_64-amazon-linux-2-on-amazon-web-services",
     "relUrl": "/philosophy/#provose-standardizes-on-x86_64-amazon-linux-2-on-amazon-web-services"
-  },"126": {
+  },"127": {
     "doc": "Philosophy",
     "title": "Philosophy",
     "content": " ",
     "url": "/philosophy/",
     "relUrl": "/philosophy/"
-  },"127": {
+  },"128": {
     "doc": "postgresql_clusters",
     "title": "postgresql_clusters",
     "content": " ",
     "url": "/v3.0/reference/postgresql_clusters/",
     "relUrl": "/v3.0/reference/postgresql_clusters/"
-  },"128": {
+  },"129": {
     "doc": "postgresql_clusters",
     "title": "Description",
     "content": "This Provose configuration sets up AWS Aurora PostgreSQL clusters. ",
     "url": "/v3.0/reference/postgresql_clusters/#description",
     "relUrl": "/v3.0/reference/postgresql_clusters/#description"
-  },"129": {
+  },"130": {
     "doc": "postgresql_clusters",
     "title": "Examples",
     "content": "resource \"random_password\" \"pg1_password\" { # AWS RDS passwords must be between 8 and 41 characters length = 41 # This is a list of special characters that can be included in the # password. This lits omits characters that often need to be # escaped. override_special = \"()-_=+[]{}&lt;&gt;?\" } resource \"random_password\" \"bigpg_password\" { length = 41 override_special = \"()-_=+[]{}&lt;&gt;?\" } module \"myproject\" { source = \"github.com/provose/provose?ref=v3.0.0\" provose_config = { authentication = { aws = { region = \"us-east-1\" } } name = \"myproject\" internal_root_domain = \"example-internal.com\" internal_subdomain = \"production\" } postgresql_clusters = { # This creates an AWS Aurora PostgreSQL cluster available # at the host pg1.production.example-internal.com. # This host is only available within the VPC. pg1 = { engine_version = \"11.6\" database_name = \"exampledb\" password = random_password.pg1_password.result instances = { instance_type = \"db.r5.large\" instance_count = 1 } } # This creates a cluster at bigpg.production.example-internal.com. # This host is only available within the VPC. bigpg = { engine_version = \"11.6\" database_name = \"exampledb\" password = random_password.bigpg_password.result instances = { instance_type = \"db.t3.medium\" instance_count = 3 } } } } . ",
     "url": "/v3.0/reference/postgresql_clusters/#examples",
     "relUrl": "/v3.0/reference/postgresql_clusters/#examples"
-  },"130": {
+  },"131": {
     "doc": "postgresql_clusters",
     "title": "Inputs",
     "content": ". | instances – Required. Settings for the AWS RDS instances running the PostgreSQL cluster. | instance_type – Required. The database instance type, like \"db.r5.large\". The accepted database instance types for AWS Aurora PostgreSQL can be found here on the AWS website. | instance_count – Required. The number of database instances in the cluster. Provose requires that all database instances be of the same instance_type. | . | engine_version – Required. This is the version of the AWS Aurora PostgreSQL cluster. The currently-supported engine versions can be found here on the AWS website. | database_name – Required. The name of the initial database created by AWS RDS. You can create additional databases by logging into the instance with \"root\" as the username and the password you set below. | password – Required. The password for the database root user. | snapshot_identifier – Optional. If set, this is the ARN of the RDS snapshot to create this instance from. If not set, Provose provisions a blank database. | apply_immediately – Optional Defaults to true, which means that configuration changes to the database are applied immediately. If set to false, any changes to the database configuration made through Provose or Terraform will be applied during the database’s next maintenance window. Be careful that making configuration changes can result in a database outage. | deletion_protection – Optional. Defaults to true, which is the opposite of the typical Terraform configuration. When set to true, the database cannot be deleted. Set to false if you are okay with deleting this database when running terraform destroy or other commands. | . ",
     "url": "/v3.0/reference/postgresql_clusters/#inputs",
     "relUrl": "/v3.0/reference/postgresql_clusters/#inputs"
-  },"131": {
+  },"132": {
     "doc": "postgresql_clusters",
     "title": "Outputs",
     "content": ". | postgresql_clusters.aws_db_subnet_group.postgresql – A mapping of aws_db_subnet_group resources that describe the subnets for every cluster specified. Provose defaults to setting all of the subnets available in the VPC. | postgresql_clusters.aws_security_group.postgresql – An aws_security_group resource that governs access to the PostgreSQL clusters. By default, the database is open to connection from anywhere within the VPC. The database is not accessible to the public Internet. | postgresql_clusters.aws_rds_cluster.postgresql – A mapping of aws_rds_cluster resources for every cluster specified. | postgresql_clusters.aws_rds_cluster_instance.postgresql – A mapping of aws_rds_cluster_instance resources–of every instance in every Aurora PostgreSQL cluster created by Provose. | postgresql.aws_route53_record.postgresql – A mapping of aws_route53_record resources that give a friendly DNS name for every Aurora PostgreSQL cluster specified. | postgresql.aws_route53_record.postgresql__readonly – A mapping of aws_route53_record resources that give a friendly DNS name for the readonly endpoint for every Aurora postgresql cluster specified. | . ",
     "url": "/v3.0/reference/postgresql_clusters/#outputs",
     "relUrl": "/v3.0/reference/postgresql_clusters/#outputs"
-  },"132": {
+  },"133": {
     "doc": "postgresql_clusters",
     "title": "Supported engine versions",
     "content": "You can check which versions of AWS Aurora PostgreSQl are available by running the following AWS CLI comamnd and looking for the EngineVersion keys: . aws rds describe-db-engine-versions --engine aurora-postgresql . Currently, the available versions are, in order from newest to oldest: . | \"11.7\" | \"11.6\" | \"11.4\" | \"10.12\" | \"10.11\" | \"10.7\" | \"10.7\" | \"10.6\" | \"10.5\" | \"10.4\" | \"9.6.17\" | \"9.6.16\" | \"9.6.12\" | \"9.6.11\" | \"9.6.9\" | \"9.6.8\" | \"9.6.6\" | \"9.6.3\" | . ",
     "url": "/v3.0/reference/postgresql_clusters/#supported-engine-versions",
     "relUrl": "/v3.0/reference/postgresql_clusters/#supported-engine-versions"
-  },"133": {
+  },"134": {
     "doc": "provose_config",
     "title": "provose_config",
     "content": " ",
     "url": "/v3.0/reference/provose_config/",
     "relUrl": "/v3.0/reference/provose_config/"
-  },"134": {
+  },"135": {
     "doc": "provose_config",
     "title": "Description",
     "content": "The provose_config module is used to describe settings that are required by all of the other Provose modules. Authentication . Provose connects to your Amazon Web Services account using both the Terraform AWS provider and the AWS CLI v2–which must be installed on the machine running Provose. Both the provider and the CLI will look for credentials in these places in the following order: . | The AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY environment variables. | Credentials under the \"default\" profile in the ~/.aws/credentials file on your system. You can select a different profile with the AWS_PROFILE environment variable. | Credentials under the \"default\" profile in the ~/.aws/config file on your system. You can select a different profile with the AWS_PROFILE environment variable. | Container credentials, if you happen to be running Provose inside of a container you deployed to Amazon Elastic Container Service (ECS). | Instance profile credentials, if you happen to be running Provose inside of an Amazon EC2 instance. | . For #2 or #3, you would install your credentials in an appropriate file and then run AWS_PROFILE=name-of-your-profile terraform plan (or terraform apply or terraform destroy). Amazon [has a guide for setting up the credentials and config files. ",
     "url": "/v3.0/reference/provose_config/#description",
     "relUrl": "/v3.0/reference/provose_config/#description"
-  },"135": {
+  },"136": {
     "doc": "provose_config",
     "title": "Examples",
     "content": "module \"myproject\" { source = \"github.com/provose/provose?ref=v3.0.0\" provose_config = { authentication = { aws = { region = \"us-east-1\" access_key = var.access_key secret_key = var.secret_key } } name = \"myproject\" internal_root_domain = \"example-internal.com\" internal_subdomain = \"production\" } } . ",
     "url": "/v3.0/reference/provose_config/#examples",
     "relUrl": "/v3.0/reference/provose_config/#examples"
-  },"136": {
+  },"137": {
     "doc": "provose_config",
     "title": "Inputs",
     "content": ". | authentication – Required. This is an object that contains the authentication information needed for Provose’s underlying Terraform providers. | aws – Required. This object contains information for connecting to AWS resources. | region – Required. This is the AWS region for Provose to connect to. | access_key – Optional. This is the AWS IAM access key. If you omit this, Terraform will look in your AWS config and environment variable for credentials. If you are running Terraform on an AWS EC2 instance, you can omit the access_key key to use the EC2 instance’s IAM instance profile. | secret_key – Optional. This is the AWS IAM access key. If you omit this, Terraform will look in your AWS config and environment variable for credentials. If you are running Terraform on an AWS EC2 instance, you can omit the access_key key to use the EC2 instance’s IAM instance profile. | . | . | name – Required. This is the “name” for this instance of Provose. This is the namespace for the underlying Terraform resources that Provose deploys, which lets you use the Provose module multiple times without creating conflicts in name resources. | internal_root_domain – Required. This is the domain name that you are using with Provose. Provose requires you to have a domain name in your AWS account as the base name for TLS certificates that Provose provisions. These certificates are used to secure access to internal services. | internal_subdomain – Required. This is the subdomain used for this instance of Provose. Give a different internal subdomain to every Provose module to prevent name conflicts. | vpc_cidr – Optional. This is the CIDR that specifies how many addresses to allocate in the VPC and what format they are. This is an optional parameter that defaults to \"10.0.0.0/16\". If you are setting up multiple Provose modules that can connect to each other with VPC peering, you will want to set non-overlapping CIDRs for the two modules. | . ",
     "url": "/v3.0/reference/provose_config/#inputs",
     "relUrl": "/v3.0/reference/provose_config/#inputs"
-  },"137": {
+  },"138": {
     "doc": "provose_config",
     "title": "Outputs",
     "content": "This Provose configuration creates no resources by itself. It helps configure all of the other resources. ",
     "url": "/v3.0/reference/provose_config/#outputs",
     "relUrl": "/v3.0/reference/provose_config/#outputs"
-  },"138": {
+  },"139": {
     "doc": "redis_clusters",
     "title": "redis_clusters",
     "content": " ",
     "url": "/v3.0/reference/redis_clusters/",
     "relUrl": "/v3.0/reference/redis_clusters/"
-  },"139": {
+  },"140": {
     "doc": "redis_clusters",
     "title": "Description",
     "content": "The Provose redis_clusters module sets up a Redis instance using Amazon ElastiCache for Redis. Currently, Provose only supports setting up clusters that contain a single instance, meaning that the instances.instance_count parameter is not yet supported. ",
     "url": "/v3.0/reference/redis_clusters/#description",
     "relUrl": "/v3.0/reference/redis_clusters/#description"
-  },"140": {
+  },"141": {
     "doc": "redis_clusters",
     "title": "Examples",
     "content": "module \"myproject\" { source = \"github.com/provose/provose?ref=v3.0.0\" provose_config = { authentication = { aws = { region = \"us-east-1\" } } name = \"myproject\" internal_root_domain = \"example-internal.com\" internal_subdomain = \"production\" } # Here, we create two Redis clusters named \"cluster1\" and \"cluster2\". redis_clusters = { # This cluster's DNS name is cluster1.production.example-internal.com cluster1 = { engine_version = \"5.0.6\" instances = { instance_type = \"cache.t3.micro\" } } # This cluster's DNS name is cluster2.production.example-internal.com cluster2 = { engine_version = \"5.0.6\" instances = { instance_type = \"cache.m5.large\" } # This means that changes to the cluster are applied in the next # mantenance window as opposed to immediately. apply_immediately = false } } } . ",
     "url": "/v3.0/reference/redis_clusters/#examples",
     "relUrl": "/v3.0/reference/redis_clusters/#examples"
-  },"141": {
+  },"142": {
     "doc": "redis_clusters",
     "title": "Inputs",
     "content": ". | instances – Required. This is a group of settings for the instances that run the ElastiCache cluster. | instance_type – Required. This lists the ElastiCache-specific instance type to deploy. An example value is \"cache.m5.large\". A complete list of available instance types is here in the AWS documentation. | . | engine_version – Required. This lists the Redis version to deploy–like \"5.0.6\". A complete list of available versions is available here in the AWS documentation. | apply_immediately – Optional. This defaults to true, which makes configuration changes apply to the cluster immediately. When set to false, configuration changes are instead applied during the cluster’s next maintenance window. | . ",
     "url": "/v3.0/reference/redis_clusters/#inputs",
     "relUrl": "/v3.0/reference/redis_clusters/#inputs"
-  },"142": {
+  },"143": {
     "doc": "redis_clusters",
     "title": "Outputs",
     "content": ". | redis_clusters.aws_security_group.redis – This is a aws_security_group resource that governs access to the cluster. By default, the Redis cluster is accessible within the containing VPC created by Provose. | redis_clusters.aws_elasticache_subnet_group.redis – This is the aws_elasticache_subnet_group resource that defines which subnets are available to the clusters. By default, this is all of the subnets in the VPC. | redis_clusters.aws_elasticache_cluster.redis – This is a mapping from cluster names to aws_elasticache_cluster resources that configure each cluster. | redis_clusters.aws_route53_record.redis – This is a mapping from cluster names to aws_route53_record resources representing Route 53 DNS records that give friendly names to the clusters. | . ",
     "url": "/v3.0/reference/redis_clusters/#outputs",
     "relUrl": "/v3.0/reference/redis_clusters/#outputs"
-  },"143": {
+  },"144": {
     "doc": "Release notes",
     "title": "Provose v3.0 Release notes",
     "content": "Provose 3.0 comes with a number of improvements aimed at simplifying deployments. There are not a whole lot of new features compared to version 2.0, but this is a a major version bump because some changes may be incompatible. Users migrating up from version 2.0 may notice that this version creates many more AWS tags. This should help users track their cloud expenses with more granularity in AWS Cost Explorer. ",
     "url": "/v3.0/release-notes/#provose-v30-release-notes",
     "relUrl": "/v3.0/release-notes/#provose-v30-release-notes"
-  },"144": {
+  },"145": {
     "doc": "Release notes",
     "title": "Release notes",
     "content": " ",
     "url": "/v3.0/release-notes/",
     "relUrl": "/v3.0/release-notes/"
-  },"145": {
+  },"146": {
     "doc": "s3_buckets",
     "title": "s3_buckets",
     "content": " ",
     "url": "/v3.0/reference/s3_buckets/",
     "relUrl": "/v3.0/reference/s3_buckets/"
-  },"146": {
+  },"147": {
     "doc": "s3_buckets",
     "title": "Description",
     "content": "The Provose s3_buckets module is a mapping of S3 buckets–which must have globally unique names–and some basic settings. ",
     "url": "/v3.0/reference/s3_buckets/#description",
     "relUrl": "/v3.0/reference/s3_buckets/#description"
-  },"147": {
+  },"148": {
     "doc": "s3_buckets",
     "title": "Examples",
     "content": "module \"myproject\" { source = \"github.com/provose/provose?ref=v3.0.0\" provose_config = { authentication = { aws = { region = \"us-east-1\" } } name = \"myproject\" internal_root_domain = \"example-internal.com\" internal_subdomain = \"production\" } s3_buckets = { \"example-bucket-name.example.com\" = {} \"some-other-unique-bucket-name\" = { versioning = true } \"third-bucket\" = { acl = \"private\" } } } . ",
     "url": "/v3.0/reference/s3_buckets/#examples",
     "relUrl": "/v3.0/reference/s3_buckets/#examples"
-  },"148": {
+  },"149": {
     "doc": "s3_buckets",
     "title": "Inputs",
     "content": ". | versioning – Optional. Defaults to false. If set to true, then object versioning is enabled in the S3 bucket. | acl – Optional. This is a field to specify a “canned ACL.” The default ACL is \"private”, where the bucket owner gets full control and nobody else has access rights. Valid ACL values are \"private\", \"public-read\", \"public-read-write\", \"aws-read-exec\", \"authenticated-read\", \"bucket-owner-read\", \"bucket-owner-full-control\", or \"log-delivery-write\". The meaning of these canned ACLs can be read on this page in the AWS documentation. | . ",
     "url": "/v3.0/reference/s3_buckets/#inputs",
     "relUrl": "/v3.0/reference/s3_buckets/#inputs"
-  },"149": {
+  },"150": {
     "doc": "s3_buckets",
     "title": "Outputs",
     "content": ". | s3_buckets.aws_s3_bucket.s3 – This is a mapping from bucket names to aws_s3_bucket resources. | . ",
     "url": "/v3.0/reference/s3_buckets/#outputs",
     "relUrl": "/v3.0/reference/s3_buckets/#outputs"
-  },"150": {
+  },"151": {
     "doc": "secrets",
     "title": "secrets",
     "content": " ",
     "url": "/v3.0/reference/secrets/",
     "relUrl": "/v3.0/reference/secrets/"
-  },"151": {
+  },"152": {
     "doc": "secrets",
     "title": "Description",
     "content": "The Provose secrets module is a mapping of names to secret values. These are stored in Amazon Secrets Manager and can be accessed by containers deployed with the Provose containers module. ",
     "url": "/v3.0/reference/secrets/#description",
     "relUrl": "/v3.0/reference/secrets/#description"
-  },"152": {
+  },"153": {
     "doc": "secrets",
     "title": "Examples",
     "content": "This is an example of defining secrets with the Provose secrets module, and then consuming them in the containers module. variable \"some_secret\" { type = string default = \"This is how to use a Terraform variable.\" } module \"myproject\" { source = \"github.com/provose/provose?ref=v3.0.0\" provose_config = { authentication = { aws = { region = \"us-east-1\" } } name = \"myproject\" internal_root_domain = \"example-internal.com\" internal_subdomain = \"production\" } # Be careful not to put the actual values of your secrets into Git # or your version control. secrets = { root_password = \"...insert password here...\" secret_key = \"...insert secret key here...\" # Use Terraform variables to specify secret values so they don't end # up in your source code. other_secret = var.some_secret } # Here we include a container configuration as an example of how # other Provose modules use secrets. containers = { helloexample = { # these secrets named `root_password` and `secret_key` are retrieved # from AWS Secrets Manager and inserted into this Elastic Container Service # configuration as environment variables named `ROOT_PASSWORD` and # `APPLICATION_SECRET_KEY`. secrets = { ROOT_PASSWORD = \"root_password\" APPLICATION_SECRET_KEY = \"secret_key\" } # The configuration below this comment is just standard setup # for a container. image = { name = \"nginxdemos/hello\" tag = \"latest\" private_registry = false } public = { https = { internal_http_port = 80 internal_http_health_check_path = \"/\" public_dns_names = [\"demo.example.com\"] } } instances = { instance_type = \"FARGATE\" container_count = 10 cpu = 256 memory = 512 } } } } . ",
     "url": "/v3.0/reference/secrets/#examples",
     "relUrl": "/v3.0/reference/secrets/#examples"
-  },"153": {
+  },"154": {
     "doc": "secrets",
     "title": "Inputs",
     "content": "A typical Provose secrets module configuration looks like . secrets = { secret_name = \"secret value as a string\" other_secret_name = var.some_secret_variable } . ",
     "url": "/v3.0/reference/secrets/#inputs",
     "relUrl": "/v3.0/reference/secrets/#inputs"
-  },"154": {
+  },"155": {
     "doc": "secrets",
     "title": "Outputs",
     "content": ". | secrets.aws_secretsmanager_secret.secrets – This is a mapping of aws_secretsmanager_secret resources for every secret specified. | secrets.aws_secretsmanager_secret_version.secrets – This is a mapping of aws_secretsmanager_secret_version resources for every secret specified. | . ",
     "url": "/v3.0/reference/secrets/#outputs",
     "relUrl": "/v3.0/reference/secrets/#outputs"
-  },"155": {
+  },"156": {
     "doc": "Security",
     "title": "Security",
     "content": " ",
     "url": "/security/",
     "relUrl": "/security/"
-  },"156": {
+  },"157": {
     "doc": "Security",
     "title": "How to report a security issue",
     "content": "To report a security issue, email security@neocrym.com. Do not post on GitHub. ",
     "url": "/security/#how-to-report-a-security-issue",
     "relUrl": "/security/#how-to-report-a-security-issue"
-  },"157": {
+  },"158": {
     "doc": "Security",
     "title": "Provose’s threat model",
     "content": "Provose keeps sensitive information in Terraform state. Terraform synchronizes its operations by storing “state” about what has been deployed. By default, the state is written to the local filesystem, but Terraform also makes it easy to store state remotely–such as in an Amazon S3 bucket. This allows multiple contributors to run Terraform on different machines while only keeping one synchronized copy of state. Other Terraform modules avoid writing sensitive information to Terraform state, instead writing sensitive information to the local filesystem. However, this makes it more difficult to synchronize Terraform on multiple machines. Provose assumes that your Terraform state is secure. We recommend storing state in an encrypted, versioned Amazon S3 bucket that can only be accessed by the AWS accounts that need to run Terraform. Provose believes in trusted VPCs. Many organizations structure their cloud infrastructure with the principle of defense-in-depth. However, Provose creates VPCs and provisions resources in them with network access open to other resources within the VPC. Provose makes the assumption that resources deployed within the same VPC can trust each other, and that defense-in-depth should be practiced by deploying unrelated resources in separate, unpeered VPCs. Provose recommends using AWS credentials that cannot destroy resources. Provose and Terraform have some superficial protection of important resources, like enabling deletion protection by default on AWS Relational Database Service (RDS) databases. ",
     "url": "/security/#provoses-threat-model",
     "relUrl": "/security/#provoses-threat-model"
-  },"158": {
+  },"159": {
     "doc": "source",
     "title": "source",
     "content": " ",
     "url": "/v3.0/reference/source/",
     "relUrl": "/v3.0/reference/source/"
-  },"159": {
+  },"160": {
     "doc": "source",
     "title": "Description",
     "content": "The source parameter is used in Terraform modules to describe where to find the module. When using Provose, you should set source to be \"github.com/provose/provose?ref=v3.0.0\". Always make sure that the ref= parameter is pinned to a specific version to avoid Provose upgrading without your intention. If you want to make modifications to Provose and use them, you should clone the Provose repository on GitHub with with shell command git clone --recurse-submodules https://github.com/provose/provose.git. After that, you can set the source parameter to be the local filesystem path where you cloned the repository. THe source parameter comes from Terraform’s underlying module syntax–not Provose itself. The Terraform documentation has more information about how to specify source in a module configuration. ",
     "url": "/v3.0/reference/source/#description",
     "relUrl": "/v3.0/reference/source/#description"
-  },"160": {
+  },"161": {
     "doc": "source",
     "title": "Examples",
     "content": "module \"myproject\" { source = \"github.com/provose/provose?ref=v3.0.0\" provose_config = { authentication = { aws = { region = \"us-east-1\" } } name = \"myproject\" internal_root_domain = \"example-internal.com\" internal_subdomain = \"production\" } } . ",
     "url": "/v3.0/reference/source/#examples",
     "relUrl": "/v3.0/reference/source/#examples"
-  },"161": {
+  },"162": {
     "doc": "source",
     "title": "Inputs",
     "content": "The value for the source parameter is just a string that points at the online repository or filesystem path. This parameter is not a mapping. ",
     "url": "/v3.0/reference/source/#inputs",
     "relUrl": "/v3.0/reference/source/#inputs"
-  },"162": {
+  },"163": {
     "doc": "source",
     "title": "Outputs",
     "content": "There are no outputs for the source parameter. ",
     "url": "/v3.0/reference/source/#outputs",
     "relUrl": "/v3.0/reference/source/#outputs"
-  },"163": {
+  },"164": {
     "doc": "Uninstalling Provose",
     "title": "Uninstalling Provose",
     "content": "This page describes how to delete a Provose (a Terraform module) and the underlying Terraform resources it creates. ",
     "url": "/v3.0/uninstalling/#uninstalling-provose",
     "relUrl": "/v3.0/uninstalling/#uninstalling-provose"
-  },"164": {
+  },"165": {
     "doc": "Uninstalling Provose",
     "title": "Table of contents",
     "content": ". | Deleting a Provose module with terraform destroy | Deleting databases | Deleting S3 buckets | . ",
     "url": "/v3.0/uninstalling/#table-of-contents",
     "relUrl": "/v3.0/uninstalling/#table-of-contents"
-  },"165": {
+  },"166": {
     "doc": "Uninstalling Provose",
     "title": "Deleting a Provose module with terraform destroy",
     "content": "Provose is implemented as a HashiCorp Terraform module. Most Terraform resources can be deleted by removing them from the source code, but Terraform treats modules as special. Removing them from a file or deleting the entire file will cause an error. Instead, use Terraform’s selective delete feature to remove modules, including Provose. For a module named myproject that looks like: . module \"myproject\" { // contents go here } . run terraform destroy -target module.myproject to destroy all resources in the project. ",
     "url": "/v3.0/uninstalling/#deleting-a-provose-module-with-terraform-destroy",
     "relUrl": "/v3.0/uninstalling/#deleting-a-provose-module-with-terraform-destroy"
-  },"166": {
+  },"167": {
     "doc": "Uninstalling Provose",
     "title": "Deleting databases",
     "content": "If you have deployed a MySQL or PostgreSQL database, you may have to disable deletion protection in order for Terraform to succeed in deleting the database. This can be done in the AWS console or it can be done by adding deletion_protection = false in the Provose configuration. The below example shows how to disable deletion protection on a MySQL database. module \"myproject\" { // ...omitted configuration here... mysql_clusters = { db1 = { engine_version = \"5.7.mysql_aurora.2.08.0\" database_name = \"exampledb\" password = \"some long password\" instances = { instance_type = \"db.r5.large\" instance_count = 1 } // Add this line to allow the database to be deleted. // If this line is omitted, deletion protection is enabled // and the instance cannot be deleted from Provose or // the AWS console. deletion_protection = false } } } . ",
     "url": "/v3.0/uninstalling/#deleting-databases",
     "relUrl": "/v3.0/uninstalling/#deleting-databases"
-  },"167": {
+  },"168": {
     "doc": "Uninstalling Provose",
     "title": "Deleting S3 buckets",
     "content": "S3 buckets can only be deleted when they are empty. Provose also automatically creates S3 buckets for storing logs from the Application Load Balancers (ALBs) used to route HTTP traffic from the Internet and from within the VPC. If you are deleting a Provose module, you should delete or empty S3 buckets created by that module through the AWS console or the AWS CLI. ",
     "url": "/v3.0/uninstalling/#deleting-s3-buckets",
     "relUrl": "/v3.0/uninstalling/#deleting-s3-buckets"
-  },"168": {
+  },"169": {
     "doc": "Uninstalling Provose",
     "title": "Uninstalling Provose",
     "content": " ",
