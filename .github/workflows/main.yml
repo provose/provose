@@ -21,6 +21,9 @@ jobs:
         with:
           ref: website
 
+      - name: Build the website-building container
+        run: docker-compose build
+
       # Runs a single command using the runners shell
       - name: Build the website
         run: docker-compose run --user=$(id -u):$(id -g) --entrypoint=bash jekyll ./build-all-versions.sh
