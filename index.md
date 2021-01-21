@@ -17,7 +17,7 @@ Provose is a Terraform module that deploys hundreds of underlying cloud resource
 
 Provose is distributed under the MIT license. You can download Provose at [github.com/provose/provose](https://github.com/provose/provose), which is also where you can also submit bug reports and contribute improvements.
 
-## Learn Provose from [Tutorial](/3.0/tutorial/) or the [Reference](/v3.0/reference/).
+## Learn Provose from [Tutorial](/v3.0/tutorial/) or the [Reference](/v3.0/reference/).
 
 Provose is easy to learn. You can get started with just a few lines of code.
 
