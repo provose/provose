@@ -18,7 +18,7 @@ Provose is easy to learn. You can get started with just a few lines of code. You
 
 ## Here is what Provose code looks like.
 
-Below is an example of what Provose looks like, provisioning a [container serving HTTP traffic on AWS Fargate](/v3.0/reference/containers/):
+Below is an example of what Provose looks like, provisioning a [container serving HTTP traffic on AWS Fargate](https://provose.com/v3.0/reference/containers/):
 
 ```terraform
 module "myproject" {
@@ -74,12 +74,12 @@ module "myproject" {
 ```
 
 You can also take a look at how to use Provose to provision:
- * [MySQL](/v3.0/reference/mysql_clusters/)
- * [PostgreSQL](/v3.0/reference/postgresql_clusters/)
- * [Elasticsearch](/v3.0/reference/elasticsearch_clusters/)
- * [Redis](/v3.0/reference/redis_clusters/)
- * [Lustre](/v3.0/reference/lustre_file_systems/)
- * [bare EC2 instances](/v3.0/reference/ec2_on_demand_instances/)
+ * [MySQL](https://provose.com/v3.0/reference/mysql_clusters/)
+ * [PostgreSQL](https://provose.com/v3.0/reference/postgresql_clusters/)
+ * [Elasticsearch](https://provose.com/v3.0/reference/elasticsearch_clusters/)
+ * [Redis](https://provose.com/v3.0/reference/redis_clusters/)
+ * [Lustre](https://provose.com/v3.0/reference/lustre_file_systems/)
+ * [bare EC2 instances](https://provose.com/v3.0/reference/ec2_on_demand_instances/)
 
 and a lot more on Amazon Web Services.
 
