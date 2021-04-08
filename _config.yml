@@ -32,7 +32,7 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: neocrym
 github_username: neocrym
-
+color_scheme: provose
 latest_provose_version: v1.1
 
 # Build settings
