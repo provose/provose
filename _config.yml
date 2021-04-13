@@ -24,11 +24,7 @@ email: "engineering@neocrym.com"
 
 tagline: "Provose is the easiest way to manage your Amazon Web Services infrastructure."
 
-description: >- # this means to ignore newlines until "baseurl:"
-  Provose is a Terraform super-module. You tell it what types of databases
-  and containers you want to run on Amazon Web Services (AWS), and it
-  automatically provisions certificates, security groups, IAM policies,
-  and more.
+description: "Provose is the easiest way to manage your Amazon Web Services infrastructure."
 
 logo: "/assets/images/1x/logo-black-on-transparent-1x.png"
 
