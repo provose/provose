@@ -19,33 +19,70 @@
 # in the templates via {{ site.myvariable }}.
 
 title: "Provose"
-email: provose@neocrym.com
+
+email: "engineering@neocrym.com"
+
+tagline: "Provose is the easiest way to manage your Amazon Web Services infrastructure."
+
 description: >- # this means to ignore newlines until "baseurl:"
   Provose is a Terraform super-module. You tell it what types of databases
   and containers you want to run on Amazon Web Services (AWS), and it
   automatically provisions certificates, security groups, IAM policies,
   and more.
+
 logo: "/assets/images/1x/logo-black-on-transparent-1x.png"
-footer_content: 'Copyright &copy; 2020 <a href="https://neocrym.com">Neocrym Records Inc</a>. Distributed via an <a href="https://github.com/provose/provose.github.io/blob/master/LICENSE">MIT license</a>. <a href="/privacy/">Privacy Policy</a>.'
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      image: "/assets/images/1x/twitter-facebook-preview-card-1x.png"
+
+
+image: "/assets/images/1x/twitter-facebook-preview-card-1x.png"
+
+footer_content: 'Copyright &copy; 2020-2021 <a href="https://neocrym.com">Neocrym Records Inc</a>. Distributed via an <a href="https://github.com/provose/provose/blob/master/LICENSE">MIT license</a>. <a href="/privacy/">Privacy Policy</a>.'
+
 destination: docs
+
 permalink: pretty
+
 baseurl: "" # the subpath of your site, e.g. /blog
+
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
+
 twitter_username: neocrym
+
+twitter:
+  username: neocrym
+  card: summary_large_image
+  
 github_username: neocrym
+
 color_scheme: provose
-latest_provose_version: v1.1
+
+social:
+  name: Neocrym Records Inc.
+  links:
+    - https://twitter.com/neocrym
+    - https://www.facebook.com/neocrym
+    - https://www.linkedin.com/company/neocrym
+    - https://github.com/provose
+
+
+latest_provose_version: v3.0
 
 # Build settings
 remote_theme: pmarsceill/just-the-docs
-# theme: "just-the-docs"
+
 plugins:
   - jekyll-sitemap
   - jekyll-admin
-#  - jekyll-feed
+  - jekyll-seo-tag
 
 # Enable search: https://pmarsceill.github.io/just-the-docs/docs/search/
 search_enabled: true
+
 # Exclude from processing.
 # The following items will not be processed, by default.
 # Any item listed under the `exclude:` key here will be automatically added to
@@ -76,10 +113,9 @@ exclude:
   - vendor/ruby/
 
 aux_links:
-  "Docs on GitHub":
-    - "https://github.com/provose/provose.github.io/"
   "Provose on GitHub":
     - "https://github.com/provose/provose/"
   "Neocrym.com":
-    - "https://neocrym.com"
+    - "https://www.neocrym.com"
+
 ga_tracking: UA-156547622-4

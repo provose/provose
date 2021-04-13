@@ -267,6 +267,7 @@ PLATFORMS
 DEPENDENCIES
   github-pages
   jekyll-feed (~> 0.12)
+  jekyll-seo-tag
   jekyll-sitemap
   just-the-docs
   kramdown (>= 2.3.1)
