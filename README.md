@@ -1,3 +1,5 @@
+<img src="https://provose.com/assets/images/1x/logo-blue-on-transparent-1x.png"  />
+
 # Provose is the easiest way to manage your Amazon Web Service (AWS) infrastructure.
 
 ## Provose is built on top of [HashiCorp Terraform](https://www.terraform.io/), an industry-leading infrastructure-as-code tool.
