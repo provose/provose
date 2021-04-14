@@ -26,18 +26,18 @@ tagline: "Provose is the easiest way to manage your Amazon Web Services infrastr
 
 description: "Provose is the easiest way to manage your Amazon Web Services infrastructure."
 
-logo: "/assets/images/1x/logo-black-on-transparent-1x.png"
+logo: "https://provose.com/assets/images/1x/logo-black-on-transparent-1x.png"
 
 defaults:
   - scope:
       path: ""
     values:
-      image: "/assets/images/1x/twitter-facebook-preview-card-1x.png"
+      image: "https://provose.com/assets/images/1x/twitter-facebook-preview-card-1x.png"
 
 
-image: "/assets/images/1x/twitter-facebook-preview-card-1x.png"
+image: "https://provose.com/assets/images/1x/twitter-facebook-preview-card-1x.png"
 
-footer_content: 'Copyright &copy; 2020-2021 <a href="https://neocrym.com">Neocrym Records Inc</a>. Distributed via an <a href="https://github.com/provose/provose/blob/master/LICENSE">MIT license</a>. <a href="/privacy/">Privacy Policy</a>.'
+footer_content: 'Copyright &copy; 2020-2021 <a href="https://neocrym.com">Neocrym Records Inc</a>. Distributed via an <a href="https://github.com/provose/provose/blob/master/LICENSE">MIT license</a>. <a href="https://neocrym.com/privacy/">Privacy Policy</a>.'
 
 destination: docs
 
@@ -52,7 +52,7 @@ twitter_username: neocrym
 twitter:
   username: neocrym
   card: summary_large_image
-  image: "/assets/images/1x/logo-black-on-transparent-1x.png"
+  image: "https://provose.com/assets/images/1x/logo-black-on-transparent-1x.png"
   
 github_username: neocrym
 
