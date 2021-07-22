@@ -21,12 +21,6 @@ Provose is distributed under the MIT license. You can download Provose at [githu
 
 Provose is easy to learn. You can get started with just a few lines of code. You can also find an example of setting up a [Ghost.org blog on Amazon Web Services using Provose](https://github.com/provose/provose-ghost-website-example).
 
-## Sign up for the Provose newsletter for release announcements and occasional tips.
-
-Don't worry, we won't email you too often.
-
-<iframe src="https://provose.substack.com/embed" width="480" height="320" style="border:1px solid #EEE; background:white;" frameborder="0" scrolling="no"></iframe>
-
 ## Here is what Provose code looks like.
 
 Below is an example of what Provose looks like, provisioning a [container serving HTTP traffic on AWS Fargate](/v3.0/reference/containers/):
