@@ -16,7 +16,7 @@ jobs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
       with:
-        terraform_version: 0.13.5
+        terraform_version: 1.1.9
 
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
