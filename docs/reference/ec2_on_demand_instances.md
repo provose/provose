@@ -26,11 +26,11 @@ If you are looking to deploy the same application across multiple services--perh
 
   - `instance_type` -- **Required.** The instance type.
 
+  - `ami_id` -- **Required.** The ID of the Amazon Machine Image (AMI) to deploy for this instance.
+
   - `instance_count` -- **Optional.** The number of instances to deploy. This defaults to 1. If you deploy one instance named `bob`, then it will be named `bob` in the AWS console and Provose creates a DNS record for your internal subdomain named `bob`. If you set `instance_count` to be greater than one, then the instances will be `bob-1`, `bob-2`, and so forth.
 
   - `key_name` -- **Optional.** The name of the AWS key pair.
-
-  - `ami_id` -- **Optional.** The ID of the Amazon Machine Image (AMI) to deploy for this instance. By default, Provose will deploy an ECS-optimized GPU-ready Amazon Linux 2 AMI--specifically `amzn2-ami-ecs-gpu-hvm-2.0.20200218-x86_64-ebs`. New users of Provose might want to choose a newer AMI, but Provose cannot update the default AMI for existing users without causing their existing instances to be destroyed and recreated.
 
   - `availability_zone` -- **Optional.** Set this to a specific Availability Zone in your AWS Region if you have a preference for what availability zone to deploy your instance in.
 

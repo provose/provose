@@ -30,11 +30,7 @@ resource "aws_ecr_repository_policy" "images" {
         ],
         [
           for role in aws_iam_role.ec2_on_demand_instances : role.arn
-        ],
-        try(
-          [aws_iam_role.jumphost[0].arn],
-          []
-        )
+        ]
       ))
     }
   )

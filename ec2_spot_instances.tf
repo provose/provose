@@ -218,10 +218,10 @@ EOF
   }
 
   # Required parameters
+  ami           = each.value.ec2.instances.ami_id
   instance_type = each.value.ec2.instances.instance_type
 
   key_name = try(each.value.ec2.instances.key_name, null)
-  ami      = try(each.value.ec2.instances.ami_id, data.aws_ami.amazon_linux_2_ecs_gpu_hvm_ebs.id)
   # If the user is offering their own choice of Availability Zones, then AWS requires that we also
   # specify the corresponding subnet ID. Provose sets up a VPC with a subnet for every
   # Availability Zone, so when provided with an Availability Zone, we look up the corresponding

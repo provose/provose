@@ -2,9 +2,7 @@ locals {
   # This is true when we enable other resources that need
   # the VPC load balnacer to be provisioned.
   vpc_http_https_load_balancer_enabled = (
-    (var.redisinsight != null) ||
     (length(var.elasticsearch_clusters) > 0) ||
-    (var.sentry != null) ||
     (length(local.containers_with_vpc_https) > 0)
   )
 }

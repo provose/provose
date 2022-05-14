@@ -12,7 +12,7 @@ The Provose `elasticsearch_clusters` creates [Elasticsearch](https://www.elastic
 
 ## Examples
 
-### Running a single node of Elasticsearch 7.1 with Logstash
+### Running a single node of Elasticsearch 7.1
 
 ```terraform
 {% include_relative examples/elasticsearch_clusters/simple.tf %}
@@ -29,12 +29,6 @@ The Provose `elasticsearch_clusters` creates [Elasticsearch](https://www.elastic
   - `instance_count` -- **Required.** The number of instances to deploy for the Elasticsearch cluster.
 
   - `storage_per_instance_gb` -- **Required.** The amount of storage to provision--in gigabytes--for each instance in the cluster.
-
-- `logstash` -- **Optional.** Optional settings to install Logstash on an EC2 instance that would write logs into the Elasticsearch cluster. [Logstash](https://www.elastic.co/logstash) is a data processing engine commonly used to format and redirect logs for indexing into Elasticsearch. It is not a required component to Elasticsearch, so Logstash configuration is purely optional. There are [more details below](#how-to-use-provose-to-deploy-logstash) about how to configure and use Logstash with Provose.
-
-  - `instance_type` -- **Required.** The EC2 instance type to run Logstash on, like `"t2.small"`.
-
-  - `key_name` -- **Optional.** The name of an AWS EC2 key pair that can be used to log into the Logstash instance.
 
 ## Outputs
 
@@ -57,16 +51,6 @@ The Amazon Elasticsearch service creates long and hard-to-remember names for clu
 Provose sets up an internal Application Load Balancer to map an easy-to-remember DNS name name to the cluster. This DNS name, load balancer, Elasticsearch cluster, and Kibana dashboard is **not** available on the public Internet. For security reasons, they are all **only** available within the VPC that Provose creates for Elasticsearch cluster.
 
 The internal Application Load Balance redirects requests to the Elasticsearch cluster or Kibana dashboard via an HTTP 301 redirect. Some Elasticsearch clients--such as the one Logstash uses--will treat the HTTP 301 code as an error as opposed to following the redirect. For these clients, you will need to use the DNS name for the Elasticsearch cluster or the Kibana dashboard set by AWS.
-
-Provose also offers its own deployment of Logstash that is configured to work correctly with Provose's deployment of Elasticsearch.
-
-### How to use Provose to deploy Logstash
-
-The Provose `elasticsearch_clusters` module allows the provisioning of Logstash on an AWS EC2 instance. Logstash is a data processing engine used to commonly format and ingest logs for indexing into Elasticsearch. Logstash is not a required component to Elasticsearch, so Logstash configuration is purely optional.
-
-This Logstash configuration is for development purposes only. It will not autoscale to large amounts of logs to be ingested.
-
-If your `provose_config.internal_root_domain` is `"example.com"`, your `provose_config.internal_subdomain` is `"subdomain"`, and your Elasticsearch cluster name is `"cluster"`, then the Logstash DNS name is `"cluster-logstash.subdomain.example.com"` on UDP port 5959. Provose currently does not support advanced Logstash configurations. If you need that, you should consider running your own Logstash instance through either the Provose `ec2_instances` or `containers` modules.
 
 ### The differences between Amazon Elasticsearch Service and Elastic.co's Elasticsearch
 

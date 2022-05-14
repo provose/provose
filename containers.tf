@@ -586,7 +586,7 @@ resource "aws_instance" "containers__instance" {
         for i in range(var.containers[container_name].instances.instance_count) :
         join("-", [container_name, "host", i])
         if(
-          ! can(var.containers[container_name].instances.spot_instance)
+          !can(var.containers[container_name].instances.spot_instance)
         )
       ]
       if local.container_compatibility[container_name] == "EC2"
@@ -600,7 +600,7 @@ resource "aws_instance" "containers__instance" {
           container      = var.containers[container_name]
         }
         if(
-          ! can(var.containers[container_name].instances.spot_instance)
+          !can(var.containers[container_name].instances.spot_instance)
         )
       ]
       if local.container_compatibility[container_name] == "EC2"
@@ -608,7 +608,7 @@ resource "aws_instance" "containers__instance" {
   )
   associate_public_ip_address = true
   iam_instance_profile        = module.aws_iam_instance_profile__containers.instance_profiles[each.value.container_name].name
-  ami                         = data.aws_ami.amazon_linux_2_ecs_gpu_hvm_ebs.id
+  ami                         = each.value.container.instances.ami_id
   instance_type               = each.value.container.instances.instance_type
   # element wraps around each.value.index if we are creating more AWS
   # instances than we have subnets.
@@ -806,7 +806,7 @@ resource "aws_spot_instance_request" "containers__instance" {
   # Below this line is `aws_instance` parameters
   associate_public_ip_address = true
   iam_instance_profile        = module.aws_iam_instance_profile__containers.instance_profiles[each.value.container_name].name
-  ami                         = data.aws_ami.amazon_linux_2_ecs_gpu_hvm_ebs.id
+  ami                         = each.value.container.instances.ami_id
   instance_type               = each.value.container.instances.instance_type
   # element wraps around each.value.index if we are creating more AWS
   # instances than we have subnets.

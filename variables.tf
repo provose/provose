@@ -33,7 +33,7 @@ variable "ec2_on_demand_instances" {
   description = "Sets up bare AWS EC2 On-Demand instances."
 
   validation {
-    condition = ! contains([
+    condition = !contains([
       for instance_config in var.ec2_on_demand_instances :
       instance_config.instances.instance_type != "FARGATE"
     ], false)
@@ -41,17 +41,17 @@ variable "ec2_on_demand_instances" {
   }
 
   validation {
-    condition = ! contains([
+    condition = !contains([
       for instance_config in var.ec2_on_demand_instances :
-      ! can(instance_config.spot_price)
+      !can(instance_config.spot_price)
     ], false)
     error_message = "You cannot specify a Spot price with an EC2 On-Demand instance. You are probably looking to use the `ec2_spot_instances` key instead."
   }
 
   validation {
-    condition = ! contains([
+    condition = !contains([
       for instance_config in var.ec2_on_demand_instances :
-      ! can(instance_config.spot_type)
+      !can(instance_config.spot_type)
     ], false)
     error_message = "You cannot specify a Spot type with an EC2 On-Demand instance. You are probably looking to use the `ec2_spot_instances` key instead."
   }
@@ -63,7 +63,7 @@ variable "ec2_spot_instances" {
   description = "Sets up bare AWS Spot instances."
 
   validation {
-    condition = ! contains([
+    condition = !contains([
       for instance_config in var.ec2_spot_instances :
       instance_config.instances.instance_type != "FARGATE"
     ], false)
@@ -94,13 +94,6 @@ variable "images" {
   default     = {}
   description = "Sets up images on AWS's Elastic Container Registry."
 }
-
-variable "jumphost" {
-  type        = map
-  default     = null
-  description = "Creates a jumphost"
-}
-
 variable "lustre_file_systems" {
   type        = any
   default     = {}
@@ -136,12 +129,6 @@ variable "redis_clusters" {
   description = "Sets up AWS ElastiCache Redis clusters."
 }
 
-variable "redisinsight" {
-  type        = map
-  default     = null
-  description = "Sets up an AWS EC2 instance with RedisInsight."
-}
-
 variable "s3_buckets" {
   type        = any
   default     = {}
@@ -149,19 +136,7 @@ variable "s3_buckets" {
 }
 
 variable "secrets" {
-  type        = map
+  type        = map(any)
   default     = {}
   description = "This is a mapping of secrets to values. The secrets are stored in AWS Secrets Manager."
-}
-
-variable "sentry" {
-  type        = any
-  default     = null
-  description = "Sets up an AWS EC2 instance running Sentry in a Docker container. This installation of Sentry is appropriate for development usage, but will not scale to production usage."
-}
-
-variable "statsd_graphite_grafana" {
-  type        = any
-  default     = null
-  description = "This sets up Statsd, Graphite, and Grafana in Docker containers on a single AWS EC2 instance."
 }
