@@ -52,9 +52,9 @@ If you are looking to deploy the same application across multiple services--perh
 
 - `root_block_device` -- **Optional** These are optional settings about the Elastic Block Storage (EBS) volume that stores the root filesystem for this EC2 instance.
 
-  - `volume_type` -- **Optional.** This is the type of EBS volume. Values can be either `"standard"`, `"gp2"`, `"io1"`, `"sc1"`, or `"st1"`, with `"standard"` being the default.
+  - `volume_size_gb` -- **Required.** This is the size of the root EBS volume in gigabytes.
 
-  - `volume_size_gb` -- **Optional.** This is the size of the EBS volume in gigabytes. This defaults to the root volume size defined in the underlying Amazon Machine Image (AMI) and will never be less than the minimum.
+  - `volume_type` -- **Optional.** This is the type of EBS volume. Values can be either `"standard"`, `"gp2"`, `"io1"`, `"sc1"`, or `"st1"`, with `"standard"` being the default.
 
   - `delete_on_termination` -- **Optional.** This defaults to `true`, which deletes the EBS volume if the instance is terminated. Set this to `false` to keep the root EBS volume in your account after instance termination.
 

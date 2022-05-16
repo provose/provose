@@ -69,17 +69,50 @@ resource "aws_s3_bucket" "s3_buckets" {
   for_each = var.s3_buckets
 
   bucket = each.key
-  acl    = try(each.value.acl, null)
-
-  versioning {
-    enabled = try(each.value.versioning, false)
-  }
 
   tags = {
     Name    = each.key
     Provose = var.provose_config.name
   }
 }
+
+resource "aws_s3_bucket_acl" "example_bucket_acl" {
+  for_each = {
+    for key, value in var.s3_buckets :
+    key => {
+      bucket = aws_s3_bucket.s3_buckets[key].id
+      acl    = try(value.acl, null)
+    }
+  }
+
+  bucket = each.value.id
+  acl    = each.value.acl
+
+  depends_on = [
+    aws_s3_bucket.s3_buckets
+  ]
+}
+
+
+resource "aws_s3_bucket_versioning" "s3_buckets" {
+  for_each = {
+    for key, value in var.s3_buckets :
+    key => {
+      bucket     = aws_s3_bucket.s3_buckets[key].id
+      versioning = try(value.versioning, false) ? "Enabled" : "Disabled"
+    }
+  }
+
+  bucket = each.value.bucket
+  versioning_configuration {
+    status = each.value.versioning
+  }
+
+  depends_on = [
+    aws_s3_bucket.s3_buckets
+  ]
+}
+
 
 resource "aws_iam_role_policy" "s3_buckets__container_iam__list" {
   for_each = {

@@ -2,27 +2,27 @@ terraform {
   required_providers {
     archive = {
       source  = "hashicorp/archive"
-      version = "1.3.0"
+      version = "2.2.0"
     }
     aws = {
       source  = "hashicorp/aws"
-      version = "3.9.0"
+      version = "4.14.0"
     }
     null = {
       source  = "hashicorp/null"
-      version = "2.1.2"
+      version = "3.1.1"
     }
     tls = {
       source  = "hashicorp/tls"
-      version = "2.2.0"
+      version = "3.4.0"
     }
     random = {
       source  = "hashicorp/random"
-      version = "2.3.0"
+      version = "3.1.3"
     }
     local = {
       source  = "hashicorp/local"
-      version = "1.4.0"
+      version = "2.2.2"
     }
   }
 }

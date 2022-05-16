@@ -11,12 +11,23 @@ data "aws_region" "current" {}
 resource "aws_s3_bucket" "this" {
   for_each = local.iter
   bucket   = each.value
-  acl      = "log-delivery-write"
   # We let `terraform destroy` delete automatically-created S3 buckets for logs,
   # even though it is possible that many users are required to preserve their
   # logs.
   force_destroy = true
 }
+
+resource "aws_s3_bucket_acl" "this" {
+  for_each = aws_s3_bucket.this
+
+  bucket = each.value.id
+  acl    = "log-delivery-write"
+
+  depends_on = [
+    aws_s3_bucket.this
+  ]
+}
+
 
 resource "aws_s3_bucket_policy" "this" {
   #  for_each = local.iter

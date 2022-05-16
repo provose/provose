@@ -158,12 +158,6 @@ resource "aws_ecs_cluster" "containers" {
   for_each = var.containers
 
   name = each.key
-  capacity_providers = (
-    each.value.instances.instance_type == "FARGATE" ? ["FARGATE"] :
-    (
-      each.value.instances.instance_type == "FARGATE_SPOT" ? ["FARGATE_SPOT"] : null
-    )
-  )
   setting {
     name  = "containerInsights"
     value = "enabled"
@@ -173,6 +167,25 @@ resource "aws_ecs_cluster" "containers" {
     Provose = var.provose_config.name
   }
 }
+
+resource "aws_ecs_cluster_capacity_providers" "containers" {
+  for_each = {
+    for key, value in var.containers :
+    key => {
+      cluster_name = aws_ecs_cluster.containers[key].name
+      capacity_providers = (
+        value.instances.instance_type == "FARGATE" ? ["FARGATE"] :
+        (
+          value.instances.instance_type == "FARGATE_SPOT" ? ["FARGATE_SPOT"] : null
+        )
+      )
+    }
+  }
+  cluster_name = each.value.cluster_name
+
+  capacity_providers = each.value.capacity_providers
+}
+
 
 resource "aws_ecs_task_definition" "containers" {
   for_each = {

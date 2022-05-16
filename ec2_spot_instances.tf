@@ -242,11 +242,8 @@ EOF
   iam_instance_profile = try(each.value.ec2.iam_instance_profile, each.value.default_iam_instance_profile)
 
   root_block_device {
-    volume_type = try(each.value.ec2.root_block_device.volume_type, null)
-    volume_size = max(
-      try(each.value.ec2.root_block_device.volume_size_gb, 0),
-      local.minimum_aws_ami_root_volume_size_gb
-    )
+    volume_size           = each.value.ec2.root_block_device.volume_size_gb
+    volume_type           = try(each.value.ec2.root_block_device.volume_type, null)
     delete_on_termination = try(each.value.ec2.root_block_device.delete_on_termination, true)
     encrypted             = try(each.value.ec2.root_block_device.encrypted, false)
     kms_key_id            = try(each.value.ec2.root_block_device.kms_key_id, null)
