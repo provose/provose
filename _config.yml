@@ -67,7 +67,7 @@ social:
     - https://github.com/provose
 
 
-latest_provose_version: v3.0
+latest_provose_version: v4.0
 
 # Build settings
 remote_theme: pmarsceill/just-the-docs
