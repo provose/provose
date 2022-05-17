@@ -1,0 +1,3 @@
+[submodule "modules/domain-name-parser"]
+	path = modules/domain-name-parser
+	url = https://github.com/provose/domain-name-parser

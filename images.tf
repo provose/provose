@@ -68,7 +68,7 @@ output "images" {
       images = aws_ecr_repository.images
     }
     aws_ecr_repository_policy = {
-      images_ecs = aws_ecr_repository_policy.images_ecs
+      images_ecs                     = aws_ecr_repository_policy.images_ecs
       images_ec2_on_demand_instances = aws_ecr_repository_policy.images_ec2_on_demand_instances
     }
   }
