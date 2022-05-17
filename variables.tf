@@ -1,7 +1,22 @@
+terraform {
+  # Optional attributes and the defaults function are
+  # both experimental, so we must opt in to the experiment.
+  experiments = [module_variable_optional_attrs]
+}
+
 variable "batch" {
   type        = any
   default     = {}
   description = "Sets up AWS Batch configuration."
+}
+
+variable "certificates" {
+  type = map(object({
+    domain_name               = string,
+    subject_alternative_names = optional(list(string)),
+  }))
+  default     = {}
+  description = "Sets up TLS certificates using Amazon Certificate Manager (ACM)."
 }
 
 variable "containers" {

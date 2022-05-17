@@ -93,6 +93,23 @@ resource "aws_lb_listener" "public_http_https__443" {
   }
 }
 
+# This resource attaches our newly-created TLS certificate to our load balancer.
+# If we were to omit this, the load balancer would return the default, VPC-only
+# certificate that Provose provisions. When that happens, users trying to use the
+# redirect would get a TLS error.
+resource "aws_lb_listener_certificate" "public_http_https__443" {
+  # Don't provision this resource if we don't actually have a public HTTPS load balancer
+  # listener.
+  for_each        = length(aws_lb_listener.public_http_https__443) > 0 ? aws_acm_certificate_validation.certificates : {}
+  listener_arn    = aws_lb_listener.public_http_https__443[0].arn
+  certificate_arn = each.value.certificate_arn
+
+  depends_on = [
+    aws_lb_listener.public_http_https__443,
+    aws_acm_certificate_validation.certificates
+  ]
+}
+
 resource "aws_lb_listener" "public_http_https__80" {
   for_each          = aws_lb.public_http_https
   load_balancer_arn = each.value.arn
@@ -123,6 +140,9 @@ output "public_http_https" {
     aws_lb_listener = {
       public_http_https__443 = try(aws_lb_listener.public_http_https__443[0], null)
       public_http_https__80  = try(aws_lb_listener.public_http_https__80[0], null)
+    }
+    aws_lb_listener_certificate = {
+      public_http_https__443 = try(aws_lb_listener_certificate.public_http_https__443[0], null)
     }
   }
 }

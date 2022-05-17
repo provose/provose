@@ -732,49 +732,6 @@ resource "aws_route53_record" "containers__public_https" {
   }
 }
 
-resource "aws_acm_certificate" "containers__public_https" {
-  for_each          = aws_route53_record.containers__public_https
-  domain_name       = each.key
-  validation_method = "DNS"
-  options {
-    certificate_transparency_logging_preference = "ENABLED"
-  }
-}
-
-resource "aws_route53_record" "containers__public_https_validation" {
-  for_each = aws_acm_certificate.containers__public_https
-
-  name       = tolist(each.value.domain_validation_options)[0].resource_record_name
-  type       = tolist(each.value.domain_validation_options)[0].resource_record_type
-  zone_id    = data.aws_route53_zone.external_dns__for_containers[each.value.domain_name].zone_id
-  records    = [tolist(each.value.domain_validation_options)[0].resource_record_value]
-  ttl        = 60
-  depends_on = [aws_acm_certificate.containers__public_https]
-}
-
-resource "aws_acm_certificate_validation" "containers__public_https_validation" {
-  for_each = {
-    for key, certificate in aws_acm_certificate.containers__public_https :
-    key => {
-      certificate_arn         = certificate.arn
-      validation_record_fqdns = [aws_route53_record.containers__public_https_validation[key].fqdn]
-    }
-    if contains(keys(aws_route53_record.containers__public_https_validation), key)
-  }
-  certificate_arn         = each.value.certificate_arn
-  validation_record_fqdns = each.value.validation_record_fqdns
-}
-
-resource "aws_lb_listener_certificate" "containers__public_https_validation" {
-  for_each        = length(aws_lb_listener.public_http_https__443) > 0 ? aws_acm_certificate_validation.containers__public_https_validation : {}
-  listener_arn    = aws_lb_listener.public_http_https__443[0].arn
-  certificate_arn = each.value.certificate_arn
-
-  depends_on = [
-    aws_lb_listener.public_http_https__443
-  ]
-}
-
 resource "aws_route53_record" "containers__vpc_https" {
   for_each = { for x in local.container_vpc_https_dns_names : x => x }
 
@@ -941,23 +898,13 @@ output "containers" {
       containers__instance = aws_instance.containers__instance
     }
     aws_route53_record = {
-      containers__instance                = aws_route53_record.containers__instance
-      containers__public_https            = aws_route53_record.containers__public_https
-      containers__public_https_validation = aws_route53_record.containers__public_https_validation
-      containers__vpc_https               = aws_route53_record.containers__vpc_https
-      containers__instance_spot           = aws_route53_record.containers__instance_spot
+      containers__instance      = aws_route53_record.containers__instance
+      containers__public_https  = aws_route53_record.containers__public_https
+      containers__vpc_https     = aws_route53_record.containers__vpc_https
+      containers__instance_spot = aws_route53_record.containers__instance_spot
     }
     aws_route53_zone = {
       external_dns__for_containers = data.aws_route53_zone.external_dns__for_containers
-    }
-    aws_acm_certificate = {
-      containers__public_https = aws_acm_certificate.containers__public_https
-    }
-    aws_acm_certificate_validation = {
-      containers__public_https_validation = aws_acm_certificate_validation.containers__public_https_validation
-    }
-    aws_lb_listener_certificate = {
-      containers__public_https_validation = aws_lb_listener_certificate.containers__public_https_validation
     }
     aws_spot_instance_request = {
       containers__instance = aws_spot_instance_request.containers__instance
