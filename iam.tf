@@ -11,10 +11,10 @@ resource "aws_iam_role" "iam__ecs_task_execution_role" {
       {
         Effect = "Allow"
         Principal = {
-          Service = [
+          Service = sort([
+            "ec2.amazonaws.com",
             "ecs-tasks.amazonaws.com",
-            "ec2.amazonaws.com"
-          ]
+          ])
         }
         Action = "sts:AssumeRole"
       }
