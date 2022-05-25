@@ -9,9 +9,6 @@ locals {
 
 # TODO: Should we expose the log bucket as an output?
 module "public_http_https__log" {
-  providers = {
-    aws = aws
-  }
   source = "./modules/load_balancer_s3_log_buckets"
   names  = ["${var.provose_config.name}-p.${var.provose_config.internal_subdomain}.${var.provose_config.internal_root_domain}"]
 }
