@@ -51,6 +51,6 @@ ${jsonencode([{
             "sourceVolume": volume_name
             "containerPath": volume.container_mount
         }
-    ])
-    
+    ]),
+    "volumesFrom": []
 }])}
