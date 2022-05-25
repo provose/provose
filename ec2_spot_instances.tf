@@ -184,15 +184,14 @@ resource "aws_spot_instance_request" "ec2_spot_instances" {
   # to copy any tags from the Spot instance request to the instance.
   provisioner "local-exec" {
     interpreter = ["/bin/bash", "-c"]
-    environment = local.AWS_ENVIRONMENT
     command     = <<EOF
 TAGS=$(
-  aws --region ${data.aws_region.current.name} \
+  ${local.AWS_COMMAND} \
   ec2 describe-spot-instance-requests \
   --spot-instance-request-ids ${self.id} \
   --query 'SpotInstanceRequests[0].Tags'
 )
-aws --region ${data.aws_region.current.name} \
+${local.AWS_COMMAND} \
 ec2 create-tags --resources ${self.spot_instance_id} \
 --tags "$TAGS"
 EOF

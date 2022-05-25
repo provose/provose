@@ -32,14 +32,6 @@ For #2 or #3, you would install your credentials in an appropriate file and then
 
 - `authentication` -- **Required.** This is an object that contains the authentication information needed for Provose's underlying Terraform providers.
 
-  - `aws` -- **Required.** This object contains information for connecting to AWS resources.
-
-    - `region` -- **Required.** This is the AWS region for Provose to connect to.
-
-    - `access_key` -- **Optional.** This is the AWS IAM access key. If you omit this, Terraform will look in your AWS config and environment variable for credentials. If you are running Terraform on an AWS EC2 instance, you can omit the `access_key` key to use the EC2 instance's IAM instance profile.
-
-    - `secret_key` -- **Optional.** This is the AWS IAM access key. If you omit this, Terraform will look in your AWS config and environment variable for credentials. If you are running Terraform on an AWS EC2 instance, you can omit the `access_key` key to use the EC2 instance's IAM instance profile.
-
 - `name` -- **Required.** This is the "name" for this instance of Provose. This is the namespace for the underlying Terraform resources that Provose deploys, which lets you use the Provose module multiple times without creating conflicts in name resources.
 
 - `internal_root_domain` -- **Required.** This is the domain name that you are using with Provose. Provose requires you to have a domain name in your AWS account as the base name for TLS certificates that Provose provisions. These certificates are used to secure access to internal services.
