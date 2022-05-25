@@ -154,6 +154,32 @@ resource "aws_security_group" "containers__internal" {
   }
 }
 
+# If this ECS service is using a Docker image from
+# the Provose-managed AWS ECR, then we should resolve
+# the image's exact SHA-256 hash from the image name and tag.
+#
+# Resolving the exact hash solves two problems:
+# - when the same tag is overwritten to point to a different image
+# - when the user is running `terraform apply` to create
+#   AWS ECS service, but the necessary image has not been pushed
+#   to ECR.
+data "aws_ecr_image" "containers__private" {
+  for_each = {
+    for key, container in var.containers :
+    key => {
+      repository_name = container.image.name
+      image_tag       = container.image.tag
+    }
+    if container.image.private_registry
+  }
+  repository_name = each.value.repository_name
+  image_tag       = each.value.image_tag
+  depends_on = [
+    aws_ecr_repository.images,
+  ]
+}
+
+
 resource "aws_ecs_cluster" "containers" {
   for_each = var.containers
 
@@ -193,6 +219,7 @@ resource "aws_ecs_task_definition" "containers" {
     key => {
       container                = container
       image_name               = container.image.private_registry ? aws_ecr_repository.images[container.image.name].repository_url : container.image.name
+      image_tag                = container.image.private_registry ? data.aws_ecr_image.containers__private[key].id : container.image.tag
       requires_compatibilities = [local.container_compatibility[key]]
       network_mode             = local.network_mode[key]
       task_role_arn            = aws_iam_role.iam__ecs_task_execution_role[key].arn
@@ -224,8 +251,7 @@ resource "aws_ecs_task_definition" "containers" {
       region       = data.aws_region.current.name
       task_name    = each.key
       image_name   = each.value.image_name
-      image_tag    = each.value.container.image.tag
-      image_name   = each.value.image_name
+      image_tag    = each.value.image_tag
       cpu          = each.value.container.instances.cpu
       memory       = each.value.container.instances.memory
       network_mode = each.value.network_mode
@@ -298,6 +324,7 @@ resource "aws_ecs_task_definition" "containers" {
   }
   depends_on = [
     aws_ecr_repository.images,
+    data.aws_ecr_image.containers__private,
     aws_secretsmanager_secret.secrets,
     aws_secretsmanager_secret_version.secrets,
     aws_efs_file_system.elastic_file_systems,
