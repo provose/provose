@@ -8,13 +8,6 @@ resource "aws_acm_certificate" "certificates" {
   }
   lifecycle {
     create_before_destroy = true
-    ignore_changes = [
-      # We ignore changes in the status field.
-      # Otherwise, the certificate's status field changing from
-      # "PENDING_VALIDATION" to "ISSUED" would be considered
-      # as "drift" by Terraform.
-      status,
-    ]
   }
 }
 
