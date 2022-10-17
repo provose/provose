@@ -1,7 +1,3 @@
-terraform {
-  required_version = ">= 1.3.0"
-}
-
 variable "batch" {
   type        = any
   default     = {}
