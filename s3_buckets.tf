@@ -76,16 +76,19 @@ resource "aws_s3_bucket" "s3_buckets" {
   }
 }
 
+# If the user has provided a canned bucket ACL, like `"private"`,
+# we create the corresponding bucket ACL object here.
 resource "aws_s3_bucket_acl" "example_bucket_acl" {
   for_each = {
     for key, value in var.s3_buckets :
     key => {
       bucket = aws_s3_bucket.s3_buckets[key].id
-      acl    = try(value.acl, null)
+      acl    = value.acl
     }
+    if try(value.acl, null) != null
   }
 
-  bucket = each.value.id
+  bucket = each.value.bucket
   acl    = each.value.acl
 
   depends_on = [
