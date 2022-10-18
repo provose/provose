@@ -48,9 +48,9 @@ This example shows ten nginx "Hello World" containers running on AWS Fargate.
 
 - `instances` -- **Required.** This is an object that defines how this container is run.
 
-  - `ami_id` -- **Required.** The ID of the Amazon Machine Image (AMI) to deploy for this instance.
-
   - `instance_type` -- **Required.** Set this to `"FARGATE"` to deploy the containers on AWS Fargate. Set this to `"FARGATE_SPOT"` to use Fargate with Spot instances--which can [give cost savings of up to 70%](https://aws.amazon.com/blogs/compute/deep-dive-into-fargate-spot-to-run-your-ecs-tasks-for-up-to-70-less/). Note that with Fargate, it will not be possible to use `bind_mounts` to mount to the host. However, if you want to deploy these containers on AWS EC2 instances, set this to the instance type of your choice, like `"t3.small"`. Keep in mind that AWS does not make all instance types available in all Availability Zones.
+
+  - `ami_id` -- **Required.** The ID of the Amazon Machine Image (AMI) to deploy for this instance. This is required when the instance type is *not* `"FARGATE"` or `'FARGATE_SPOT"`.
 
   - `container_count` -- **Required.** This is the number of containers to deploy.
 
