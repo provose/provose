@@ -26,7 +26,7 @@ module "myproject-ec2" {
         }
       }
       instances = {
-        instance_type   = "t2.small"
+        instance_type = "t2.small"
         /* Make sure to use an AWS AMI that is ECS-optimized.
          * You can search for ECS-optimized AMIs in the
          * AWS AMI catalog:
