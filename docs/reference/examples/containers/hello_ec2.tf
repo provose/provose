@@ -26,7 +26,12 @@ module "myproject-ec2" {
         }
       }
       instances = {
-        instance_type   = "t2.small"
+        instance_type = "t2.small"
+        /* Make sure to use an AWS AMI that is ECS-optimized.
+         * You can search for ECS-optimized AMIs in the
+         * AWS AMI catalog:
+         * https://us-west-1.console.aws.amazon.com/ec2/v2/ */
+        ami_id          = "ami-0f71b77f57e47333c"
         container_count = 4
         instance_count  = 2
         cpu             = 256
