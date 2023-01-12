@@ -30,14 +30,3 @@ terraform {
 locals {
   AWS_COMMAND = "aws --region ${data.aws_region.current.name} "
 }
-
-
-# THIS PROVIDER IS DEPRECATED. DO NOT REFERENCE IT IN OTHER CODE.
-# This provider is here for long-time Provose users who have
-# resources that depend on this provider.
-# Originally, this provider was used for looking up CloudFront certificate information
-# in us-east-1.
-provider "aws" {
-  alias  = "acm_lookup"
-  region = "us-east-1"
-}
